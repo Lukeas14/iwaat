@@ -1,0 +1,54 @@
+body{
+	background:#FFF;
+}
+
+#content{
+	width:960px;
+	margin:0px auto;
+	background:#FFF;
+}
+
+table.admin_table{
+	
+}
+table.admin_list thead th{
+	text-align:left;
+}
+table.admin_list tbody td{
+	padding:0px;
+	font-size:12px;
+}
+
+
+.company_info{
+	width:450px;
+	padding:10px;
+	border:1px solid #DDD;
+}
+.company_info p{
+	display:block;
+	clear:both;
+	min-height:10px;
+}
+.company_info p label{
+	display:block;
+	float:left;
+	width:100px;
+	font-size:11px;
+	font-weight:bold;
+}
+.company_info p input, .company_info p textarea{
+	width:100%;
+}
+
+.left_wrapper{
+	float:left;
+}
+
+.right_wrapper{
+	float:right;
+}
+.right_wrapper .company_info{
+	clear:right;
+	width:450px;
+}

@@ -1,0 +1,47 @@
+<dataConfig>
+  <dataSource type="JdbcDataSource" 
+              driver="com.mysql.jdbc.Driver"
+              url="jdbc:mysql://localhost/iwaat" 
+              user="jiwaatlucas" 
+              password="j23waati$lucas"
+			  encoding="UTF-8"/>
+  <document>
+    <entity name="app" query="select id,name,slug,tagline,description,popularity_index from apps">
+		<field column="id" name="id" />
+		<field column="name" name="name" />
+		<field column="slug" name="slug" />
+		<field column="tagline" name="tagline" />
+		<field column="description" name="description" />
+		<field column="popularity_index" name="popularity_index" />
+		<entity name="app_tag" query="select tag_id from app_tags where app_id = '${app.id}'">
+			<entity name="tag" query="select name from tags where id = '${app_tag.tag_id}'">
+				<field column="name" name="tags" />
+			</entity>
+		</entity>
+		<entity name="app_logo" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'logo'">
+			<field column="file_source" name="logo" />
+		</entity>
+		<entity name="app_screenshot" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot'">
+			<field column="file_source" name="screenshots" />
+		</entity>
+		<entity name="app_screenshot_large" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot_large'">
+			<field column="file_source" name="screenshot_large" />
+		</entity>
+		<entity name="app_screenshot_small" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot_small'">
+			<field column="file_source" name="screenshot_small" />
+		</entity>
+		<entity name="app_homepage_url" query="SELECT url AS homepage_url FROM app_urls WHERE app_id = '${app.id}' AND type = 'homepage'">
+			<field column="homepage_url" name="homepage_url" />
+		</entity>
+		<entity name="app_homepage_title" query="SELECT data AS homepage_title FROM app_external_media WHERE app_id = '${app.id}' AND type = 'homepage_title'">
+			<field column="homepage_title" name="homepage_title"/>
+		</entity>
+		<entity name="app_homepage_meta_keywords" query="SELECT data AS homepage_meta_keywords FROM app_external_media WHERE app_id = '${app.id}' AND type = 'homepage_meta_keywords'">
+			<field column="homepage_meta_keywords" name="homepage_meta_keywords"/>
+		</entity>
+		<entity name="app_homepage_meta_description" query="SELECT data AS homepage_meta_description FROM app_external_media WHERE app_id = '${app.id}' AND type = 'homepage_meta_description'">
+			<field column="homepage_meta_description" name="homepage_meta_description"/>
+		</entity>
+    </entity>
+  </document>
+</dataConfig>

@@ -1,0 +1,2 @@
+2011-09-22T20:36:54-07:00 : Invalid Object > Requires an URL.
+2011-09-23T16:10:50-07:00 : Invalid URL > SEOstats supports soley RFC compliant URL's with HTTP(/S) protocol.
