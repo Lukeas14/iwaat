@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://dev.iwaat.com';
+$config['base_url']	= BASE_URL;
 
 /*
 |--------------------------------------------------------------------------

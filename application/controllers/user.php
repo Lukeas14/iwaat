@@ -121,7 +121,7 @@ class User extends MY_Controller {
 		{
 			$this->session->set_flashdata('message', 'Please log in or register to add an application.');
 			$this->session->set_flashdata('redirect', $this->uri->uri_string());
-			redirect('/login_register', 'refresh');
+			redirect('/login_register', 'location');
 		}
 		
 		$this->load->helper(array('form', 'url'));

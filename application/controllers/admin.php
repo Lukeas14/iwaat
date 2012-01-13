@@ -11,9 +11,9 @@ class Admin extends MY_Controller {
 		//Only admins allowed to access these pages
 		if (!$this->ion_auth->logged_in()){
 			$this->session->set_flashdata('redirect', $this->uri->uri_string());
-			redirect('/login_register', 'refresh');
+			redirect('/login_register', 'location');
 			if(!$this->ion_auth->is_admin()){
-				redirect('/', 'refresh');
+				redirect('/', 'location');
 			}
 		}
 		
