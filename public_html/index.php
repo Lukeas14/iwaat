@@ -57,7 +57,7 @@ if (defined('ENVIRONMENT'))
  * as this file.
  *
  */
-	$system_path = '/var/www/iwaat.com/system';
+	$system_path = '/var/www/iwaat/system';
 
 /*
  *---------------------------------------------------------------
@@ -73,7 +73,7 @@ if (defined('ENVIRONMENT'))
  * NO TRAILING SLASH!
  *
  */
-	$application_folder = '/var/www/iwaat.com/application';
+	$application_folder = '/var/www/iwaat/application';
 
 /*
  * --------------------------------------------------------------------
