@@ -18,6 +18,14 @@ a{
 	text-decoration:none;
 }
 
+h1{
+	margin:0 0 20px 0;
+	color:#666;
+	font-size:19px;
+	font-weight:normal;
+	text-shadow:1px 1px #EEE;
+}
+
 /** Forms **/
 label{
 	display:block;
@@ -89,6 +97,7 @@ form span{
 	display:inline-block;
 	float:left;
 	margin:12px 0 0 7px;
+	color:#404040;
 }
 
 /** Common Wrappers **/
@@ -246,7 +255,6 @@ opacity:0;
 	width:100%;
 	height:200px;
 	text-align:center;
-	border-bottom:1px solid #FFFFFF;
 }
 #homepage_search_form_wrapper{
 	width:700px;
@@ -266,12 +274,32 @@ opacity:0;
 	font-size:20px;
 }
 
-#homepage_content{
+#homepage_categories{
+	width:960px;	
+	margin:0 auto;
+	overflow:hidden;
+}
+.homepage_category{
+	float:left;
+	width:285px;
+	height:100px;
+	margin:15px;
+	border:1px solid #EEE;
+	background:#DDD;
+	background: -webkit-linear-gradient(top, #ffffff 0px, #EEE 100%); /* Chrome10+,Safari5.1+ */
+	border-radius:5px;
+	
+	box-shadow: 0px 0px 3px #555;
+}
+.homepage_category:hover{
+	box-shadow: 0px 0px 6px #555;
+}
+.homepage_category h2{
 	width:100%;
-	height:400px;
-	background:#FFF;
-	border-top:1px solid #E1E1E1;
-	border-bottom:1px solid #E1E1E1;
+	padding:5px 10px;
+	font-size:18px;
+	font-weight:100;
+	color:#76c248;
 }
 
 
@@ -486,7 +514,7 @@ opacity:0;
 }
 .app_header .app_info .app_description{
 	width:100%;
-	height:240px;
+	height:225px;
 	margin:10px 0 0 0;
 	overflow:auto;
 	font-size:12px;
@@ -542,7 +570,7 @@ opacity:0;
 }
 .app_metadata .app_urls label{
 	float:left;
-	display:block;
+	display:block;"
 	margin:0;
 	padding:0;
 	text-align:left;
@@ -936,4 +964,15 @@ div::-webkit-scrollbar-track {
 }
 #admin_apps th#id{
 	width:40px;
+}
+
+/** Contact Us **/
+#contact_us{
+	overflow:hidden;
+	width:840px;
+	margin:10px auto;
+	padding:10px;
+}
+#contact_us textarea{
+	width:450px;
 }

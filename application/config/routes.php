@@ -53,7 +53,9 @@ $route['suggest_app'] = "apps/suggest_app";
 $route['add_app'] = "apps/add_app";
 
 //Contact pages
-$route['contact_us'] = "contact/contact_us";
+$route['contact_us'] = "static_pages/contact_us";
+$route['privacy_policy'] = "static_pages/privacy_policy";
+$route['terms_conditions'] = "static_pages/terms_conditions";
 
 $route['login_register'] = "user/login_register";
 $route['account/profile'] = "user/account_profile";

@@ -1,10 +1,28 @@
 <?php
 
-$http_host = $_SERVER['HTTP_HOST'];
-switch($http_host){
-	case 'dev.iwaat.com':
-		define('ENVIRONMENT', 'development');
-		
+$environments = array('development','testing','production');
+$host = array('dev.iwaat.com', 'test.iwaat.com', 'www.iwaat.com');
+$host_environments = array_combine($host, $environments);
+
+
+foreach($argv as $arg){
+	if(in_array($arg, array('development', 'testing', 'production'))){
+		define('ENVIRONMENT', $arg);
+	}
+}
+
+if(!defined('ENVIRONMENT') && !empty($_SERVER['HTTP_HOST'])){
+	if(array_key_exists($_SERVER['HTTP_HOST'], $host_environments)){
+		define('ENVIRONMENT', $host_environments[$_SERVER['HTTP_HOST']]);
+	}
+}
+
+if(!defined('ENVIRONMENT')){
+	define('ENVIRONMENT', 'production');
+}
+
+switch(ENVIRONMENT){
+	case 'development':
 		define('BASE_URL', 'http://dev.iwaat.com');
 		
 		error_reporting(E_ALL);
@@ -16,9 +34,7 @@ switch($http_host){
 		define('DB_NAME', 'iwaat');
 		break;
 	
-	case 'test.iwaat.com':
-		define('ENVIRONMENT', 'testing');
-		
+	case 'testing':
 		define('BASE_URL', 'http://test.iwaat.com');
 		
 		error_reporting(E_ALL);

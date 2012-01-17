@@ -10,9 +10,18 @@
 	</div>
 </div>
 
-<div id="homepage_content">
+<div id="homepage_categories">
+<?php foreach($homepage_categories as $homepage_category): ?>
+	<div class="homepage_category">
+		<h2><?=$homepage_category['name']?></h2>
+		<?php foreach($homepage_apps[$homepage_category['id']]['apps'] as $homepage_app): ?>
+		<img src="/images/apps/<?=$this->app->get_app_image_directory($homepage_app['id'])?>/<?=$homepage_app['logo']?>" style="width:90px;"/>
+		<?php endforeach; ?>
+	</div>
+<?php endforeach; ?>
 	
 </div>
+
 
 <script type="text/javascript">
 $(document).ready(function(){

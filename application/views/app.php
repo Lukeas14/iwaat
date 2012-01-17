@@ -10,7 +10,7 @@
 		</div>
 		<div class="app_info_wrapper"></div>
 		<div class="app_info">
-			<a class="app_logo" href="<?=$app['urls']['homepage']?>" target="_blank"onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')">
+			<a class="app_logo" href="<?=$app['urls']['homepage']?>" target="_blank" rel="nofollow" onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')">
 			<?php if(!empty($app['images']['logo'][0]['source'])): ?>
 				<img src="<?=$app['images']['logo'][0]['source']?>" />
 			<?php endif; ?>
@@ -35,7 +35,7 @@
 		<div class="app_urls">
 			<?php if(!empty($app['urls']['homepage'])): ?>
 			<p class="app_url_homepage">
-				<label>Homepage:</label><a href="<?=$app['urls']['homepage']?>" target="_blank" onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')"><?=$app['urls']['homepage']?></a>
+				<label>Homepage:</label><a href="<?=$app['urls']['homepage']?>" target="_blank" rel="nofollow" onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')"><?=$app['urls']['homepage']?></a>
 			</p>
 			<?php endif; ?>
 
@@ -43,20 +43,20 @@
 			<p class="app_url_blog">
 				<label>Blog:</label>
 				<?php if(!empty($app['urls']['blog'])): ?>
-				<a href="<?=$app['urls']['blog']?>" target="_blank">Blog</a>
+				<a href="<?=$app['urls']['blog']?>" target="_blank" rel="nofollow">Blog</a>
 				<?php endif; ?>
 				
 				<?php if(!empty($app['urls']['blog']) && !empty($app['urls']['rss'])): ?>&nbsp;&nbsp;~&nbsp;&nbsp;<?php endif; ?>
 				
 				<?php if(!empty($app['urls']['rss'])): ?>
-				<a href="<?=$app['urls']['rss']?>" target="_blank">RSS</a>
+				<a href="<?=$app['urls']['rss']?>" target="_blank" rel="nofollow">RSS</a>
 				<?php endif; ?>
 			</p>
 			<?php endif; ?>
 			
 			<?php if(!empty($app['urls']['twitter'])): ?>
 			<p class="app_url_twitter">
-				<label>Twitter:</label><a href="http://www.twitter.com/<?=$app['urls']['twitter']?>" target="_blank">@<?=$app['urls']['twitter']?></a>
+				<label>Twitter:</label><a href="http://www.twitter.com/<?=$app['urls']['twitter']?>" target="_blank" rel="nofollow">@<?=$app['urls']['twitter']?></a>
 			</p>
 			<?php endif; ?>
 			
@@ -102,8 +102,8 @@
 			<div class="app_media_wrapper app_blog_wrapper <?=(empty($app['media']['twitter_feed'])) ? 'app_big_wrapper' : ''?>">
 			<?php foreach($app['media']['blog_rss_feed'] as $blog_item): ?>
 				<div class="app_media_item app_blog_item">
-					<a class="blog_item_title" href="<?=$blog_item['permalink']?>" target="_blank"><span class="blog_item_time"><?=(!empty($blog_item['datetime'])) ? get_relative_time($blog_item['datetime']) : '';?></span> <?=$blog_item['title']?></a>
-					<p class="blog_item_text"><?=truncate($blog_item['description'], 300)?> <a href="<?=$blog_item['permalink']?>" target="_blank">Read More</a></p>
+					<a class="blog_item_title" href="<?=$blog_item['permalink']?>" target="_blank" rel="nofollow"><span class="blog_item_time"><?=(!empty($blog_item['datetime'])) ? get_relative_time($blog_item['datetime']) : '';?></span> <?=$blog_item['title']?></a>
+					<p class="blog_item_text"><?=truncate($blog_item['description'], 300)?> <a href="<?=$blog_item['permalink']?>" target="_blank" rel="nofollow">Read More</a></p>
 				</div>
 			<?php endforeach; ?>
 			</div>
@@ -113,7 +113,7 @@
 			<div class="app_media_wrapper app_twitter_wrapper <?=(empty($app['media']['blog_rss_feed'])) ? 'app_big_wrapper' : ''?>">
 			<?php foreach($app['media']['twitter_feed'] as $twitter_item): ?>
 				<div class="app_media_item app_twitter_item">
-					<a href="http://twitter.com/<?=$twitter_item['from_user']?>"><img src="<?=$twitter_item['profile_image_url']?>"/></a>
+					<a href="http://twitter.com/<?=$twitter_item['from_user']?>" rel="nofollow"><img src="<?=$twitter_item['profile_image_url']?>"/></a>
 					<p class="twitter_item_text"><?=$twitter_item['text']?></p>
 				</div>
 			<?php endforeach; ?>

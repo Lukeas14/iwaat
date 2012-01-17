@@ -34,10 +34,19 @@
 				</select>
 			</p>
 			<p>
-				<label for="owner_id">Owner</label>
+				<label for="owner_id">Owner:</label>
 				<select name="owner_id">
 				<?php foreach($users as $user): ?>
 					<option value="<?=$user->id?>" <?=set_select('owner_id', $user->id, ($app['owner_id'] == $user->id) ? true : false)?>><?=$user->username?> - <?=$user->email?></option>
+				<?php endforeach; ?>
+				</select>
+			</p>
+			<p>
+				<label for="category_id">Category:</label>
+				<select name="category_id">
+					<option value="null" <?=(empty($app['category_id'])) ? "selected='selected'" : ""?> disabled="disabled">Select a Category...</option>
+				<?php foreach($categories as $category): ?>
+					<option value="<?=$category['id']?>" <?=set_select('category_id', $category['id'], ($app['category_id'] == $category['id']) ? true : false)?>><?=$category['name']?></option>
 				<?php endforeach; ?>
 				</select>
 			</p>

@@ -5,19 +5,35 @@ class Apps extends MY_Controller {
 	private $data = array();
 	
 	public function app(){
+		$this->load->driver('cache');
+
 		$this->load->model('app');
 		
 		$app_slug = $this->uri->segment(2);
+		$cache_app_id = 'app_' . $app_slug;
+		if($this->cache->memcached->is_supported()){
+			if(!$app = $this->cache->memcached->get($this->app->get_app_cache_id($app_slug))){
+				$app = $this->app->get_app($app_slug);
+
+				$this->cache->memcached->save($this->app->get_app_cache_id($app_slug), $app, CACHE_TIME);
+			}
+		}
+		else{
+			$app = $this->app->get_app($app_slug);
+		}
 		
-		$app = $this->app->get_app($app_slug);
 		if(empty($app)){
 			show_404();
 		}
 		elseif($app['status'] != 'active'){
 			show_404();
 		}
+		
+		//Get related apps
+		$related_apps = $this->app->get_related_apps($app['id'], 0, 6);
+		$app['related_apps'] = (!empty($related_apps->response->docs)) ? $related_apps->response->docs : array();
+		
 		$this->data['app'] = $app;
-		//echo"<pre>";print_r($app);echo"</pre>";
 	
 		$this->load->view('app', $this->data);
 	}

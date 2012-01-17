@@ -40,7 +40,7 @@ class User extends MY_Controller {
 			}
 		}
 		else{
-			$this->data['notifications']['error'] = $this->form_validation->_error_array;
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 			
 			$this->session->keep_flashdata('redirect');
 			$this->load->view('login_register', $this->data);
@@ -78,8 +78,8 @@ class User extends MY_Controller {
 			redirect($redirect, 'refresh');
 		}
 		else{
-			if(!empty($this->form_validation->_error_array)){
-				$this->data['notifications']['error'] = $this->form_validation->_error_array;
+			if($this->form_validation->errors_exist()){
+				$this->data['notifications']['error'] = $this->form_validation->get_errors();
 			}
 			elseif($this->ion_auth->errors()){
 				$this->data['notifications']['error'] = $this->ion_auth->errors();
@@ -89,9 +89,9 @@ class User extends MY_Controller {
 			}
 			
 			$this->session->keep_flashdata('redirect');
-			$this->load->view('login_register', $this->data);
 		}
 		
+		$this->load->view('login_register', $this->data);
 	}
 	
 	public function logout(){
@@ -186,7 +186,7 @@ class User extends MY_Controller {
 			}
 		}
 		else{
-			$this->data['notifications']['error'] = $this->form_validation->_error_array;
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
 		
 		$this->load->view('account_add_app', $this->data);

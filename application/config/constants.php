@@ -2,7 +2,11 @@
 
 define('ADMIN_EMAIL', 'lukeas14@gmail.com');
 
-define('APP_IMAGE_DIR', '/var/www/iwaat.com/public_html/images/apps');
+define('CACHE_TIME', 60 * 60);
+
+define('BASE_DIR', '/var/www/iwaat');
+define('APP_IMAGE_DIR', BASE_DIR . '/public_html/images/apps');
+define('APP_IMAGE_TMP_DIR', './tmp/app_images');
 define('SCREENSHOT_API_URL', 'http://images.shrinktheweb.com/xino.php?stwembed=1&stwu=aa00b&stwaccesskeyid=ca6b061948c9f8b&stwxmax=%s&stwymax=%s&stwurl=%s');
 define('SCREENSHOT_LARGE_WIDTH', 1024);
 define('SCREENSHOT_LARGE_HEIGHT', 500);

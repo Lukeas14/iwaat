@@ -345,6 +345,10 @@ class App extends CI_Model{
 		return $app_tags;
 	}
 	
+	function get_app_cache_id($app_slug){
+		return 'app_' . $app_slug;
+	}
+	
 	function get_app($id){
 		if(empty($id)) return false;
 		
@@ -459,8 +463,28 @@ class App extends CI_Model{
 		}  
 	}
 	
-	function get_categories(){
+	function get_categories($parent_category = 0, $active = true){
+		if(is_numeric($parent_category)){
+			$this->db->where('parent_id', $parent_category);
+		}
+		if($active === true){
+			$this->db->where('status', 'active');
+		}
 		
+		$this->db->order_by('name');
+		
+		$query = $this->db->get('categories');
+		
+		return $query->result_array();
+	}
+	
+	function get_homepage_apps($categories){
+		$apps = array();
+		foreach($categories as $category){
+			$apps[$category['id']] = $this->get_apps(array('apps.status' => 'active', 'apps.category_id' => $category['id'], 'app_images.type' => 'logo'), array('app_images' => array('select' => 'app_images.file_name as logo', 'condition' => 'app_images.app_id = apps.id', 'type' => 'left')), 0, 3, array(), 'popularity_index');
+		}
+		
+		return $apps;
 	}
 	
 	function update_app_tags($app_id, $tags){
@@ -574,6 +598,9 @@ class App extends CI_Model{
 		}
 		if(isset($data['owner_id'])){
 			$update_app['owner_id'] = $data['owner_id'];
+		}
+		if(isset($data['category_id']) && is_numeric($data['category_id'])){
+			$update_app['category_id'] = $data['category_id'];
 		}
 		if(isset($data['last_import']))
 		{

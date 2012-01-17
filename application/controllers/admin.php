@@ -49,6 +49,8 @@ class Admin extends MY_Controller {
 		$this->load->library('form_validation');
 		$this->load->model('app');
 		
+		$app_slug = $this->uri->segment(3);
+		
 		$this->data['http_referer'] = ($this->session->flashdata('http_referer')) ? $this->session->flashdata('http_referer') : (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '/admin/apps';
 		$this->session->set_flashdata('http_referer', $this->data['http_referer']);
 		
@@ -63,6 +65,7 @@ class Admin extends MY_Controller {
 		$this->form_validation->set_rules('tags', 'Tags', 'trim');
 		$this->form_validation->set_rules('status', 'Status', 'trim|required');
 		$this->form_validation->set_rules('owner_id', 'Owner', 'trim|required');
+		$this->form_validation->set_rules('category_id', 'Category', 'trim');
 		$this->form_validation->set_rules('urls[homepage]', 'Homepage URL', 'trim');
 		$this->form_validation->set_rules('urls[blog]', 'Blog URL', 'trim');
 		$this->form_validation->set_rules('urls[rss]', 'Blog RSS URL', 'trim');
@@ -85,7 +88,7 @@ class Admin extends MY_Controller {
 				//Upload Logo
 				if($_FILES['logo']['size'] > 0){
 					$image_config = array(
-						'upload_path'	=> './tmp',
+						'upload_path'	=> APP_IMAGE_TMP_DIR,
 						'allowed_types'	=> 'gif|jpg|png',
 						'max_size'		=> 2048,
 						'file_name'		=> md5($app_id . 'logo')
@@ -103,17 +106,24 @@ class Admin extends MY_Controller {
 					}
 				}
 				
+				//Clear app cache
+				$this->load->driver('cache');
+				if($this->cache->memcached->is_supported()){
+					$this->cache->memcached->delete($this->app->get_app_cache_id($app_slug));
+				}
+				
 				$this->session->set_flashdata('confirm', 'App updated.');
 				redirect($this->uri->uri_string(), 'location');
 			}
 		}
 		else{
-			$this->data['notifications']['error'] = $this->form_validation->_error_array;
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
 		
-		$app_slug = $this->uri->segment(3);
 		
 		$this->data['users'] = $this->ion_auth->get_users();
+		
+		$this->data['categories'] = $this->app->get_categories(0, true);
 		
 		$app = $this->app->get_app($app_slug);
 		if(empty($app)){
@@ -144,7 +154,7 @@ class Admin extends MY_Controller {
 			}
 		}
 		else{
-			$this->data['notifications']['error'] = $this->form_validation->_error_array;
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
 		
 		$this->data['users'] = $this->ion_auth->get_users();
@@ -175,10 +185,16 @@ class Admin extends MY_Controller {
 		$homepage_url = $this->input->get('homepage_url');
 		
 		$screenshot_large_url = sprintf(SCREENSHOT_API_URL, SCREENSHOT_LARGE_WIDTH, SCREENSHOT_LARGE_HEIGHT, $homepage_url);
-		$this->app->add_app_image_from_url($app_id, 'screenshot_large', $screenshot_large_url);
+		if($this->app->add_app_image_from_url($app_id, 'screenshot_large', $screenshot_large_url) === false){
+			$this->session->set_flashdata('error', 'Error adding large screenshot.');
+			exit();
+		}
 		
 		$screenshot_small_url = sprintf(SCREENSHOT_API_URL, SCREENSHOT_SMALL_WIDTH, SCREENSHOT_SMALL_HEIGHT, $homepage_url);
-		$this->app->add_app_image_from_url($app_id, 'screenshot_small', $screenshot_small_url);
+		if($this->app->add_app_image_from_url($app_id, 'screenshot_small', $screenshot_small_url) === false){
+			$this->session->set_flashdata('error', 'Error adding small screenshot.');
+			exit();
+		}
 		
 		$this->session->set_flashdata('confirm', 'Screenshot generated.');
 		

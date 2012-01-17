@@ -29,7 +29,7 @@
 			</p>
 			<p>
 				<label for="tags">Tags:</label>
-				<input type="text" name="tags" value="<?=set_value('tags')?>"/><span>Seperate by commas. (Max 5)
+				<input type="text" name="tags" value="<?=set_value('tags')?>"/><span style="float:none;">Separate by commas. (Max 5)</span>
 			</p>
 			<p>
 				<label for="urls[homepage]">Homepage URL:</label>
@@ -49,7 +49,7 @@
 			</p>
 			<p>
 				<label for="logo">Logo:</label>
-				<input type="file" class="file" name="logo" size="20"/><span>Max size: 2MB</span>
+				<input type="file" class="file" name="logo" size="20"/><span style="float:none;">Max size: 2MB</span>
 			</p>
 			<p>
 				<label></label>

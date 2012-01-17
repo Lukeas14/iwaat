@@ -1205,7 +1205,7 @@ class Apache_Solr_Service
 		$params['q'] = 'id:'.$doc_id;
 		$params['start'] = $offset;
 		$params['rows'] = $limit;
-		$params['fl'] = '*,score';
+		$params['fl'] = 'id,popularity_index,name,slug,tagline,logo,screenshot_small,timestamp,score';
 		
 		$params['mlt.fl'] = 'description,tagline,homepage_title,homepage_meta_keywords,homepage_meta_description';
 		$params['mlt.mindf'] = 1;
