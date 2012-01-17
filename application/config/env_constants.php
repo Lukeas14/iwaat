@@ -5,9 +5,11 @@ $host = array('dev.iwaat.com', 'test.iwaat.com', 'www.iwaat.com');
 $host_environments = array_combine($host, $environments);
 
 
-foreach($argv as $arg){
-	if(in_array($arg, array('development', 'testing', 'production'))){
-		define('ENVIRONMENT', $arg);
+if(!empty($argv)){
+	foreach($argv as $arg){
+		if(in_array($arg, array('development', 'testing', 'production'))){
+			define('ENVIRONMENT', $arg);
+		}
 	}
 }
 
@@ -47,12 +49,10 @@ switch(ENVIRONMENT){
 		break;
 	
 	default:
-		define('ENVIRONMENT', 'production');
-		
 		define('BASE_URL', 'http://www.iwaat.com');
 		
-		error_reporting(0);
-		ini_set('display_errors',0);
+		error_reporting(E_ALL);
+		ini_set('display_errors',1);
 		
 		define('DB_HOST', 'localhost');
 		define('DB_USER', 'jliwaatwesley');
