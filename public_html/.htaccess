@@ -17,7 +17,7 @@
     # Enforce www
     # If you have subdomains, you can add them to 
     # the list using the "|" (OR) regex operator
-    RewriteCond %{HTTP_HOST} !^(www|dev|test|subdomain) [NC]
+    RewriteCond %{HTTP_HOST} !^(www|dev|subdomain) [NC]
     RewriteRule ^(.*)$ http://www.iwaat.com/$1 [L,R=301]
  
     # Enforce NO www
@@ -40,8 +40,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
  
-	RewriteCond $1 !^(index\.php|css|images|robots\.txt)
-	RewriteRule ^(.*)$ /index.php/$1 [L]
+	#RewriteCond $1 !^(index\.php|css|images|robots\.txt)
+	#RewriteRule ^(.*)$ /index.php/$1 [L]
 </IfModule>
  
 <IfModule !mod_rewrite.c>
