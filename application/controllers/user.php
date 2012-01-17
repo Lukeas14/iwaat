@@ -57,7 +57,6 @@ class User extends MY_Controller {
 		$this->form_validation->set_rules('register_email', 'Email Address', 'trim|required|valid_email');
 		$this->form_validation->set_rules('register_password', 'Password', 'trim|required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[register_confirm_password]');
 		$this->form_validation->set_rules('register_confirm_password', 'Confirm Password', 'trim|required');
-		//$this->form_validation->set_message('matches', 'The %s fields do not match.');
 		
 		if($this->form_validation->run() === true){
 			$username = $this->input->post('register_first_name') . ' ' . $this->input->post('register_last_name');

@@ -40,8 +40,8 @@
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php/$1 [L]
  
-	#RewriteCond $1 !^(index\.php|css|images|robots\.txt)
-	#RewriteRule ^(.*)$ /index.php/$1 [L]
+	RewriteCond $1 !^(index\.php|css|images|robots\.txt)
+	RewriteRule ^(.*)$ /index.php/$1 [L]
 </IfModule>
  
 <IfModule !mod_rewrite.c>
