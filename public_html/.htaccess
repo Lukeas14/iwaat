@@ -17,7 +17,7 @@
     # Enforce www
     # If you have subdomains, you can add them to 
     # the list using the "|" (OR) regex operator
-    RewriteCond %{HTTP_HOST} !^(www|dev|subdomain) [NC]
+    RewriteCond %{HTTP_HOST} !^(www|dev|test|subdomain) [NC]
     RewriteRule ^(.*)$ http://www.iwaat.com/$1 [L,R=301]
  
     # Enforce NO www
