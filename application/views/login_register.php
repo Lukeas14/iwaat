@@ -4,7 +4,7 @@
 
 	<div id="login_wrapper">
 		<h1>Login</h1>
-		<form action="/login?<?=$_SERVER['QUERY_STRING']?>" method="post" accept-charset="utf-8">
+		<form action="/login" method="post" accept-charset="utf-8">
 		<div class="login_form">
 			<p>
 				<label for="email">Email Address:</label>
@@ -28,7 +28,7 @@
 
 	<div id="register_wrapper">
 		<h1>Register</h1>	
-		<form action="/register?<?=$_SERVER['QUERY_STRING']?>" method="post">
+		<form action="/register" method="post">
 		<div class="register_form">
 			<p>
 				<label for="register_first_name">First Name:</label>
