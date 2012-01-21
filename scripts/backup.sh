@@ -14,6 +14,6 @@ rm $DB_FILENAME
 IMG_DIR=/var/www/iwaat/public_html/images/apps
 IMG_FILENAME=app-images_${DATE}.gz
 touch $IMG_FILENAME
-tar -cvzf $IMG_FILENAME $IMG_DIR
+tar -czf $IMG_FILENAME --totals $IMG_DIR
 s3cmd put $IMG_FILENAME s3://iwaat-backup/$IMG_FILENAME
 rm $IMG_FILENAME
