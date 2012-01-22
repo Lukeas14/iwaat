@@ -28,7 +28,7 @@
  * By default development will show errors but testing and live will hide them.
  */
 
-include_once('../application/config/env_constants.php');
+include_once('/var/www/iwaat/application/config/env_constants.php');
 
 
 /*
