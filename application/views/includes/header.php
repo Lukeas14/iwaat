@@ -20,7 +20,7 @@
 		
 	<div id="header_account">
 		<?php if($this->ion_auth->logged_in()): ?>
-		<?php $profile = $this->ion_auth->profile();?>
+			<?php $profile = $this->ion_auth->profile();?>
 			<span class="account_username"><?=$profile->username?></span>&nbsp;&nbsp;&nbsp;<a href="/account/profile">My Account</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="/logout">Log out</a>
 		<?php else: ?>
 			<a href="/login_register">Log in / Register</a>
@@ -31,7 +31,7 @@
 		
 		<div class="color_bar_1"></div>
 		<div id="header">
-			<div id="logo">IWAAT</div>
+			<a href="/"><div id="logo">IWAAT</div></a>
 		</div>
 	</div>
 		

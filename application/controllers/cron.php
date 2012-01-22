@@ -113,7 +113,7 @@ class Cron extends MY_Controller {
 		//echo"<pre>";print_r($apps);echo"</pre>";
 	}
 	
-	function import_external_data()
+	function import_external_data_old()
 	{
 		$this->load->model('app');
 		$this->load->model('company');
@@ -138,23 +138,28 @@ class Cron extends MY_Controller {
 		
 	}
 	
-	function import_external_data2(){
+	function import_external_data(){
 		$this->load->model('app');
 		$this->load->library('import_data');
 		$this->load->model('external_data');
 		
-		$app_import_queue = $this->external_data->get_app_import_queue(1000);
+		$app_import_queue = $this->external_data->get_app_import_queue(100);
 		
-		$count = 0;
 		foreach($app_import_queue as $app){
-			$count++;
+			$start_time = time();
+		
 			echo $app['id']." - ".$app['name']."\n";
+			
 			$app_external_data = $this->import_data->import_external_data($app);
 			$this->external_data->set_external_data($app['id'], $app_external_data);
 			$this->app->update_app($app['id'], array('last_import' => 'NOW()'), false);
+			
+			//Ensure that at least 10 seconds have expired in between app data imports
+			$time_expired = time() - $start_time;
+			if($time_expired < 11){
+				sleep(11 - $time_expired);
+			}
 		}
-		//print_r($app_external_data);
-		
 	}
 	
 	function get_homepage_url(){
@@ -178,7 +183,7 @@ class Cron extends MY_Controller {
 	function update_traction_index(){
 		$this->load->model('app');
 		$this->load->model('traction_index');
-		$apps = $this->app->get_apps(array('id' => 872), array(), 0, 10000);
+		$apps = $this->app->get_apps(array(), array(), 0, 100000);
 		foreach($apps['apps'] as $app){
 			$traction_index = $this->traction_index->get_traction_index($app['id']);
 			if(!is_numeric($traction_index)) $traction_index = 0;
