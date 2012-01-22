@@ -29,8 +29,8 @@ class Static_pages extends MY_Controller {
 		$this->load->view('contact_us', $this->data);
 	}
 	
-	public function terms_conditions(){
-		$this->load->view('terms_conditions', $this->data);
+	public function terms_service(){
+		$this->load->view('terms_service', $this->data);
 	}
 	
 	public function privacy_policy(){

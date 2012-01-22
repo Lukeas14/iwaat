@@ -17,7 +17,7 @@
 				Copyright &copy; <?=date("Y");?> IWAAT.com.  All Rights Reserved
 			</p>
 			<p class="footer_links">
-				<a href="/terms_conditions">Terms & Conditions</a>&nbsp;|&nbsp;<a href="/privacy_policy">Privacy Policy</a>&nbsp;|&nbsp;<a href="/contact_us">Contact Us</a>
+				<a href="/privacy_policy">Privacy Policy</a>&nbsp;|&nbsp;<a href="/terms_service">Terms of Service</a>&nbsp;|&nbsp;<a href="/contact_us">Contact Us</a>
 			</p>
 		</div>
 	</div>

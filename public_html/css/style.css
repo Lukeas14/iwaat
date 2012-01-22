@@ -976,3 +976,57 @@ div::-webkit-scrollbar-track {
 #contact_us textarea{
 	width:450px;
 }
+
+/** Privacy Policy **/
+#privacy_policy{
+	width:840px;
+	margin:10px auto 20px auto;
+	color:#333;
+}
+#privacy_policy ul{
+	padding:0 0 0 15px;
+	margin:10px 0;
+}
+#privacy_policy h3{
+	margin:10px 0 5px 0;
+	color:#C24851;
+	font-weight:normal;
+}
+#privacy_policy p{
+	margin:0 0 10px 0;
+	text-indent:15px;
+}
+#privacy_policy p.statement{
+	font-size:15px;
+	text-indent:0px;
+	color:#888;
+}
+
+/** Terms of Service **/
+#terms_service{
+	width:840px;
+	margin:10px auto 20px auto;
+	color:#333;
+}
+#terms_service ul, #terms_service ol{
+	padding:0 0 0 15px;
+	margin:10px 0;
+}
+#terms_service ol li{
+	margin:0 0 5px 0;
+}
+#terms_service h3{
+	margin:10px 0 5px 0;
+	color:#C24851;
+	font-weight:normal;
+	font-size:14px;
+}
+#terms_service p{
+	margin:0 0 10px 0;
+	text-indent:15px;
+}
+#terms_service p.statement{
+	font-size:15px;
+	text-indent:0px;
+	color:#888;
+}
