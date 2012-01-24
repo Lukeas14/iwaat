@@ -5,8 +5,7 @@
 	
 	<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="/css/jquery-ui-1.8.16.custom.css" type="text/css" media="screen"/>
-	<link href='http://fonts.googleapis.com/css?family=Quantico' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Crete+Round|Port+Lligat+Slab|Ruluko|Passion+One|Jura' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
