@@ -12,3 +12,6 @@ rm $FILENAME
 
 #sync images
 s3cmd sync $S3_BUCKET/images/apps/ /var/www/iwaat/public_html/images/apps/
+
+#clear cache
+/etc/init.d/memcached restart
