@@ -1,21 +1,16 @@
-<?php $this->load->view('includes/header'); ?>
-
-<div id="homepage_search">
-	<h1>I Want An App That...</h1>
-	<div id="homepage_search_form_wrapper">
-		<form action="/search" method="GET" accept-charset="utf-8" id="homepage_search_form">
-			<input type="text" name="q" class="text_field"/>
-			<input type="submit" name="s" value="Search"/>
-		</form>
-	</div>
-</div>
+<?php $this->load->view('includes/header'); ?>	
 
 <div id="homepage_categories">
 <?php foreach($homepage_categories as $homepage_category): ?>
-	<div class="homepage_category">
-		<h2><?=$homepage_category['name']?></h2>
+	<?php $category_alt = (!isset($category_alt) || $category_alt == 'odd') ? 'even' : 'odd'; ?>
+	<div class="homepage_category <?=$category_alt?>">
+		<a href="/category/<?=$homepage_category['slug']?>" class="homepage_category_label <?=$category_alt?>"><?=$homepage_category['name']?></a>
 		<?php foreach($homepage_apps[$homepage_category['id']]['apps'] as $homepage_app): ?>
-		<img src="/images/apps/<?=$this->app->get_app_image_directory($homepage_app['id'])?>/<?=$homepage_app['logo']?>" style="width:90px;"/>
+		<a class="homepage_app" href="/app/<?=$homepage_app['slug']?>">
+			<div class="homepage_app_logo"><img src="<?=get_app_image($homepage_app['id'], $homepage_app['logo'])?>"/></div>
+			<div class="homepage_app_name"><?=$homepage_app['name']?></div>
+		</a>
+		
 		<?php endforeach; ?>
 	</div>
 <?php endforeach; ?>
@@ -25,7 +20,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	$("#homepage_search_form input.text_field").focus();	
+	$("#header.homepage input.text").focus();	
 })
 </script>
 

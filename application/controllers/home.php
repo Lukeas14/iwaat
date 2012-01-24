@@ -14,6 +14,8 @@ class Home extends MY_Controller {
 		$this->data['homepage_apps'] = $this->app->get_homepage_apps($this->data['homepage_categories']);
 		//echo"<pre>";print_r($this->data['homepage_apps']);echo"</pre>";
 		
+		$this->data['is_homepage'] = true;
+		
 		$this->load->view('home', $this->data);
 	}
 }

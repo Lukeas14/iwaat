@@ -116,3 +116,11 @@ function get_notifications($controller_notifications){
 	
 	return $notifications;
 }
+
+function get_app_image_directory($app_id){
+	return substr($app_id, -2);
+}
+
+function get_app_image($app_id, $file_name){
+	return "/images/apps/" . get_app_image_directory($app_id) . "/" . $file_name;
+}

@@ -70,10 +70,6 @@
 		<?php if(!empty($app['urls']['homepage'])): ?>
 		<div class="app_social_buttons">
 			<div class="app_google">
-				<!-- Place this tag in your head or just before your close body tag -->
-				<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
-
-				<!-- Place this tag where you want the +1 button to render -->
 				<g:plusone size="tall" href="<?=$app['urls']['homepage']?>"></g:plusone>
 			</div>
 			
@@ -154,6 +150,13 @@ $(document).ready(function(){
 	
 	//Load Twitter button
 	$.getScript("//platform.twitter.com/widgets.js");
+	
+	//Load Google Plus
+	(function() {
+	  var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	  po.src = 'https://apis.google.com/js/plusone.js';
+	  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	})();
 });
 
 </script>

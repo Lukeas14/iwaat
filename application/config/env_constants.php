@@ -48,6 +48,7 @@ switch(ENVIRONMENT){
 		define('DB_NAME', 'iwaat');
 		break;
 	
+	case 'production':
 	default:
 		define('BASE_URL', 'http://www.iwaat.com');
 		

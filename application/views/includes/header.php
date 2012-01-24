@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
 	<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen"/>
 	<link rel="stylesheet" href="/css/jquery-ui-1.8.16.custom.css" type="text/css" media="screen"/>
-	
+	<link href='http://fonts.googleapis.com/css?family=Quantico' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Crete+Round|Port+Lligat+Slab|Ruluko|Passion+One|Jura' rel='stylesheet' type='text/css'>
+
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
@@ -30,8 +32,21 @@
 	<div id="header_wrapper">
 		
 		<div class="color_bar_1"></div>
-		<div id="header">
-			<a href="/"><div id="logo">IWAAT</div></a>
+		<div id="header" class="<?=(isset($is_homepage) && $is_homepage === true) ? 'homepage' : ''?>">
+		<form action="/search" method="GET" accept-charset="utf-8">
+			<a href="/">
+				<div id="logo">
+					<span class="">I</span>
+					<span class="red">W</span>ant
+					<span class="green">A</span>n
+					<span class="blue">A</span>pp
+					<span class="yellow">T</span>hat...
+				</div>
+			</a>
+			<br/>
+			<input class="text" type="text" name="q" class="text_field"/>
+			<input class="submit" type="submit" name="s" value="Search"/>
+		</form>
 		</div>
 	</div>
 		

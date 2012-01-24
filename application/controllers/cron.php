@@ -145,8 +145,10 @@ class Cron extends MY_Controller {
 		
 		$app_import_queue = $this->external_data->get_app_import_queue(100);
 		
+		$cron_start_time = time();
+		
 		foreach($app_import_queue as $app){
-			$start_time = time();
+			$app_start_time = time();
 		
 			echo $app['id']." - ".$app['name']."\n";
 			
@@ -155,9 +157,15 @@ class Cron extends MY_Controller {
 			$this->app->update_app($app['id'], array('last_import' => 'NOW()'), false);
 			
 			//Ensure that at least 10 seconds have expired in between app data imports
-			$time_expired = time() - $start_time;
-			if($time_expired < 11){
+			$time_expired = time() - $app_start_time;
+			if($time_expired <= 11){
 				sleep(11 - $time_expired);
+			}
+			
+			//Ensure that this script is done before the next cronjob starts
+			$time_expired = time() - $cron_start_time;
+			if($time_expired >= 60*55){
+				exit();
 			}
 		}
 	}
