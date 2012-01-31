@@ -28,10 +28,29 @@
 			<span class="app_tagline">  <?=$app['tagline']?></span>
 			<?php endif; ?>
 		</h1>
+		
 		<div class="app_index_wrapper">
 			<div class="app_index" style="background:#<?=get_index_color($app['popularity_index'])?>"><?=$app['popularity_index']?></div>
 			<p class="app_index_label">Traction Index</p>
 		</div>
+		
+		<?php if(!empty($app['urls']['homepage'])): ?>
+		<div class="app_social_buttons">
+			<div class="app_google">
+				<g:plusone size="tall" href="<?=$app['urls']['homepage']?>"></g:plusone>
+			</div>
+			
+			<div class="app_facebook">
+				<div id="fb-root"></div>
+				<div class="fb-like" data-href="<?=$app['urls']['homepage']?>" data-send="false" data-layout="box_count" data-width="100" data-show-faces="false"></div>
+			</div>
+
+			<div class="app_twitter">
+				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?=$app['urls']['homepage']?>" data-count="vertical" data-via="JLukeas">Tweet</a>
+			</div>
+		</div>
+		<?php endif; ?>
+		
 		<div class="app_urls">
 			<?php if(!empty($app['urls']['homepage'])): ?>
 			<p class="app_url_homepage">
@@ -67,22 +86,7 @@
 			<?php endif; ?>
 		</div>
 		
-		<?php if(!empty($app['urls']['homepage'])): ?>
-		<div class="app_social_buttons">
-			<div class="app_google">
-				<g:plusone size="tall" href="<?=$app['urls']['homepage']?>"></g:plusone>
-			</div>
-			
-			<div class="app_facebook">
-				<div id="fb-root"></div>
-				<div class="fb-like" data-href="<?=$app['urls']['homepage']?>" data-send="false" data-layout="box_count" data-width="100" data-show-faces="false"></div>
-			</div>
-
-			<div class="app_twitter">
-				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?=$app['urls']['homepage']?>" data-count="vertical" data-via="JLukeas">Tweet</a>
-			</div>
-		</div>
-		<?php endif; ?>
+		
 	</div>
 	
 	<div class="app_media">

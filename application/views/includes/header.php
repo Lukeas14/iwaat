@@ -43,7 +43,7 @@
 				</div>
 			</a>
 			<br/>
-			<input class="text" type="text" name="q" class="text_field"/>
+			<input class="text" type="text" name="q" class="text_field" autocomplete="off"/>
 			<input class="submit" type="submit" name="s" value="Search"/>
 		</form>
 		</div>
