@@ -142,6 +142,7 @@ class Cron extends MY_Controller {
 		$this->load->model('app');
 		$this->load->library('import_data');
 		$this->load->model('external_data');
+		$this->load->model('traction_index');
 		
 		$app_import_queue = $this->external_data->get_app_import_queue(100);
 		
@@ -168,6 +169,14 @@ class Cron extends MY_Controller {
 				exit();
 			}
 		}
+		
+		$apps = $this->app->get_apps(array(), array(), 0, 100000);
+		foreach($apps['apps'] as $app){
+			$traction_index = $this->traction_index->get_traction_index($app['id']);
+			if(!is_numeric($traction_index)) $traction_index = 0;
+			$this->app->update_app($app['id'], array('popularity_index' => $traction_index));
+			echo $app['name']." - ".$traction_index."\n";
+		}
 	}
 	
 	function get_homepage_url(){
@@ -191,6 +200,7 @@ class Cron extends MY_Controller {
 	function update_traction_index(){
 		$this->load->model('app');
 		$this->load->model('traction_index');
+		
 		$apps = $this->app->get_apps(array(), array(), 0, 100000);
 		foreach($apps['apps'] as $app){
 			$traction_index = $this->traction_index->get_traction_index($app['id']);

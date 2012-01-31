@@ -43,7 +43,10 @@ class Traction_index extends CI_Model{
 		foreach($results->result_array() as $app_field){
 			if(empty($app_field['data']) || !is_numeric($app_field['data'])) continue;
 			
-			$sub_indices[$app_field['type']] = (log($app_field['data']) - log($this->field_aggrs[$app_field['type']]['min'])) / (log($this->field_aggrs[$app_field['type']]['max']) - log($this->field_aggrs[$app_field['type']]['min']));
+			$sub_index_val = (log($app_field['data']) - log($this->field_aggrs[$app_field['type']]['min'])) / (log($this->field_aggrs[$app_field['type']]['max']) - log($this->field_aggrs[$app_field['type']]['min']));
+			if($sub_index_val > 0){
+				$sub_indices[$app_field['type']] = $sub_index_val;
+			}
 		}
 		
 		if(count($sub_indices) == 0){
@@ -51,7 +54,6 @@ class Traction_index extends CI_Model{
 		}
 		
 		$traction_value = pow(array_product($sub_indices), (1 / count($sub_indices)));
-		
 		$traction_index = round($traction_value * 100);
 		
 		return $traction_index;
