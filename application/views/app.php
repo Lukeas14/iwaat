@@ -1,7 +1,4 @@
 <?php $this->load->view('includes/header'); ?>
-<?php
-//echo"<pre>";print_r($app['related_apps']);echo"</pre>";
-?>
 <div class="app_wrapper">
 
 	<div class="app_header">
@@ -30,7 +27,8 @@
 		</h1>
 		
 		<div class="app_index_wrapper">
-			<div class="app_index" style="background:#<?=get_index_color($app['popularity_index'])?>"><?=$app['popularity_index']?></div>
+			<?php $index_color = get_index_color($app['popularity_index']); ?>
+			<div class="app_index" style="background:#<?=$index_color['bg']?>; color:#<?=$index_color['text']?>"><?=($app['popularity_index'] > 0) ? $app['popularity_index'] : 'N/A'?></div>
 			<p class="app_index_label">Traction Index</p>
 		</div>
 		
