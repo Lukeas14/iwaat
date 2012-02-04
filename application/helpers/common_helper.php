@@ -3,22 +3,23 @@
 function get_index_color($index){
 	if(empty($index) || !is_numeric($index)) $index = 0;
 	$alpha_array = array(
-			0 => array('bg'=>'FFFF00', 'text'=>'000000'),
-			1 => array('bg'=>'FFEE00', 'text'=>'003300'),
-			2 => array('bg'=>'FFDD00', 'text'=>'006600'),
-			3 => array('bg'=>'FFCC00', 'text'=>'009900'),
-			4 => array('bg'=>'FFBB00', 'text'=>'009900'),
-			5 => array('bg'=>'FFAA00', 'text'=>'009900'),
-			6 => array('bg'=>'FF8800', 'text'=>'009900'),//FFFFCC'),
-			7 => array('bg'=>'FF6600', 'text'=>'009900'),
-			8 => array('bg'=>'FF4400', 'text'=>'99FF33'),
-			9 => array('bg'=>'FF2200', 'text'=>'CCFF00'),
-			10 => array('bg'=>'FF0000', 'text'=>'FFFF00'),
+			0 => array('bg'=>'FFFF00', 'text'=>'555'),
+			1 => array('bg'=>'FFEE00', 'text'=>'555'),
+			2 => array('bg'=>'FFDD00', 'text'=>'555'),
+			3 => array('bg'=>'FFCC00', 'text'=>'FFF'),
+			4 => array('bg'=>'FFBB00', 'text'=>'FFF'),
+			5 => array('bg'=>'FFAA00', 'text'=>'FFF'),
+			6 => array('bg'=>'FF8800', 'text'=>'FFFFFF'),//FFFFCC'),
+			7 => array('bg'=>'FF6600', 'text'=>'EEEEEE'),
+			8 => array('bg'=>'FF4400', 'text'=>'EEEEEE'),
+			9 => array('bg'=>'FF2200', 'text'=>'DDDDDD'),
+			10 => array('bg'=>'FF0000', 'text'=>'DDDDDD'),
 		);
 
 	$index_val = round($index / 10);
+	//echo $index_val;
 	$hex_codes = $alpha_array[$index_val];
-	return $hex_codes['bg'];
+	//return $hex_codes['bg'];
 	return $hex_codes;
 }
 
