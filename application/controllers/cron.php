@@ -170,12 +170,22 @@ class Cron extends MY_Controller {
 			}
 		}
 		
+		//Update traction index
 		$apps = $this->app->get_apps(array(), array(), 0, 100000);
 		foreach($apps['apps'] as $app){
 			$traction_index = $this->traction_index->get_traction_index($app['id']);
 			if(!is_numeric($traction_index)) $traction_index = 0;
 			$this->app->update_app($app['id'], array('popularity_index' => $traction_index));
+			
+			
+				
 			echo $app['name']." - ".$traction_index."\n";
+		}
+		
+		//Clear app cache
+		$this->load->driver('cache');
+		if($this->cache->memcached->is_supported()){
+			$this->cache->memcached->clean();
 		}
 	}
 	
