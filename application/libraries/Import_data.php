@@ -4,8 +4,8 @@ class Import_data{
 	
 	private $CI; //Codeigniter instance
 	
-	private $sources = array('homepage', 'seomoz', 'twitter', 'facebook', 'blog_rss');
-	//private $sources = array('twitter', 'blog_rss');
+	private $sources = array('homepage', 'seomoz', 'twitter', 'facebook', 'blog_rss','compete');
+	//private $sources = array('compete');
 	
 	const TWITTER_COUNT_URL = 'http://urls.api.twitter.com/1/urls/count.json?url=%s';
 	const TWITTER_SEARCH_URL = 'http://search.twitter.com/search.json?q=%s';
@@ -17,6 +17,9 @@ class Import_data{
 	const SEOMOZ_AUTHORITY_URL = 'http://lsapi.seomoz.com/linkscape/url-metrics/%s?AccessID=%s&Expires=%s&Signature=%s';
 	const SEOMOZ_ACCESS_ID = 'member-33f124b667';
 	const SEOMOZ_SECRET_KEY = 'd3a75efeac98bff3fdee353c90d6aaf3';
+	
+	const COMPETE_API_KEY = '2e391886a1969cb33b19a34d2aaab2cf';
+	const COMPETE_UV_URL = 'http://apps.compete.com/sites/%s/trended/uv/?apikey=%s&latest=1';
 
 	function __construct(){
 		$this->CI =& get_instance();
@@ -249,6 +252,25 @@ class Import_data{
 		}
 		
 		return $facebook_data;
+	}
+	
+	private function import_compete_data($app){
+		$compete_data = array();
+		
+		if(!empty($app['homepage_url'])){
+			$homepage_url = preg_replace('~^(?:f|ht)tps?://~i','', $app['homepage_url']);
+			$compete_uv_url = sprintf(self::COMPETE_UV_URL, $homepage_url, self::COMPETE_API_KEY);
+			$json_response = $this->CI->curl->simple_get($compete_uv_url);
+			$response = json_decode($json_response, true);
+			if($response['status'] == 'OK' && !empty($response['data']['trends']['uv'][0]['value']) && $response['data']['trends']['uv'][0]['value'] > 0){
+				$compete_data[] = array(
+					'type' => 'compete_unique_visitors',
+					'data_numeric' => $response['data']['trends']['uv'][0]['value']
+				);
+			}
+		}
+		
+		return $compete_data;
 	}
 	
 	private function remove_whitespace($str){
