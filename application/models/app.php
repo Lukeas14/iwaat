@@ -85,6 +85,8 @@ class App extends CI_Model{
 			return false;
 		}
 		
+		$this->db->set('time_updated', 'NOW()', false);
+		
 		$this->db->set($add_app);
 		
 		$this->db->set('last_import', 'null', false);
@@ -174,6 +176,8 @@ class App extends CI_Model{
 		$this->db->insert('app_images', array('app_id'=>$app_id, 'type'=>$type, 'file_name'=>$image_file_name));
 		$image_id = $this->db->insert_id();
 		
+		$this->update_app($app_id, array());
+		
 		return $image_id;
 	}
 	
@@ -200,6 +204,8 @@ class App extends CI_Model{
 		}
 		
 		$this->db->insert('app_images', array('app_id' => $app_id, 'type' => $type, 'file_name' => $image_name));
+		
+		$this->update_app($app_id, array());
 		
 		return true;
 	}
@@ -249,6 +255,8 @@ class App extends CI_Model{
 		}
 		
 		$this->db->insert('app_images', array('app_id' => $app_id, 'type' => $type, 'file_name' => $data['file_name']));
+		
+		$this->update_app($app_id, array());
 		
 		return true;
 	}
@@ -525,6 +533,8 @@ class App extends CI_Model{
 			$this->db->where_not_in('tag_id', $tag_ids);
 		}
 		$this->db->delete('app_tags');
+		
+		$this->update_app($app_id, array());
 	}
 	
 	function update_app_urls($app_id, $urls){
@@ -546,6 +556,8 @@ class App extends CI_Model{
 				$this->db->delete('app_urls');
 			}
 		}
+		
+		$this->update_app($app_id, array());
 	}
 	
 	function update_app($app_id, $data, $escape_values = true){
@@ -619,6 +631,9 @@ class App extends CI_Model{
 		foreach($update_app as $update_app_field => $update_app_val){
 			$this->db->set($update_app_field, $update_app_val);
 		}
+		
+		$this->db->set('time_updated', 'NOW()', false);
+		
 		$this->db->where('id', $app_id);
 		$this->db->update('apps');
 		
