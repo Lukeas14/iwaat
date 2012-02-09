@@ -21,16 +21,16 @@
 				<field column="name" name="tags" />
 			</entity>
 		</entity>
-		<entity name="app_logo" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'logo'">
+		<entity name="app_logo" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),IF(app_id>9,-2,-1),2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'logo'">
 			<field column="file_source" name="logo" />
 		</entity>
-		<entity name="app_screenshot" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot'">
+		<entity name="app_screenshot" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),IF(app_id>9,-2,-1),2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot'">
 			<field column="file_source" name="screenshots" />
 		</entity>
-		<entity name="app_screenshot_large" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot_large'">
+		<entity name="app_screenshot_large" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),IF(app_id>9,-2,-1),2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot_large'">
 			<field column="file_source" name="screenshot_large" />
 		</entity>
-		<entity name="app_screenshot_small" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),-2,2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot_small'">
+		<entity name="app_screenshot_small" pk="id" query="SELECT CONCAT('/images/apps/',SUBSTRING(CAST(app_id AS CHAR CHARACTER SET utf8),IF(app_id>9,-2,-1),2),'/',file_name) AS file_source FROM app_images WHERE app_id = '${app.id}' AND type = 'screenshot_small'">
 			<field column="file_source" name="screenshot_small" />
 		</entity>
 		<entity name="app_homepage_url" pk="id" query="SELECT url AS homepage_url FROM app_urls WHERE app_id = '${app.id}' AND type = 'homepage'">
