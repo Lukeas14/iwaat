@@ -14,7 +14,7 @@
 	<title>Welcome to CodeIgniter</title>
 </head>
 <body>
-	
+
 <div id="wrapper">
 
 	<div id="content">
@@ -43,7 +43,7 @@
 				</div>
 			</a>
 			<br/>
-			<input class="text" type="text" name="q" class="text_field" autocomplete="off"/>
+			<input class="text" type="text" name="q" class="text_field" autocomplete="off" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
 			<input class="submit" type="submit" name="s" value="Search"/>
 		</form>
 		</div>
