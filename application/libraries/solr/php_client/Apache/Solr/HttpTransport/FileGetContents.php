@@ -73,6 +73,9 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 
 	public function performGetRequest($url, $timeout = false)
 	{
+		//Set Authentication
+		stream_context_set_option($this->_getContext, 'http', 'header', 'Authorization: Basic ' . base64_encode(SOLR_USERNAME.':'.SOLR_PASSWORD));
+     
 		// set the timeout if specified
 		if ($timeout !== FALSE && $timeout > 0.0)
 		{
@@ -99,6 +102,9 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 
 	public function performHeadRequest($url, $timeout = false)
 	{
+		//Set Authentication
+		stream_context_set_option($this->_getContext, 'http', 'header', 'Authorization: Basic ' . base64_encode(SOLR_USERNAME.':'.SOLR_PASSWORD));
+     
 		stream_context_set_option($this->_headContext, array(
 				'http' => array(
 					// set HTTP method
@@ -131,6 +137,9 @@ class Apache_Solr_HttpTransport_FileGetContents extends Apache_Solr_HttpTranspor
 	
 	public function performPostRequest($url, $rawPost, $contentType, $timeout = false)
 	{
+		//Set Authentication
+		stream_context_set_option($this->_getContext, 'http', 'header', 'Authorization: Basic ' . base64_encode(SOLR_USERNAME.':'.SOLR_PASSWORD));
+     
 		stream_context_set_option($this->_postContext, array(
 				'http' => array(
 					// set HTTP method

@@ -34,6 +34,9 @@ switch(ENVIRONMENT){
 		define('DB_USER', 'jiwaatlucas');
 		define('DB_PASS', 'j23waati$lucas');
 		define('DB_NAME', 'iwaat');
+		
+		define('SOLR_USERNAME', 'jwasolrat');
+		define('SOLR_PASSWORD', 'joi2!d9s@kd#@d01)#');
 		break;
 	
 	case 'testing':
@@ -46,6 +49,9 @@ switch(ENVIRONMENT){
 		define('DB_USER', 'jiwaatlucas');
 		define('DB_PASS', 'j3oi2@$I@OJ$wmew');
 		define('DB_NAME', 'iwaat');
+		
+		define('SOLR_USERNAME', 'jwasolrat');
+		define('SOLR_PASSWORD', 'joi2!d9s@kd#@d01)#');
 		break;
 	
 	case 'production':
@@ -59,4 +65,7 @@ switch(ENVIRONMENT){
 		define('DB_USER', 'jliwaatwesley');
 		define('DB_PASS', 'eiof2!J@Issd$I6kfsd4');
 		define('DB_NAME', 'iwaat');
+		
+		define('SOLR_USERNAME', 'jwasolrat');
+		define('SOLR_PASSWORD', 'joi2!d9s@kd#@d01)#');
 }
