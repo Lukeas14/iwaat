@@ -2,7 +2,7 @@
 
 class Traction_index extends CI_Model{
 	
-	private $fields = array('facebook_share_count', 'seomoz_authority', 'twitter_url_count', 'twitter_url_mentions', 'twitter_followers');
+	private $fields = array('facebook_share_count', 'seomoz_authority', 'twitter_url_count', 'twitter_url_mentions', 'twitter_followers', 'compete_unique_visitors');
 	private $field_aggrs;
 
 	function __construct()

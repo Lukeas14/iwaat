@@ -143,6 +143,7 @@ class Cron extends MY_Controller {
 		$this->load->library('import_data');
 		$this->load->model('external_data');
 		$this->load->model('traction_index');
+		$this->load->driver('cache');
 		
 		$app_import_queue = $this->external_data->get_app_import_queue(100);
 		
@@ -168,25 +169,18 @@ class Cron extends MY_Controller {
 			if($time_expired >= 60*55){
 				exit();
 			}
-		}
-		
-		//Update traction index
-		$apps = $this->app->get_apps(array(), array(), 0, 100000);
-		foreach($apps['apps'] as $app){
+			
+			//Update traction index
 			$traction_index = $this->traction_index->get_traction_index($app['id']);
 			if(!is_numeric($traction_index)) $traction_index = 0;
-			$this->app->update_app($app['id'], array('popularity_index' => $traction_index));
+			$this->app->update_app_popularity_index($app['id'], $traction_index);
 			
-			
-				
-			echo $app['name']." - ".$traction_index."\n";
+			//Clear app cache
+			if($this->cache->memcached->is_supported()){
+				$this->cache->memcached->delete($this->app->get_app_cache_id($app['id']));
+			}
 		}
 		
-		//Clear app cache
-		$this->load->driver('cache');
-		if($this->cache->memcached->is_supported()){
-			$this->cache->memcached->clean();
-		}
 	}
 	
 	function get_homepage_url(){

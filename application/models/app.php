@@ -560,6 +560,26 @@ class App extends CI_Model{
 		$this->update_app($app_id, array());
 	}
 	
+	function update_app_popularity_index($app_id, $popularity_index){
+		if(!is_numeric($app_id) || !is_numeric($popularity_index)) return false;
+		
+		$this->db->select('id,popularity_index');
+		$this->db->where('id',$app_id);
+		$query = $this->db->get('apps');
+		if($query->num_rows() == 0) return false;
+		$app = $query->row_array();
+		
+		$popularity_index_change = $popularity_index - $app['popularity_index'];
+		
+		$this->db->query("INSERT INTO app_popularity_index (app_id, date_added, popularity_index) VALUES ({$app_id}, NOW(), {$popularity_index}) ON DUPLICATE KEY UPDATE popularity_index = {$popularity_index}");
+		
+		$app_update_data = array('popularity_index' => $popularity_index, 'popularity_index_change' => $popularity_index_change);
+		
+		$this->update_app($app_id, $app_update_data);
+		
+		return $app_update_data;
+	}
+	
 	function update_app($app_id, $data, $escape_values = true){
 		if(!is_numeric($app_id) || !is_array($data)) return false;
 		
@@ -591,6 +611,14 @@ class App extends CI_Model{
 			}
 			else{
 				$update_app['popularity_index'] = $data['popularity_index'];
+			}
+		}
+		if(isset($data['popularity_index_change'])){
+			if(!is_numeric($data['popularity_index_change'])){
+				$this->errors[] = 'Popularity Index Change must be a number.';
+			}
+			else{
+				$update_app['popularity_index_change'] = $data['popularity_index_change'];
 			}
 		}
 		if(isset($data['status'])){
