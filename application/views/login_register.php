@@ -21,6 +21,7 @@
 			<p>
 				<label>&nbsp;</label>
 				<input type="submit" class="submit" name="submit" value="Login"/>
+				<a href="/account/forgot_password" style="margin:0 0 0 10px">Forgot Password?</a>
 			</p>
 		</form>
 		</div>

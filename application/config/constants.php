@@ -13,6 +13,12 @@ define('SCREENSHOT_LARGE_HEIGHT', 500);
 define('SCREENSHOT_SMALL_WIDTH', 400);
 define('SCREENSHOT_SMALL_HEIGHT', 300);
 
+//Sendgrid
+define('SENDGRID_HOST', 'smtp.sendgrid.net');
+define('SENDGRID_PORT', 587);
+define('SENDGRID_USER', 'Lukeas14');
+define('SENDGRID_PASS', 'Scott2');
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

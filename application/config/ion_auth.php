@@ -20,9 +20,9 @@
 	/**
 	 * Tables.
 	 **/
-	$config['tables']['groups']  = 'groups';
-	$config['tables']['users']   = 'users';
-	$config['tables']['meta']    = 'meta';
+	$config['tables']['groups']          = 'groups';
+	$config['tables']['users']           = 'users';
+	$config['tables']['users_groups']    = 'users_groups';
 	
 	/**
 	 * Site Title, example.com
@@ -43,12 +43,14 @@
 	 * Default administrators group, use name
 	 */
 	$config['admin_group']         = 'admin';
-	 
-	/**
-	 * Meta table column you want to join WITH.
+	
+	 /**
+	 * Users table column and Group table column you want to join WITH.
 	 * Joins from users.id
+	 * Joins from groups.id
 	 **/
-	$config['join']                = 'user_id';
+	$config['join']['users']       = 'user_id';
+	$config['join']['groups']      = 'group_id';
 	
 	/**
 	 * Columns in your meta table,

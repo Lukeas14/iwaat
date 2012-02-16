@@ -10,8 +10,7 @@ class User extends MY_Controller {
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		
-		
-		$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/';
+		$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/account/profile';
 		$this->session->set_flashdata('redirect', $redirect);		
 		
 		$this->load->view('login_register', $this->data);
@@ -30,7 +29,7 @@ class User extends MY_Controller {
 			if($this->ion_auth->login($this->input->post('login_email'), $this->input->post('login_password'), $remember)){
 				$this->session->set_flashdata('confirm', $this->ion_auth->messages());
 				
-				$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/';
+				$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/account/profile';
 				redirect($redirect, 'refresh');
 			}
 			else{
@@ -73,7 +72,7 @@ class User extends MY_Controller {
 			
 			$this->ion_auth->login($email, $password, false);
 					
-			$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/';
+			$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/account/profile';
 			redirect($redirect, 'refresh');
 		}
 		else{
@@ -94,15 +93,67 @@ class User extends MY_Controller {
 	}
 	
 	public function logout(){
-		$this->session->set_flashdata('confirm', array("You have successfully logged out."));
-		
 		$logout = $this->ion_auth->logout();
 		
+		$this->session->set_flashdata('confirm', 'You have successfully logged out.');
+	
 		
-		redirect('/', 'refresh');
+		redirect('/login_register?confirm=You have successfully logged out.', 'location');
 	}
 	
 	public function account_profile(){
+		require_once(APPPATH . 'libraries/swift/swift_required.php');
+		
+		$text = "Hi!\nHow are you?\n";
+		$html = "
+		<html>
+		  <head></head>
+		  <body>
+			<p>Hi!<br>
+			   How are you?<br>
+			</p>
+		  </body>
+		</html>
+		";
+
+
+		// This is your From email address
+		$from = array('justin@iwaat.com' => 'I Want An App That...');
+		// Email recipients
+		$to = array(
+		  'Lukeas14@gmail.com'=>'Justin Lucas',
+		);
+		$subject = 'test sendgrid email';
+		
+		// Setup Swift mailer parameters
+		$transport = Swift_SmtpTransport::newInstance(SENDGRID_HOST, SENDGRID_PORT);
+		$transport->setUsername(SENDGRID_USER);
+		$transport->setPassword(SENDGRID_PASS);
+		$swift = Swift_Mailer::newInstance($transport);
+
+		// Create a message (subject)
+		$message = new Swift_Message($subject);
+
+		// attach the body of the email
+		$message->setFrom($from);
+		$message->setBody($html, 'text/html');
+		$message->setTo($to);
+		$message->addPart($text, 'text/plain');
+
+		// send message 
+		if ($recipients = $swift->send($message, $failures))
+		{
+		  // This will let us know how many users received this message
+		  echo 'Message sent out to '.$recipients.' users';
+		}
+		// something went wrong =(
+		else
+		{
+		  echo "Something went wrong - ";
+		  print_r($failures);
+		}
+		exit();
+		
 		if (!$this->ion_auth->logged_in())
 		{
 			$this->session->set_flashdata('message', 'Please log in or register to edit your account profile');
@@ -111,13 +162,40 @@ class User extends MY_Controller {
 		}
 		
 		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean|max_length[64]');
+		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required|xss_clean|max_length[64]');
+		$this->form_validation->set_rules('email', 'Email Address', 'trim|required|valid_email');
+		
+		if($this->form_validation->run() === true){
+			$update_data = array(
+				'first_name'	=> $this->input->post('first_name'),
+				'last_name'		=> $this->input->post('last_name'),
+				'email'			=> $this->input->post('email'),
+				'username'		=> $this->input->post('first_name') . ' ' . $this->input->post('last_name')
+			);
+			$user_update = $this->ion_auth->update(null, $update_data);
+			if($user_update){
+				$this->session->set_flashdata('confirm', 'Your profile has been updated.');
+				redirect('/account/profile', 'location');
+			}
+			else{
+				$this->session->set_flashdata('error', $this->ion_auth->errors());
+				redirect('/account/profile', 'location');
+			}
+		}
+		else{
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
+		}
+		
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
 		
 		$this->load->view('account_profile', $this->data);
 	}
 	
 	public function account_add_app(){
-		if (!$this->ion_auth->logged_in())
-		{
+		if(!$this->ion_auth->logged_in()){
 			$this->session->set_flashdata('message', 'Please log in or register to add an application.');
 			$this->session->set_flashdata('redirect', $this->uri->uri_string());
 			redirect('/login_register', 'location');
@@ -126,13 +204,12 @@ class User extends MY_Controller {
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		$this->load->model('app');
-		
 		$this->form_validation->set_rules('name', 'Name', 'trim|required');
 		$this->form_validation->set_rules('tagline', 'Tagline', 'trim');
 		$this->form_validation->set_rules('description', 'Description', 'trim');
 		$this->form_validation->set_rules('date_launched', 'Date Launched', 'trim');
 		$this->form_validation->set_rules('tags', 'Tags', 'trim');
-		$this->form_validation->set_rules('urls[homepage]', 'Homepage URL', 'trim');
+		$this->form_validation->set_rules('urls[homepage]', 'Homepage URL', 'trim|required');
 		$this->form_validation->set_rules('urls[blog]', 'Blog URL', 'trim');
 		$this->form_validation->set_rules('urls[rss]', 'Blog RSS URL', 'trim');
 		$this->form_validation->set_rules('urls[twitter]', 'Twitter', 'trim');
@@ -146,7 +223,7 @@ class User extends MY_Controller {
 				}
 			}
 			
-			$profile = $this->ion_auth->profile();
+			$profile = $this->ion_auth->user()->row();
 			$add_app_data['owner_id'] = $profile->id;
 			
 			$add_app_data['status'] = 'pending_review';
@@ -181,14 +258,42 @@ class User extends MY_Controller {
 				}
 				
 				$this->session->set_flashdata('confirm', $add_app_data['name'] . ' Application Added.');
-				redirect('/account/app/' . $this->app->app_slug, 'location');
+				redirect('/account/edit_app/' . $this->app->app_slug, 'location');
 			}
 		}
 		else{
 			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
 		
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+		$this->data['user_apps'] = $this->app->get_apps(array('owner_id'=>$this->data['user_profile']->id));
+		
 		$this->load->view('account_add_app', $this->data);
+	}
+	
+	public function account_edit_app(){
+		if(!$this->ion_auth->logged_in()){
+			$this->session->set_flashdata('message', 'Please log in to edit an application.');
+			$this->session->set_flashdata('redirect', $this->uri->uri_string());
+			redirect('/login_register', 'location');
+		}
+		
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+		$this->load->model('app');
+		
+		$app_slug = $this->uri->segment(3);
+		
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+		$this->data['user_apps'] = $this->app->get_apps(array('owner_id'=>$this->data['user_profile']->id));
+		
+		$app = $this->app->get_app($app_slug);
+		if(empty($app)){
+			show_404();
+		}
+		$this->data['app'] = $app;
+		
+		$this->load->view('account_edit_app', $this->data);
 	}
 	
 	public function suggest_app(){
@@ -232,6 +337,87 @@ class User extends MY_Controller {
 		
 		
 		$this->load->view('suggest_app', $this->data);
+	}
+	
+	function change_password()
+	{
+		if (!$this->ion_auth->logged_in())
+		{
+			$this->session->set_flashdata('message', 'Please log in or register to change your password.');
+			$this->session->set_flashdata('redirect', $this->uri->uri_string());
+			redirect('/login_register');
+		}
+		
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+		
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+		
+		$this->form_validation->set_rules('old', 'Old password', 'required');
+		$this->form_validation->set_rules('new', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
+		$this->form_validation->set_rules('new_confirm', 'Confirm New Password', 'required');
+		
+		if($this->form_validation->run() === true){
+			$identity = $this->session->userdata($this->config->item('identity','ion_auth'));
+			
+			$change = $this->ion_auth->change_password($identity, $this->input->post('old'), $this->input->post('new'));
+			if($change){
+				$this->session->set_flashdata('confirm', 'Your password has been changed.');
+				redirect('/account/profile', 'location');
+			}
+			else{
+				$this->session->set_flashdata('error', $this->ion_auth->errors());
+				redirect('/account/change_password', 'location');
+			}
+		}
+		else{
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
+		}
+		
+		$this->load->view('account_change_password', $this->data);
+	}
+	
+	//forgot password
+	function forgot_password()
+	{
+		$this->load->helper(array('form', 'url'));
+		$this->load->library('form_validation');
+		
+		$this->form_validation->set_rules('email', 'Email Address', 'required');
+		
+		if($this->form_validation->run() === true){
+			$forgotten = $this->ion_auth->forgotten_password($this->input->post('email'));
+			
+			if($forgotten){
+				$this->session->set_flashdata('confirm', $this->ion_auth->messages());
+				redirect('/login_register', 'location');
+			}
+			else{
+				$this->session->set_flashdata('error', $this->ion_auth->errors());
+				redirect('/account/forgot_password', 'location');
+			}
+		}
+		else{
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
+		}
+		
+		$this->load->view('/account_forgot_password', $this->data);
+	}
+
+	public function reset_password($code)
+	{
+		$reset = $this->ion_auth->forgotten_password_complete($code);
+
+		if ($reset)
+		{  //if the reset worked then send them to the login page
+			$this->session->set_flashdata('confirm', $this->ion_auth->messages());
+			redirect("/login_register", 'location');
+		}
+		else
+		{ //if the reset didnt work then send them back to the forgot password page
+			$this->session->set_flashdata('error', $this->ion_auth->errors());
+			redirect("/account/forgot_password", 'location');
+		}
 	}
 }
 

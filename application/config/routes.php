@@ -48,6 +48,7 @@ $route['search'] = "search";
 
 $route['cron/(.*)'] = "cron/$1";
 
+$route['category/(.*)'] = "apps/category";
 $route['app/(.*)'] = "apps/app";
 $route['suggest_app'] = "apps/suggest_app";
 $route['add_app'] = "apps/add_app";
@@ -58,8 +59,11 @@ $route['privacy_policy'] = "static_pages/privacy_policy";
 $route['terms_service'] = "static_pages/terms_service";
 
 $route['login_register'] = "user/login_register";
+$route['account/forgot_password'] = "user/forgot_password";
+$route['account/change_password'] = "user/change_password";
 $route['account/profile'] = "user/account_profile";
 $route['account/add_app'] = "user/account_add_app";
+$route['account/edit_app/(.*)'] = "user/account_edit_app";
 $route['login'] = "user/login";
 $route['register'] = "user/register";
 $route['logout'] = "user/logout";

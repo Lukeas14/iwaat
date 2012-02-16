@@ -110,6 +110,19 @@ function get_notifications($controller_notifications){
 				}
 			}
 		}
+		
+		if(!empty($_GET[$note_type])){
+			$note_val = $_GET[$note_type];
+			if(!empty($note_val)){
+				if(is_array($note_val)){
+					$notifications[$note_type] = array_merge($notifications[$note_type], $note_val);
+				}
+				else{
+					$notifications[$note_type][] = strip_tags($note_val, '<b><a><i>');
+				}
+			}
+		}
+		
 		if(empty($notifications[$note_type])){
 			unset($notifications[$note_type]);
 		}

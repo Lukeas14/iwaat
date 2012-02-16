@@ -11,19 +11,19 @@
 		<div class="account_profile_form">
 			<p>
 				<label for="first_name">First Name:</label>
-				<input type="text" name="first_name" values=""/>
+				<input type="text" name="first_name"  value="<?=set_value('first_name', $user_profile->first_name)?>"/>
 			</p>
 			<p>
 				<label for="last_name">Last Name:</label>
-				<input type="text" name="last_name" values=""/>
+				<input type="text" name="last_name"  value="<?=set_value('last_name', $user_profile->last_name)?>"/>
 			</p>
 			<p>
 				<label for="email">Email Address:</label>
-				<input type="text" name="login_email" value="<?=set_value('login_email')?>"/>
+				<input type="text" name="email"  value="<?=set_value('email', $user_profile->email)?>"/>
 			</p>
 			<p>
 				<label for="app_name">Password:</label>
-				<p class="form_link"><a href="/account/reset_password">Reset Password</a></p>
+				<a style="float:left; display:block; margin:12px 0 0 5px;" href="/account/change_password">Change Password</a>
 			</p>
 			<p>
 				<label>&nbsp;</label>

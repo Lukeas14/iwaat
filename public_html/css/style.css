@@ -1132,14 +1132,62 @@ div::-webkit-scrollbar-track {
 	overflow:none;
 }
 
+/** Change Password **/
+#change_password_wrapper{
+	width:760px;
+	margin:40px auto;
+}
+#change_password_wrapper p{
+	color:#666;
+}
+#change_password_wrapper h1{
+	margin:0px 0 10px 0px;	
+	color:#666;
+	font-size:18px;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#change_password_form{
+	margin:40px 0 0 0px;
+}
+#change_password_wrapper label{
+	width:125px;
+}
+
+/** Forgot Password **/
+#forgot_password_wrapper{
+	width:760px;
+	margin:40px auto;
+}
+#forgot_password_wrapper p{
+	color:#666;
+}
+#forgot_password_wrapper h1{
+	margin:0px 0 10px 0px;	
+	color:#666;
+	font-size:18px;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#forgot_password_form{
+	margin:40px 0 0 0px;
+}
+#forgot_password_wrapper label{
+	width:125px;
+}
+
 /** Account **/
 #account_wrapper{
 	width:960px;
 	margin:15px auto 0 auto;
 	overflow:hidden;
 }
-#account_nav{
+#account_nav_wrapper{
+	clear:left;
 	float:left;
+	width:200px;
+}
+#account_nav{
 	width:200px;
 	background:#DDD;
 	border-radius:10px;
@@ -1166,9 +1214,18 @@ div::-webkit-scrollbar-track {
 	font-size:13px;
 	color:#888;
 }
+#account_nav a:hover{
+	color:#4890C2;
+}
 #account_nav a.selected{
 	background:#DDD;
 	color:#333;
+}
+#account_nav a.disabled{
+	color:#666;
+}
+#account_nav a.sub_nav.disabled{
+	color:#888;
 }
 #account_nav a.profile{
 	/*border-top-left-radius:5px;
@@ -1185,6 +1242,24 @@ div::-webkit-scrollbar-track {
 	font-size:19px;
 	font-weight:normal;
 	text-shadow:1px 1px #EEE;
+}
+
+#add_app_rules{
+	clear:left;
+	float:left;
+	width:200px;
+	margin:20px 0 20px 0;
+}
+#add_app_rules h3{
+	font-weight:normal;
+	color:#666;
+}
+#add_app_rules ol, #add_app_rules ul{
+	padding-left:20px;
+	margin:0;
+}
+#add_app_rules li{
+	color:#333;
 }
 
 /** Admin **/
