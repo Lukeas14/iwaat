@@ -51,9 +51,6 @@ class Admin extends MY_Controller {
 		
 		$app_slug = $this->uri->segment(3);
 		
-		$this->data['http_referer'] = ($this->session->flashdata('http_referer')) ? $this->session->flashdata('http_referer') : (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : '/admin/apps';
-		$this->session->set_flashdata('http_referer', $this->data['http_referer']);
-		
 		$this->form_validation->set_rules('app_id', 'App ID', 'trim|required');
 		$this->form_validation->set_rules('http_referer', 'HTTP Referer', '');
 		$this->form_validation->set_rules('name', 'Name', 'trim|required');
@@ -121,7 +118,7 @@ class Admin extends MY_Controller {
 		}
 		
 		
-		$this->data['users'] = $this->ion_auth->get_users();
+		$this->data['users'] = $this->ion_auth->users()->result_array();
 		
 		$this->data['categories'] = $this->app->get_categories(0, true);
 		
