@@ -9,8 +9,6 @@
 		
 		<h1 style="margin-bottom:5px;"><?=$app['name']?></h1>
 		
-		<a href="<?=$http_referer?>" style="font-size:11px;">< Back</a>
-		
 		<div id="admin_app_form">
 			
 		<?php echo form_open_multipart('');?>
@@ -37,7 +35,7 @@
 				<label for="owner_id">Owner:</label>
 				<select name="owner_id">
 				<?php foreach($users as $user): ?>
-					<option value="<?=$user->id?>" <?=set_select('owner_id', $user->id, ($app['owner_id'] == $user->id) ? true : false)?>><?=$user->username?> - <?=$user->email?></option>
+					<option value="<?=$user['id']?>" <?=set_select('owner_id', $user['id'], ($app['owner_id'] == $user['id']) ? true : false)?>><?=$user['username']?> - <?=$user['email']?></option>
 				<?php endforeach; ?>
 				</select>
 			</p>
