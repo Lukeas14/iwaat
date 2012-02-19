@@ -489,7 +489,7 @@ class App extends CI_Model{
 	function get_homepage_apps($categories, $app_count = 5){
 		$apps = array();
 		foreach($categories as $category){
-			$apps[$category['id']] = $this->get_apps(array('apps.status' => 'active', 'apps.category_id' => $category['id'], 'app_images.type' => 'logo'), array('app_images' => array('select' => 'app_images.file_name as logo', 'condition' => 'app_images.app_id = apps.id', 'type' => 'left')), 0, $app_count, array(), 'popularity_index');
+			$apps[$category['id']] = $this->get_apps(array('apps.status' => 'active', 'apps.category_id' => $category['id'], 'app_images.type' => 'logo'), array('app_images' => array('select' => 'app_images.file_name as logo', 'condition' => 'app_images.app_id = apps.id', 'type' => 'left')), 0, $app_count, array(), 'popularity_index DESC');
 		}
 		
 		return $apps;
