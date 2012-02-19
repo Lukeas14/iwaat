@@ -29,7 +29,7 @@
 				<select name="owner_id">
 					<option disabled>Select an Owner...</option>
 				<?php foreach($users as $user): ?>
-					<option value="<?=$user->id?>" <?=set_select('owner_id', $user->id, false)?>><?=$user->username?> - <?=$user->email?></option>
+					<option value="<?=$user['id']?>" <?=set_select('owner_id', $user['id'], false)?>><?=$user['username']?> - <?=$user['email']?></option>
 				<?php endforeach; ?>
 				</select>
 			</p>

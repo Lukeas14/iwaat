@@ -154,7 +154,7 @@ class Admin extends MY_Controller {
 			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
 		
-		$this->data['users'] = $this->ion_auth->get_users();
+		$this->data['users'] = $this->ion_auth->users()->result_array();
 		
 		$this->load->view('admin_add_app', $this->data);
 	}
