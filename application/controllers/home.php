@@ -7,12 +7,22 @@ class Home extends MY_Controller {
 	public function index(){
 		$this->load->model('app');
 		$this->load->helper('form');
+		$this->load->driver('cache');
 		
-		
-		$this->data['homepage_categories'] = $this->app->get_categories(0);
-		
-		$this->data['homepage_apps'] = $this->app->get_homepage_apps($this->data['homepage_categories']);
-		//echo"<pre>";print_r($this->data['homepage_apps']);echo"</pre>";
+		$homepage_apps_cache_id = 'homepage_apps';
+		$homepage_apps_cache_time = CACHE_TIME;
+		if($this->cache->memcached->is_supported()){
+			if(!$homepage_apps = $this->cache->memcached->get($homepage_apps_cache_id)){
+				$homepage_apps = $this->app->get_homepage_apps();
+				
+				$this->cache->memcached->save($homepage_apps_cache_id, $homepage_apps, $homepage_apps_cache_time);
+			}
+		}
+		else{
+			$homepage_apps = $this->app->get_homepage_apps();
+		}
+		$this->data['homepage_apps'] = $homepage_apps['apps'];
+		$this->data['homepage_categories'] = $homepage_apps['categories'];
 		
 		$this->data['is_homepage'] = true;
 		
