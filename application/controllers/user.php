@@ -68,6 +68,21 @@ class User extends MY_Controller {
 			);
 		}
 		if($this->form_validation->run() === true && $this->ion_auth->register($username, $password, $email, $additional_data)){
+			$this->load->library('swift_email');
+			$this->data['user_data'] = array(
+				'username'	=> $username,
+				'email'		=> $email,
+				'password'	=> $password
+			);
+			$email_params = array(
+				'html'		=> $this->load->view('email/register_html', $this->data, true),
+				'text'		=> $this->load->view('email/register_text', $this->data, true),
+				'subject'	=> 'Welcome to I Want An App That...',
+				'from'		=> array(ADMIN_EMAIL_ADDRESS => ADMIN_EMAIL_NAME),
+				'to'		=> array($email => $username)
+			);
+			$this->swift_email->send_email($email_params);
+			
 			$this->session->set_flashdata('confirm', 'Account created.  Welcome to IWAAT.com');
 			
 			$this->ion_auth->login($email, $password, false);
@@ -97,63 +112,10 @@ class User extends MY_Controller {
 		
 		$this->session->set_flashdata('confirm', 'You have successfully logged out.');
 	
-		
 		redirect('/login_register?confirm=You have successfully logged out.', 'location');
 	}
 	
 	public function account_profile(){
-		require_once(APPPATH . 'libraries/swift/swift_required.php');
-		
-		$text = "Hi!\nHow are you?\n";
-		$html = "
-		<html>
-		  <head></head>
-		  <body>
-			<p>Hi!<br>
-			   How are you?<br>
-			</p>
-		  </body>
-		</html>
-		";
-
-
-		// This is your From email address
-		$from = array('justin@iwaat.com' => 'I Want An App That...');
-		// Email recipients
-		$to = array(
-		  'Lukeas14@gmail.com'=>'Justin Lucas',
-		);
-		$subject = 'test sendgrid email';
-		
-		// Setup Swift mailer parameters
-		$transport = Swift_SmtpTransport::newInstance(SENDGRID_HOST, SENDGRID_PORT);
-		$transport->setUsername(SENDGRID_USER);
-		$transport->setPassword(SENDGRID_PASS);
-		$swift = Swift_Mailer::newInstance($transport);
-
-		// Create a message (subject)
-		$message = new Swift_Message($subject);
-
-		// attach the body of the email
-		$message->setFrom($from);
-		$message->setBody($html, 'text/html');
-		$message->setTo($to);
-		$message->addPart($text, 'text/plain');
-
-		// send message 
-		if ($recipients = $swift->send($message, $failures))
-		{
-		  // This will let us know how many users received this message
-		  echo 'Message sent out to '.$recipients.' users';
-		}
-		// something went wrong =(
-		else
-		{
-		  echo "Something went wrong - ";
-		  print_r($failures);
-		}
-		exit();
-		
 		if (!$this->ion_auth->logged_in())
 		{
 			$this->session->set_flashdata('message', 'Please log in or register to edit your account profile');

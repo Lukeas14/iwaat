@@ -403,6 +403,7 @@ form span{
 #footer_wrapper p.footer_links{
 	float:right;
 	margin:0;
+	color:#666;
 }
 
 #homepage_search{
@@ -527,11 +528,71 @@ form span{
 	text-align:center;
 }
 
+/** Search results **/
+
+#search_header{
+	width:960px;
+	margin:25px auto 20px auto;
+	overflow:hidden;
+	text-align:center;
+	
+	padding:4px 0px;
+	background:#E3E3E3;
+	
+	border:1px solid #D5D5D5;
+	border-bottom:1px solid #DDD;
+	
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+#search_footer{
+	width:960px;
+	margin:25px auto 20px auto;
+	overflow:hidden;
+	text-align:center;
+	
+	padding:4px 0px;
+	background:#E3E3E3;
+	
+	border:1px solid #D5D5D5;
+	border-bottom:1px solid #DDD;
+	
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+}
+
+#search_pagination{
+	width:auto;
+	
+}
+#search_pagination strong{
+	display:inline-block;
+	margin:0px 0px;
+	padding:6px 7px;
+	color:#555;
+	border:1px solid transparent;
+}
+#search_pagination a{
+	display:inline-block;
+	margin:0px 0px;
+	padding:6px 7px;
+	border:1px solid #D9D9D9;
+	color:#AAA;
+	
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	
+	background: -webkit-linear-gradient(top, #FFF 0%,#EEE 100%); /* Chrome10+,Safari5.1+ */
+}
+#search_pagination a:hover{
+	color:#4890c2;
+}
+
 #search_results{
 	overflow:hidden;
 	width:840px;
-	margin:10px auto;
-	padding:10px;
+	margin:0 auto;
 }
 .search_result{
 	position:relative;
