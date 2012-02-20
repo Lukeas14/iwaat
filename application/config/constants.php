@@ -1,6 +1,7 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-define('ADMIN_EMAIL', 'lukeas14@gmail.com');
+define('ADMIN_EMAIL_ADDRESS', 'justin@iwaat.com');
+define('ADMIN_EMAIL_NAME', 'I Want An App That...');
 
 define('CACHE_TIME', 60 * 60);
 
