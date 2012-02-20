@@ -163,6 +163,8 @@ class User extends MY_Controller {
 			redirect('/login_register', 'location');
 		}
 		
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+		
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		$this->load->model('app');
@@ -219,6 +221,29 @@ class User extends MY_Controller {
 					}
 				}
 				
+				$this->data['app_data'] = $add_app_data;
+				$this->data['app_data']['slug'] = $this->app->app_slug;
+				
+				$this->load->library('swift_email');
+				
+				$email_params = array(
+					'html'		=> $this->load->view('email/add_app_html', $this->data, true),
+					'text'		=> $this->load->view('email/add_app_text', $this->data, true),
+					'subject'	=> $add_app_data['name'] . ' added to IWAAT.com',
+					'from'		=> array(ADMIN_EMAIL_ADDRESS => ADMIN_EMAIL_NAME),
+					'to'		=> array($this->data['user_profile']->email => $this->data['user_profile']->username)
+				);
+				$this->swift_email->send_email($email_params);
+				
+				$email_params = array(
+					'html'		=> $this->load->view('email/add_app_admin_html', $this->data, true),
+					'subject'	=> $add_app_data['name'] . ' added to IWAAT.com',
+					'to'		=> array(ADMIN_EMAIL_ADDRESS => ADMIN_EMAIL_NAME),
+					'from'		=> array($this->data['user_profile']->email => $this->data['user_profile']->username)
+				);
+				$this->swift_email->send_email($email_params);
+				
+				
 				$this->session->set_flashdata('confirm', $add_app_data['name'] . ' Application Added.');
 				redirect('/account/edit_app/' . $this->app->app_slug, 'location');
 			}
@@ -227,7 +252,6 @@ class User extends MY_Controller {
 			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
 		
-		$this->data['user_profile'] = $this->ion_auth->user()->row();
 		$this->data['user_apps'] = $this->app->get_apps(array('owner_id'=>$this->data['user_profile']->id));
 		
 		$this->load->view('account_add_app', $this->data);
