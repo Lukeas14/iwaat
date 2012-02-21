@@ -12,10 +12,10 @@ color:				#000;
 }
 
 #content  {
-width:500px;
+width:316px;
 margin:100px auto;
 border:				#BBB 6px solid;
-background-color:	#fff;
+background:#FFF url('/images/iwaat_logo.png') no-repeat;
 padding:			10px;
 }
 
@@ -32,7 +32,6 @@ margin:				35px 0 35px 0;
 </head>
 <body>
 	<div id="content">
-		<img class="iwaat_logo" src="/images/iwaat_logo.png"/>
 		<br/>
 		<h1><?php echo $heading; ?></h1>
 		<?php echo $message; ?>
