@@ -814,10 +814,10 @@ form span{
 .app_header .app_info .app_logo{
 	display:block;
 	clear:both; 
-	height:175px;
+	height:205px;
 	vertical-align:baseline;
 	text-align:center;
-	line-height:175px;
+	line-height:205px;
 }
 .app_header .app_info .app_logo img{
 	clear:both;
