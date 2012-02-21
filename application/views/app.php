@@ -12,9 +12,41 @@
 				<img src="<?=$app['images']['logo'][0]['source']?>" />
 			<?php endif; ?>
 			</a>
-			<div class="app_description">
-				<p><?=$app['description']?></p>
+			<div class="app_urls">
+				<?php if(!empty($app['urls']['homepage'])): ?>
+				<p class="app_url_homepage">
+					<label>Homepage:</label><a href="<?=$app['urls']['homepage']?>" target="_blank" rel="nofollow" onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')"><?=$app['urls']['homepage']?></a>
+				</p>
+				<?php endif; ?>
+
+				<?php if(!empty($app['urls']['blog']) || !empty($app['urls']['rss'])): ?>
+				<p class="app_url_blog">
+					<label>Blog:</label>
+					<?php if(!empty($app['urls']['blog'])): ?>
+					<a href="<?=$app['urls']['blog']?>" target="_blank" rel="nofollow">Blog</a>
+					<?php endif; ?>
+
+					<?php if(!empty($app['urls']['blog']) && !empty($app['urls']['rss'])): ?>&nbsp;&nbsp;~&nbsp;&nbsp;<?php endif; ?>
+
+					<?php if(!empty($app['urls']['rss'])): ?>
+					<a href="<?=$app['urls']['rss']?>" target="_blank" rel="nofollow">RSS</a>
+					<?php endif; ?>
+				</p>
+				<?php endif; ?>
+
+				<?php if(!empty($app['urls']['twitter'])): ?>
+				<p class="app_url_twitter">
+					<label>Twitter:</label><a href="http://www.twitter.com/<?=$app['urls']['twitter']?>" target="_blank" rel="nofollow">@<?=$app['urls']['twitter']?></a>
+				</p>
+				<?php endif; ?>
+
+				<?php if(!empty($app['date_launched']) && strtotime($app['date_launched']) > 343311693): ?>
+				<p class="app_url_homepage">
+					<label>Launched:</label><?=get_relative_time($app['date_launched'])?>
+				</p>
+				<?php endif; ?>
 			</div>
+			
 		</div>
 	</div>
 
@@ -32,58 +64,28 @@
 			<p class="app_index_label">Traction Index</p>
 		</div>
 		
-		<?php if(!empty($app['urls']['homepage'])): ?>
-		<div class="app_social_buttons">
-			<div class="app_google">
-				<g:plusone size="tall" href="<?=$app['urls']['homepage']?>"></g:plusone>
-			</div>
+		<br/>
+		<div class="app_description">
 			
-			<div class="app_facebook">
-				<div id="fb-root"></div>
-				<div class="fb-like" data-href="<?=$app['urls']['homepage']?>" data-send="false" data-layout="box_count" data-width="100" data-show-faces="false"></div>
-			</div>
-
-			<div class="app_twitter">
-				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?=$app['urls']['homepage']?>" data-count="vertical" data-via="JLukeas">Tweet</a>
-			</div>
-		</div>
-		<?php endif; ?>
-		
-		<div class="app_urls">
 			<?php if(!empty($app['urls']['homepage'])): ?>
-			<p class="app_url_homepage">
-				<label>Homepage:</label><a href="<?=$app['urls']['homepage']?>" target="_blank" rel="nofollow" onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')"><?=$app['urls']['homepage']?></a>
-			</p>
-			<?php endif; ?>
+			<div class="app_social_buttons">
+				<div class="app_google">
+					<g:plusone size="tall" href="<?=$app['urls']['homepage']?>"></g:plusone>
+				</div>
 
-			<?php if(!empty($app['urls']['blog']) || !empty($app['urls']['rss'])): ?>
-			<p class="app_url_blog">
-				<label>Blog:</label>
-				<?php if(!empty($app['urls']['blog'])): ?>
-				<a href="<?=$app['urls']['blog']?>" target="_blank" rel="nofollow">Blog</a>
-				<?php endif; ?>
-				
-				<?php if(!empty($app['urls']['blog']) && !empty($app['urls']['rss'])): ?>&nbsp;&nbsp;~&nbsp;&nbsp;<?php endif; ?>
-				
-				<?php if(!empty($app['urls']['rss'])): ?>
-				<a href="<?=$app['urls']['rss']?>" target="_blank" rel="nofollow">RSS</a>
-				<?php endif; ?>
-			</p>
+				<div class="app_facebook">
+					<div id="fb-root"></div>
+					<div class="fb-like" data-href="<?=$app['urls']['homepage']?>" data-send="false" data-layout="box_count" data-width="100" data-show-faces="false"></div>
+				</div>
+
+				<div class="app_twitter">
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?=$app['urls']['homepage']?>" data-count="vertical" data-via="JLukeas">Tweet</a>
+				</div>
+			</div>
 			<?php endif; ?>
-			
-			<?php if(!empty($app['urls']['twitter'])): ?>
-			<p class="app_url_twitter">
-				<label>Twitter:</label><a href="http://www.twitter.com/<?=$app['urls']['twitter']?>" target="_blank" rel="nofollow">@<?=$app['urls']['twitter']?></a>
-			</p>
-			<?php endif; ?>
-			
-			<?php if(!empty($app['date_launched']) && strtotime($app['date_launched']) > 343311693): ?>
-			<p class="app_url_homepage">
-				<label>Launched:</label><?=get_relative_time($app['date_launched'])?>
-			</p>
-			<?php endif; ?>
-		</div>
 		
+			<p><?=$app['description']?></p>
+		</div>
 		
 	</div>
 	
