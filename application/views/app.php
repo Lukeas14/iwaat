@@ -90,7 +90,7 @@
 			
 			<?php if(!empty($app['crunchbase_permalink'])): ?>
 				<br/>
-				Source: <a href="http://www.crunchbase.com/company/<?=$app['crunchbase_permalink']?>">Crunchbase</a>
+				Source: <a href="http://www.crunchbase.com/company/<?=$app['crunchbase_permalink']?>" target="_blank">Crunchbase</a>
 			<?php endif; ?>
 		</div>
 		
