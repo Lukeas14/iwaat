@@ -14,13 +14,16 @@ class App extends CI_Model{
 		parent::__construct();
 	}
 	
-	function search_apps($query, $offset = 0, $limit = 10){
+	function search_apps($query, $params){
 		$this->load->library('solr');
 		
 		$query = $this->solr->escape_query($query);
 		
-		$results = $this->solr->search($query);
-		//echo"<pre>";print_r($results);print_r($results->response);print_r($results->response->docs);echo"</pre>";
+		$params['offset'] = (!empty($params['offset'])) ? $params['offset'] : 0;
+		
+		$params['limit'] = (!empty($params['limit'])) ? $params['limit'] : 10;
+		
+		$results = $this->solr->search($query, $params['offset'], $params['limit']);
 		
 		return $results;
 	}
@@ -640,6 +643,9 @@ class App extends CI_Model{
 				}
 				$update_app['date_launched'] = date('Y-m-d', $date_launched_unix);
 			}
+		}
+		if(isset($data['crunchbase_permalink'])){
+			$update_app['crunchbase_permalink'] = $data['crunchbase_permalink'];
 		}
 		if(isset($data['owner_id'])){
 			$update_app['owner_id'] = $data['owner_id'];
