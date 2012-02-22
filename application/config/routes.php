@@ -41,6 +41,8 @@
 $route['default_controller'] = "home";
 $route['404_override'] = '';
 
+$route['add_newsletter_email'] = "home/add_newsletter_email";
+
 $route['admin'] = "admin/index";
 $route['admin/(.*)'] = "admin/$1";
 

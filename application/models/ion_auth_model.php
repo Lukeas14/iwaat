@@ -1383,4 +1383,19 @@ class Ion_auth_model extends CI_Model
 
 		return $filtered_data;
 	}
+	
+	public function add_newsletter_email($email)
+	{
+		if(empty($email) || !validate_email_address($email)) return false;
+		
+		$email = mysql_real_escape_string($email);
+		
+		$this->db->query("
+			INSERT IGNORE INTO newsletter_emails 
+			(email_address, ip_address)
+			VALUES ('" . $email . "', INET_ATON('" . get_ip_address() . "'))"
+		);
+		
+		return true;
+	}
 }

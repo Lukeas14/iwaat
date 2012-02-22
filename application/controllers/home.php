@@ -28,6 +28,16 @@ class Home extends MY_Controller {
 		
 		$this->load->view('home', $this->data);
 	}
+	
+	public function add_newsletter_email(){
+		if($_SERVER['REQUEST_METHOD'] != 'POST' || !$this->input->post('newsletter_email')){
+			show_404();
+		}
+		
+		$add_newsletter_email = $this->ion_auth->add_newsletter_email($this->input->post('newsletter_email'));
+		
+		return;
+	}
 }
 
 /* End of file welcome.php */

@@ -138,3 +138,31 @@ function get_app_image_directory($app_id){
 function get_app_image($app_id, $file_name){
 	return "/images/apps/" . get_app_image_directory($app_id) . "/" . $file_name;
 }
+
+function get_ip_address(){
+	if (isset($_SERVER)){
+           if (isset($_SERVER["HTTP_X_FORWARDED_FOR"]))
+               return $_SERVER["HTTP_X_FORWARDED_FOR"];
+
+           if (isset($_SERVER["HTTP_CLIENT_IP"]))
+               return $_SERVER["HTTP_CLIENT_IP"];
+
+           return $_SERVER["REMOTE_ADDR"];
+    }
+	echo"DFDSFDS";
+
+	if (getenv('HTTP_X_FORWARDED_FOR'))
+	   return getenv('HTTP_X_FORWARDED_FOR');
+
+	if (getenv('HTTP_CLIENT_IP'))
+	   return getenv('HTTP_CLIENT_IP');
+
+    return getenv('REMOTE_ADDR');
+}
+
+function validate_email_address($email){
+	if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+		return true;
+    }
+    return false;
+}
