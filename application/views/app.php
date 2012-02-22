@@ -40,11 +40,13 @@
 				</p>
 				<?php endif; ?>
 
+				<!--
 				<?php if(!empty($app['date_launched']) && strtotime($app['date_launched']) > 343311693): ?>
 				<p class="app_url_homepage">
 					<label>Launched:</label><?=get_relative_time($app['date_launched'])?>
 				</p>
 				<?php endif; ?>
+				-->
 			</div>
 			
 		</div>
@@ -84,7 +86,12 @@
 			</div>
 			<?php endif; ?>
 		
-			<p><?=$app['description']?></p>
+			<p><?=nl2br($app['description'])?></p>
+			
+			<?php if(!empty($app['crunchbase_permalink'])): ?>
+				<br/>
+				Source: <a href="http://www.crunchbase.com/company/<?=$app['crunchbase_permalink']?>">Crunchbase</a>
+			<?php endif; ?>
 		</div>
 		
 	</div>
