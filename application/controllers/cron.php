@@ -14,6 +14,16 @@ class Cron extends MY_Controller {
 		}
 	}
 	
+	function add_permalink(){
+		$this->load->model('app');
+		$apps = $this->app->get_apps(array(), array('companies2'=>array('select'=>'permalink', 'condition'=>'apps.company_id = companies2.id', 'type'=>'left')), 0, 2000000);
+		foreach($apps['apps'] as $app){
+			echo $app['name'] . "\n";
+			$this->app->update_app($app['id'], array('crunchbase_permalink'=>$app['permalink']));
+		}
+		echo"done";
+	}
+	
 	function index(){
 		$this->load->model('app');
 		$apps = $this->app->get_apps(array('apps.id'=>2), array('app_urls'=>array('select'=>'url AS homepage_url','condition'=>"apps.id = app_urls.app_id AND app_urls.type = 'homepage' ",'type'=>'left')));
