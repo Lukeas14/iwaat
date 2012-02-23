@@ -125,6 +125,7 @@ class User extends MY_Controller {
 		
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
+		$this->load->model('app');
 		
 		$this->form_validation->set_rules('first_name', 'First Name', 'trim|required|xss_clean|max_length[64]');
 		$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required|xss_clean|max_length[64]');
@@ -152,6 +153,7 @@ class User extends MY_Controller {
 		}
 		
 		$this->data['user_profile'] = $this->ion_auth->user()->row();
+		$this->data['user_apps'] = $this->app->get_apps(array('owner_id'=>$this->data['user_profile']->id));
 		
 		$this->load->view('account_profile', $this->data);
 	}
@@ -264,19 +266,83 @@ class User extends MY_Controller {
 			redirect('/login_register', 'location');
 		}
 		
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+		
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		$this->load->model('app');
 		
+		$this->form_validation->set_rules('name', 'Name', 'trim|required');
+		$this->form_validation->set_rules('tagline', 'Tagline', 'trim');
+		$this->form_validation->set_rules('description', 'Description', 'trim');
+		$this->form_validation->set_rules('date_launched', 'Date Launched', 'trim');
+		$this->form_validation->set_rules('tags', 'Tags', 'trim');
+		$this->form_validation->set_rules('urls[homepage]', 'Homepage URL', 'trim|required');
+		$this->form_validation->set_rules('urls[blog]', 'Blog URL', 'trim');
+		$this->form_validation->set_rules('urls[rss]', 'Blog RSS URL', 'trim');
+		$this->form_validation->set_rules('urls[twitter]', 'Twitter', 'trim');
+		
+		if($this->form_validation->run() === true){
+			$app_id = $this->input->post('app_id');
+			$app = $this->app->get_app($app_id);
+			if(empty($app) || $app['owner_id'] != $this->data['user_profile']->id){
+				show_404();
+			}
+			
+			if($this->app->update_app($app_id, $this->input->post()) === false){
+				$this->data['notifications']['error'] = $this->app->errors;
+			}
+			else{
+				//Update app tags
+				$this->app->update_app_tags($app_id, $this->input->post('tags'));
+				
+				//Update app urls
+				$this->app->update_app_urls($app_id, $this->input->post('urls'));
+				
+				//Upload Logo
+				if($_FILES['logo']['size'] > 0){
+					$image_config = array(
+						'upload_path'	=> APP_IMAGE_TMP_DIR,
+						'allowed_types'	=> 'gif|jpg|png',
+						'max_size'		=> 2048,
+						'file_name'		=> md5($app_id . 'logo')
+					);
+					$this->load->library('upload', $image_config);
+					if(!$this->upload->do_upload('logo')){
+						$logo_data = $this->upload->data();
+						if(!empty($logo_data['file_name'])){
+							$this->session->set_flashdata('error', $this->upload->display_errors());
+						}
+					}
+					else{
+						$logo_data = $this->upload->data();
+						$this->app->add_app_image_from_upload($app_id, 'logo', $logo_data);
+					}
+				}
+				
+				//Clear app cache
+				$this->load->driver('cache');
+				if($this->cache->memcached->is_supported()){
+					$this->cache->memcached->delete($this->app->get_app_cache_id($app_slug));
+				}
+				
+				$this->session->set_flashdata('confirm', 'App updated.');
+				redirect($this->uri->uri_string(), 'location');
+			}
+		}
+		else{
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
+		}
+		
 		$app_slug = $this->uri->segment(3);
 		
-		$this->data['user_profile'] = $this->ion_auth->user()->row();
 		$this->data['user_apps'] = $this->app->get_apps(array('owner_id'=>$this->data['user_profile']->id));
 		
 		$app = $this->app->get_app($app_slug);
-		if(empty($app)){
+		if(empty($app) || $app['owner_id'] != $this->data['user_profile']->id){
 			show_404();
 		}
+		
 		$this->data['app'] = $app;
 		
 		$this->load->view('account_edit_app', $this->data);
