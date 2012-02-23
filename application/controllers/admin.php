@@ -10,11 +10,10 @@ class Admin extends MY_Controller {
 		
 		//Only admins allowed to access these pages
 		if (!$this->ion_auth->logged_in()){
-			$this->session->set_flashdata('redirect', $this->uri->uri_string());
-			redirect('/login_register', 'location');
-			if(!$this->ion_auth->is_admin()){
-				redirect('/', 'location');
-			}
+			show_404();
+		}
+		if(!$this->ion_auth->is_admin()){
+			show_404();
 		}
 		
 		$this->load->model('company');
