@@ -17,7 +17,7 @@ class App extends CI_Model{
 	function search_apps($query, $params){
 		$this->load->library('solr');
 		
-		$query = $this->solr->escape_query($query);
+		$query = $this->solr->escape_query($query) . " AND status:(active)";
 		
 		$params['offset'] = (!empty($params['offset'])) ? $params['offset'] : 0;
 		

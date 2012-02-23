@@ -1,7 +1,14 @@
 <?php $this->load->view('includes/header'); ?>
 
-Results for '<?=$keywords?>':
-<br/>
+<div id="search_header">
+
+	<div id="search_pagination">
+		<strong>Page:</strong>
+		<?=$pagination_links?>
+	</div>
+
+</div>
+
 <div id="search_results">
 <?php 
 	foreach($app_results->response->docs as $app):
@@ -10,12 +17,9 @@ Results for '<?=$keywords?>':
 		$app->description = truncate($app->description, 200);
 ?>
 	<a class="search_result" href="/app/<?=$app->slug?>">
-		<!--<img class="search_screenshot" src="<?=$app->screenshot?>"/>-->
 		<div class="search_screenshot" style="background-image:url('<?=$app->screenshot_small?>')"></div>
-		<!--<div class="search_popularity_index" style="background:#<?=$index_color?>; color:#FFF"><?=$app->popularity_index?></div>-->
-		<!--<div class="search_details_wrapper"></div>-->
 		<div class="search_details_left">
-			<div class="search_logo"><img src="<?=$app->logo?>" /></div>
+			<div class="search_logo"><img src="<?=$app->logo?>" alt="<?=$app->name?> logo"/></div>
 			<p class="search_name"><?=$app->name?></p>
 		</div>
 		<div class="search_details_right">
@@ -23,6 +27,12 @@ Results for '<?=$keywords?>':
 		</div>
 	</a>
 <?php endforeach; ?>
+</div>
+
+<div id="search_footer">
+	<div id="search_pagination">
+		<?=$this->pagination->create_links()?>
+	</div>
 </div>
 
 <script type="text/javascript">

@@ -1165,7 +1165,7 @@ class Apache_Solr_Service
 		$params['start'] = $offset;
 		$params['rows'] = $limit;
 		$params['fl'] = '*,score';
-
+		
 		$queryString = $this->_generateQueryString($params);
 
 		if ($method == self::METHOD_GET)
