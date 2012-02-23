@@ -292,7 +292,7 @@
         -->
     <fieldType name="text_en_splitting" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="true">
       <analyzer type="index">
-        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
         <!-- in this example, we will only use synonyms at query time
         <filter class="solr.SynonymFilterFactory" synonyms="index_synonyms.txt" ignoreCase="true" expand="false"/>
         -->
@@ -311,7 +311,7 @@
         <filter class="solr.PorterStemFilterFactory"/>
       </analyzer>
       <analyzer type="query">
-        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
         <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" ignoreCase="true" expand="true"/>
         <!--<filter class="solr.StopFilterFactory"
                 ignoreCase="true"
@@ -508,7 +508,7 @@
    <field name="homepage_title" type="text_general" indexed="true" stored="false" required="false" termVectors="true" />
    <field name="homepage_meta_keywords" type="text_general" indexed="true" stored="false" required="false" termVectors="true" />
    <field name="homepage_meta_description" type="text_general" indexed="true" stored="false" required="false" termVectors="true" />
-   <field name="popularity_index" type="string" indexed="false" stored="true" required="false" />
+   <field name="popularity_index" type="string" indexed="true" stored="true" required="false" />
 
    <!-- catchall field, containing all other searchable text fields (implemented
         via copyField further on in this schema  -->
