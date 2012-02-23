@@ -962,8 +962,8 @@ form span{
 }
 .app_metadata .app_social_buttons{
 	float:right;
-	width:200px;
-	margin:-10px 35px 30px 60px;
+	width:260px;
+	margin:-10px 15px 30px 20px;
 }
 .app_metadata .app_social_buttons .app_facebook{
 	float:left;
@@ -976,6 +976,11 @@ form span{
 .app_metadata .app_social_buttons .app_google{
 	float:left;
 	width:65px;
+}
+.app_metadata .app_social_buttons .app_pinterest{
+	float:left;
+	width:55px;
+	padding:4px 0 0 10px;
 }
 .app_metadata .app_index_wrapper{
 	z-index:1;
