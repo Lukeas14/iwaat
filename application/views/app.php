@@ -3,13 +3,13 @@
 
 	<div class="app_header">
 		<div class="screenshot_large">
-				<img src="<?=$app['images']['screenshot_large'][0]['source']?>"/>
+			<img src="<?=$app['images']['screenshot_large'][0]['source']?>" alt="<?=$app['name']?> screenshot"/>
 		</div>
 		<div class="app_info_wrapper"></div>
 		<div class="app_info">
 			<a class="app_logo" href="<?=$app['urls']['homepage']?>" target="_blank" rel="nofollow" onclick="return external_link('<?=(!empty($app['urls']['affiliate'])) ? $app['urls']['affiliate'] : $app['urls']['homepage']?>')">
 			<?php if(!empty($app['images']['logo'][0]['source'])): ?>
-				<img src="<?=$app['images']['logo'][0]['source']?>" />
+				<img src="<?=$app['images']['logo'][0]['source']?>" alt="<?=$app['name']?> logo"/>
 			<?php endif; ?>
 			</a>
 			<div class="app_urls">
@@ -133,7 +133,7 @@
 		<div class="related_apps_wrapper">
 		<?php foreach($app['related_apps'] as $related_app): ?>
 			<a class="related_app" href="/app/<?=$related_app->slug?>">
-				<div class="related_app_logo"><img src="<?=$related_app->logo?>"/></div>
+				<div class="related_app_logo"><img src="<?=$related_app->logo?>" alt="<?=$related_app->name?> logo"/></div>
 				<div class="related_app_name"><?=$related_app->name?></div>
 			</a>
 		<?php endforeach; ?>
