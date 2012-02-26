@@ -10,7 +10,7 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
-	<script type="text/javascript" src="/js/simpletip.js"></script>
+	<script type="text/javascript" src="/js/qtip.js"></script>
 		
 	<title>I Want An App That...</title>
 </head>
