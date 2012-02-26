@@ -6,7 +6,7 @@
 			<p>Be the first to know about our upcoming features:<br/>
 			<span>
 				We take your online privacy seriously
-				and will never share your email.
+				and will never share your info.
 			</span>
 			</p>
 			<input type="text" class="newsletter_email" name="newsletter_email" value="Email Address..."/>
@@ -35,6 +35,8 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	//$("#header ul#search_ticker").liScroll();
+	
 	$("#header.homepage input.text").focus();	
 	
 	var $newsletter_email = $("form#newsletter_signup_form input.newsletter_email");

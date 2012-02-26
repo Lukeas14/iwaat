@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
 	<script type="text/javascript" src="/js/script.js"></script>
+	<script type="text/javascript" src="/js/simpletip.js"></script>
 		
 	<title>I Want An App That...</title>
 </head>
@@ -32,20 +33,35 @@
 		
 		<div class="color_bar_1"></div>
 		<div id="header" class="<?=(isset($is_homepage) && $is_homepage === true) ? 'homepage' : ''?>">
-		<form action="/search" method="GET" accept-charset="utf-8">
-			<a href="/">
-				<div id="logo">
-					<span class="">I</span>
-					<span class="red">W</span>ant
-					<span class="green">A</span>n
-					<span class="blue">A</span>pp
-					<span class="yellow">T</span>hat...
-				</div>
-			</a>
-			<br/>
-			<input class="text" type="text" name="q" class="text_field" autocomplete="off" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
-			<input class="submit" type="submit" value="Search"/>
-		</form>
+			<form action="/search" method="GET" accept-charset="utf-8">
+				<a href="/">
+					<div id="logo">
+						<span class="">I</span>
+						<span class="red">W</span>ant
+						<span class="green">A</span>n
+						<span class="blue">A</span>pp
+						<span class="yellow">T</span>hat...
+					</div>
+				</a>
+				<input class="text" type="text" name="q" class="text_field" autocomplete="off" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
+				
+			<!--<ul id="search_ticker">
+				<li><a href="/search?q=manages+my+twitter+feed">...manages my twitter feed</a></li>
+				<li><a href="/search?q=backs+up+all+my+photos">...backs up all my photos</a></li>
+				<li><a href="/search?q=tracks+my+daily+workouts">...tracks my daily workouts</a></li>
+				<li><a href="/search?q=teaches+me+how+to+code">...teaches me how to code</a></li>
+				<li><a href="/search?q=handles+customer+appointments">...handles customer appointments</a></li>
+			</ul>->-->
+				<Br/>
+				<input class="submit" type="submit" value="Search"/>
+				
+			</form>
+			<div id="header_text_left">
+				<span>Search</span> for a web application that solves your specific problem.
+			</div>
+			<div id="header_text_right">
+				<span>Browse</span> through our library of web apps by their category.
+			</div>
 		</div>
 	</div>
 		

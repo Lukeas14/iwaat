@@ -148,6 +148,24 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+	var traction_content = "The Traction Index measures the visibility of a web application across the web. It is calculated from several data points, each measuring a small facet of an application's \"Traction\" within social networks, organic search engines, and the media."
+	//Traction index tooltip
+	$(".app_index_wrapper").qtip({
+		content:traction_content,
+		show:'mouseover',
+		hide:'mouseout',
+		position:{
+			corner:{
+				target:'rightMiddle',
+				tooltip:'leftTop'
+			}
+		},
+		style:{
+			name:'cream',
+			tip:'leftTop'
+		}
+	});
+	
 	//Load Facebook button
 	(function(d, s, id) {(function(d, s, id) {
 	  var js, fjs = d.getElementsByTagName(s)[0];

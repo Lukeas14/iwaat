@@ -210,6 +210,7 @@ form span{
 	width:960px;
 	height:65px;
 	margin:0px auto;
+	position:relative;
 }
 #header #logo{
 	float:left;
@@ -239,7 +240,7 @@ form span{
 	border:none;
 	width:505px;
 	height:25px;
-	margin:0 15px;
+	margin:15px 15px;
 	font-size:21px;
 	color:#BBB;
 	font-family: 'Jura', sans-serif;
@@ -263,8 +264,43 @@ form span{
 #header input.submit:hover{
 	opacity:0.5;
 }
+#header_text_left{
+	display:none;
+	position:absolute;
+	width:200px;
+	height:100px;
+	padding:0 0 0 75px;
+	bottom:30px;
+	left:10px;
+	background:url('/images/homepage_sprite.png') 0px 0px no-repeat;
+	font-size:20px;
+	color:#AAA;
+	text-align:left;
+	opacity:0.5;
+}
+#header_text_left span{
+	color:#FFF;
+}
+#header_text_right{
+	display:none;
+	position:absolute;
+	width:200px;
+	height:100px;
+	padding:0 75px 0 0;
+	bottom:30px;
+	right:10px;
+	background:url('/images/homepage_sprite.png') 220px -210px no-repeat;
+	font-size:20px;
+	color:#AAA;
+	text-align:right;
+	opacity:0.5;
+}
+#header_text_right span{
+	color:#FFF;
+}
+
 #header.homepage{
-	height:250px;
+	height:320px;
 	text-align:center;
 }
 #header.homepage #logo{
@@ -279,7 +315,7 @@ form span{
 	display:block;
 	width:930px;
 	height:50px;
-	margin-bottom:20px;
+	margin:20px 0 5px 0;
 	text-align:center;
 	font-size:45px;
 	color:#BBB;
@@ -292,7 +328,7 @@ form span{
 }
 #header.homepage input.submit{
 	height:60px;
-	margin:0 auto;
+	margin:45px auto;
 	padding:0px 30px;
 	
 	background: -moz-linear-gradient(top, #ffffff 0%, #999999 100%); /* FF3.6+ */
@@ -312,7 +348,66 @@ form span{
 #header.homepage input.submit:hover{
 	opacity:0.4;
 }
+#header.homepage #header_text_left{
+	display:block;
+}
+#header.homepage #header_text_right{
+	display:block;
+}
+/* liScroll styles */
 
+#recent_searches{
+	display:inline-block;
+	margin:0px;
+	padding:0px;
+	color:#BBB;
+	font-weight:700;
+	font-size:13px;
+}
+.tickercontainer { /* the outer div with the black border */
+display:inline-block;
+border: 0px solid red;
+background: transparent; 
+width: 430px; 
+height: 20px; 
+margin: 0 auto; 
+padding: 0;
+overflow: hidden; 
+}
+.tickercontainer .mask { /* that serves as a mask. so you get a sort of padding both left and right */
+position: relative;
+left: 10px;
+top: 5px;
+width: 410px;
+overflow: hidden;
+}
+ul.newsticker { /* that's your list */
+position: relative;
+left: 450px;
+font: bold 10px Verdana;
+list-style-type: none;
+margin: 0;
+padding: 0;
+
+}
+ul.newsticker li {
+float: left; /* important: display inline gives incorrect results when you check for elem's width */
+margin: 0;
+padding: 0;
+background: transparent;
+}
+ul.newsticker a {
+	display:block;
+white-space: nowrap;
+padding: 0px 0;
+color: #4890C2;
+font-size:11px;
+font-weight:normal;
+margin: 0 20px;
+} 
+ul.newsticker span {
+margin: 0 10px 0 0;
+} 
 
 /* Notifications */
 #notifications_wrapper{
@@ -442,6 +537,7 @@ form span{
 	text-align:center;
 	background:#FAFFBD;
 	vertical-align:top;
+	opacity:0.9;
 }
 #newsletter_signup{
 	width:940px;
@@ -1002,7 +1098,12 @@ form span{
 	border-bottom-left-radius:10px;
 	border-bottom-right-radius:10px;
 }
-
+.tooltip{
+	z-index: 3;
+	background:#EEE;
+	border:2px solid blue;
+}
+            
 .app_media{
 	position:relative;
 	z-index:100;
