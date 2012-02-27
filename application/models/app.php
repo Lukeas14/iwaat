@@ -399,8 +399,8 @@ class App extends CI_Model{
 
 						case 'twitter_user_timeline':
 							$media_item['relative_datetime'] = get_relative_time($media_item['created_at']);
-							$media_item['profile_image_url'] = $app['media']['twitter_user_data']['profile_image_url'];
-							$media_item['from_user'] = $app['media']['twitter_user_data']['screen_name'];
+							$media_item['profile_image_url'] = (!empty($app['media']['twitter_user_data']['profile_image_url'])) ? $app['media']['twitter_user_data']['profile_image_url'] : '';
+							$media_item['from_user'] = (!empty($app['media']['twitter_user_data']['screen_name'])) ? $app['media']['twitter_user_data']['screen_name'] : '';
 							$app['media']['twitter_feed'][] = $media_item;
 							break;
 						/*case 'twitter_url_mentions':
