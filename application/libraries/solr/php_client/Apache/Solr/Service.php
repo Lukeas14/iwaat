@@ -1202,7 +1202,8 @@ class Apache_Solr_Service
 		$params['wt'] = self::SOLR_WRITER;
 		$params['json.nl'] = $this->_namedListTreatment;
 		
-		$params['q'] = 'id:'.$doc_id;
+		$params['q'] = 'id:(' . $doc_id . ')';
+		$params['fq'] = 'status:active';
 		$params['start'] = $offset;
 		$params['rows'] = $limit;
 		$params['fl'] = 'id,popularity_index,name,slug,tagline,logo,screenshot_small,timestamp,score';
