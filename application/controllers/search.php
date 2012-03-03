@@ -42,6 +42,13 @@ class Search extends MY_Controller {
 		}
 		$this->data['app_results'] = $app_results;
 		
+		//save search
+		$save_search_data = array(
+			'query'			=> $this->data['keywords'],
+			'user_agent'	=> $_SERVER['HTTP_USER_AGENT']
+		);
+		$this->app->save_search($save_search_data);
+		
 		$pagination_config = array(
 			'base_url'				=> '/search?q=' . $this->input->get('q'),
 			'per_page'				=> self::RESULTS_PER_PAGE,
@@ -61,8 +68,6 @@ class Search extends MY_Controller {
 		if(empty($this->data['pagination_links'])){
 			$this->data['pagination_links'] = 1;
 		}
-		
-		//echo"<pre>";print_r($companies);echo"</pre>";
 	
 		$this->load->view('search',$this->data);
 	}
@@ -116,9 +121,6 @@ class Search extends MY_Controller {
 		}
 	
 		$this->load->view('category',$this->data);
-		
-		//echo"<pre>";print_r($app_results->response->docs);echo"</pre>";
-		
 		
 		return;
 	}

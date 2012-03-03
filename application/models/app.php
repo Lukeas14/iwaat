@@ -46,6 +46,20 @@ class App extends CI_Model{
 		return $results;
 	}
 	
+	function save_search($data){
+		foreach(array('query', 'user_agent') as $data_key){
+			if(!empty($data[$data_key])) $this->db->set($data_key, $data[$data_key]);
+			else return false;
+		}
+		
+		if(!empty($data['ip_address'])) $this->db->set('ip_address',  "INET_ATON('" . get_ip_address() . "')", false);
+		
+		$this->db->set('time_searched', 'NOW()', false);
+		
+		$this->db->insert('searches');
+		
+	}
+	
 	function get_related_apps($app_id, $offset = 0, $limit = 10){
 		$this->load->library('solr');
 		
