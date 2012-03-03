@@ -52,7 +52,7 @@ class App extends CI_Model{
 			else return false;
 		}
 		
-		if(!empty($data['ip_address'])) $this->db->set('ip_address',  "INET_ATON('" . get_ip_address() . "')", false);
+		$this->db->set('ip_address',  "INET_ATON('" . get_ip_address() . "')", false);
 		
 		$this->db->set('time_searched', 'NOW()', false);
 		

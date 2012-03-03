@@ -149,8 +149,7 @@ function get_ip_address(){
 
            return $_SERVER["REMOTE_ADDR"];
     }
-	echo"DFDSFDS";
-
+	
 	if (getenv('HTTP_X_FORWARDED_FOR'))
 	   return getenv('HTTP_X_FORWARDED_FOR');
 
