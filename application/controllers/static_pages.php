@@ -4,6 +4,10 @@ class Static_pages extends MY_Controller {
 	
 	public $data;
 	
+	public function about_us(){
+		$this->load->view('about_us', $this->data);
+	}
+	
 	public function contact_us(){
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
