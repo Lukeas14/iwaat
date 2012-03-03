@@ -512,6 +512,8 @@
    <field name="status" type="string" indexed="true" stored="true" required="false" />
    <field name="category" type="string" indexed="true" stored="true" required="false" />
    <field name="category_slug" type="string" indexed="true" stored="true" required="false" />
+   <field name="date_launched" type="date" indexed="true" stored="true" required="false" />
+   <field name="time_added" type="date" indexed="true" stored="true" required="false" />
 
    <!-- catchall field, containing all other searchable text fields (implemented
         via copyField further on in this schema  -->

@@ -28,6 +28,22 @@ class App extends CI_Model{
 		return $results;
 	}
 	
+	function search_apps_by_category($category_slug, $params){
+		$this->load->library('solr');
+		
+		$query = "category_slug:(" . $this->solr->escape_query($category_slug) . ") AND status:(active)";
+				
+		$params['offset'] = (!empty($params['offset'])) ? $params['offset'] : 0;
+		
+		$params['limit'] = (!empty($params['limit'])) ? $params['limit'] : 10;
+		
+		$params['sort'] = (!empty($params['sort'])) ? $params['sort'] : 'score desc';
+		
+		$results = $this->solr->search($query, $params['offset'], $params['limit'], array('sort'=>$params['sort']));
+		
+		return $results;
+	}
+	
 	function get_related_apps($app_id, $offset = 0, $limit = 10){
 		$this->load->library('solr');
 		
@@ -487,6 +503,32 @@ class App extends CI_Model{
 		$query = $this->db->get('categories');
 		
 		return $query->result_array();
+	}
+	
+	function get_categories_by_slug($parent_category = 0, $active = true){
+		$this->load->driver('cache');
+		
+		$memcached_category_id = 'categories_by_slug_' . $parent_category . '_' . $active;
+		if($this->cache->memcached->is_supported()){
+			if(!$categories = $this->cache->memcached->get($memcached_category_id)){
+				$categories = array();
+				$raw_categories = $this->app->get_categories($parent_category, $active);
+				foreach($raw_categories as $raw_category){
+					$categories[$raw_category['slug']] = $raw_category;
+				}
+
+				$this->cache->memcached->save($memcached_category_id, $categories, CACHE_TIME_DAY);
+			}
+		}
+		else{
+			$categories = array();
+			$raw_categories = $this->app->get_categories($parent_category, $active);
+			foreach($raw_categories as $raw_category){
+				$categories[$raw_category['slug']] = $raw_category;
+			}
+		}
+		
+		return $categories;
 	}
 	
 	function get_homepage_apps(){

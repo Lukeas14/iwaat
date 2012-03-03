@@ -46,16 +46,16 @@ $route['add_newsletter_email'] = "home/add_newsletter_email";
 $route['admin'] = "admin/index";
 $route['admin/(.*)'] = "admin/$1";
 
-$route['search'] = "search";
+$route['search'] = "search/index";
+$route['category/(.*)'] = "search/category";
 
 $route['cron/(.*)'] = "cron/$1";
 
-$route['category/(.*)'] = "apps/category";
 $route['app/(.*)'] = "apps/app";
 $route['suggest_app'] = "apps/suggest_app";
 $route['add_app'] = "apps/add_app";
 
-//Contact pages
+$route['about_us'] = "static_pages/about_us";
 $route['contact_us'] = "static_pages/contact_us";
 $route['privacy_policy'] = "static_pages/privacy_policy";
 $route['terms_service'] = "static_pages/terms_service";

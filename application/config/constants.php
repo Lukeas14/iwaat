@@ -4,6 +4,7 @@ define('ADMIN_EMAIL_ADDRESS', 'justin@iwaat.com');
 define('ADMIN_EMAIL_NAME', 'I Want An App That...');
 
 define('CACHE_TIME', 60 * 60);
+define('CACHE_TIME_DAY', 60 * 60 * 24);
 
 define('BASE_DIR', '/var/www/iwaat');
 define('APP_IMAGE_DIR', BASE_DIR . '/public_html/images/apps');

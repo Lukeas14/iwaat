@@ -7,8 +7,8 @@
 			  encoding="UTF-8"/>
   <document>
     <entity name="app" pk="id"
-		query="select apps.id,apps.name,apps.slug,apps.tagline,apps.description,apps.popularity_index,apps.status,categories.name AS category, categories.slug AS category_slug FROM apps LEFT JOIN categories ON apps.category_id = categories.id"
-		deltaImportQuery="select apps.id,apps.name,apps.slug,apps.tagline,apps.description,apps.popularity_index,apps.status,categories.name AS category, categories.slug AS category_slug FROM apps LEFT JOIN categories ON apps.category_id = categories.id WHERE apps.id='${dataimporter.delta.id}'"
+		query="select apps.id,apps.name,apps.slug,apps.tagline,apps.description,apps.popularity_index,apps.status,apps.date_launched,apps.time_added,categories.name AS category, categories.slug AS category_slug FROM apps LEFT JOIN categories ON apps.category_id = categories.id"
+		deltaImportQuery="select apps.id,apps.name,apps.slug,apps.tagline,apps.description,apps.popularity_index,apps.status,apps.date_launched,apps.time_added,categories.name AS category, categories.slug AS category_slug FROM apps LEFT JOIN categories ON apps.category_id = categories.id WHERE apps.id='${dataimporter.delta.id}'"
 		deltaQuery="select id from apps WHERE time_updated > '${dataimporter.last_index_time}'">
 		<field column="id" name="id" />
 		<field column="name" name="name" />
@@ -19,6 +19,8 @@
 		<field column="status" name="status" />
 		<field column="category" name="category" />
 		<field column="category_slug" name="category_slug" />
+		<field column="date_launched" name="date_launched" />
+		<field column="time_added" name="time_added" />
 		<entity name="app_tag" pk="tag_id" query="select tag_id from app_tags where app_id = '${app.id}'">
 			<entity name="tag" pk="id" query="select name from tags where id = '${app_tag.tag_id}'">
 				<field column="name" name="tags" />
