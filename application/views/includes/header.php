@@ -60,7 +60,7 @@
 				<span>Search</span> for a web application that solves your specific problem.
 			</div>
 			<div id="header_text_right">
-				<span>Browse</span> through our library of web apps by their category.
+				<span>Browse</span> through our library of web apps by category.
 			</div>
 		</div>
 	</div>
