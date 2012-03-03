@@ -18,6 +18,7 @@ class Search extends MY_Controller {
 		$search_apps_params = array(
 			'offset'	=> self::RESULTS_PER_PAGE * ($this->data['page'] - 1),
 			'limit'		=> self::RESULTS_PER_PAGE,
+			'sort'		=> ($this->input->get('sort')) ? str_replace('|', ' ', $this->input->get('sort')) : 'score desc'
 		);
 		$app_results = $this->app->search_apps($keywords, $search_apps_params);
 		$this->data['app_total'] = $app_results->response->numFound;

@@ -23,7 +23,9 @@ class App extends CI_Model{
 		
 		$params['limit'] = (!empty($params['limit'])) ? $params['limit'] : 10;
 		
-		$results = $this->solr->search($query, $params['offset'], $params['limit']);
+		$params['sort'] = (!empty($params['sort'])) ? $params['sort'] : 'score desc';
+		
+		$results = $this->solr->search($query, $params['offset'], $params['limit'], array('sort'=>$params['sort']));
 		
 		return $results;
 	}
