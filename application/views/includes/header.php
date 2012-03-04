@@ -43,7 +43,7 @@
 						<span class="yellow">T</span>hat...
 					</div>
 				</a>
-				<input class="text" type="text" name="q" class="text_field" autocomplete="off" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
+				<input class="text" type="text" name="q" class="text_field" autocomplete="off" maxlength="64" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
 				
 			<!--<ul id="search_ticker">
 				<li><a href="/search?q=manages+my+twitter+feed">...manages my twitter feed</a></li>
