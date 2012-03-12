@@ -34,6 +34,8 @@ class Apps extends MY_Controller {
 		$app['related_apps'] = (!empty($related_apps->response->docs)) ? $related_apps->response->docs : array();
 		
 		$this->data['app'] = $app;
+		
+		$this->data['meta']['title'] = $app['name'] . " Profile | IWAAT.com";
 	
 		$this->load->view('app', $this->data);
 	}

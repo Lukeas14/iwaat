@@ -41,6 +41,7 @@ class Search extends MY_Controller {
 			}
 		}
 		$this->data['app_results'] = $app_results;
+		echo"<pre>";print_r($app_results);echo"</pre>";
 		
 		//save search
 		$save_search_data = array(
@@ -57,10 +58,10 @@ class Search extends MY_Controller {
 			'enable_query_string'	=> true,
 			'use_page_numbers'		=> true,
 			'query_string_segment'	=> 'page',
-			'first_link'			=> 'First',
-			'last_link'				=> 'Last',
-			'next_link'				=> 'Next',
-			'prev_link'				=> 'Previous',
+			'first_link'			=> '<< First',
+			'last_link'				=> 'Last >>',
+			'next_link'				=> 'Next >',
+			'prev_link'				=> '<< Previous',
 			'total_rows'			=> $this->data['app_total']
 		);
 		$this->pagination->initialize($pagination_config);
@@ -68,6 +69,8 @@ class Search extends MY_Controller {
 		if(empty($this->data['pagination_links'])){
 			$this->data['pagination_links'] = 1;
 		}
+		
+		$this->data['meta']['title'] = 'Search for "' . $this->data['keywords'] . '"';
 	
 		$this->load->view('search',$this->data);
 	}
@@ -106,10 +109,10 @@ class Search extends MY_Controller {
 			'enable_query_string'	=> true,
 			'use_page_numbers'		=> true,
 			'query_string_segment'	=> 'page',
-			'first_link'			=> 'First',
+			'first_link'			=> '<< First',
 			'last_link'				=> 'Last >>',
 			'next_link'				=> 'Next >',
-			'prev_link'				=> 'Previous',
+			'prev_link'				=> '< Previous',
 			'cur_tag_open'			=> '<strong class="current_page">',
 			'cur_tag_close'		=> '</strong>',
 			'total_rows'			=> $this->data['app_total']
@@ -120,6 +123,8 @@ class Search extends MY_Controller {
 			$this->data['pagination_links'] = 1;
 		}
 	
+		$this->data['meta']['title'] = $category['name'] . " Web Applications | IWAAT.com";
+		
 		$this->load->view('category',$this->data);
 		
 		return;

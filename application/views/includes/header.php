@@ -12,7 +12,8 @@
 	<script type="text/javascript" src="/js/script.js"></script>
 	<script type="text/javascript" src="/js/qtip.js"></script>
 		
-	<title>I Want An App That...</title>
+	<title><?=(!empty($meta['title'])) ? $meta['title'] : "I Want An App That... | IWAAT.com"?></title>
+	<meta name="description" content="<?=(!empty($meta['description'])) ? $meta['description'] : 'IWAAT.com is a web app discovery engine. Our mission is to help you discover and research apps that you may never come across otherwise. At the same time, we hope to provide application creators with increased visibility to potential users.'?>"/>
 </head>
 <body>
 
@@ -43,7 +44,7 @@
 						<span class="yellow">T</span>hat...
 					</div>
 				</a>
-				<input class="text" type="text" name="q" class="text_field" autocomplete="off" maxlength="64" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
+				<input class="text" type="text" name="q" class="text_field" autocomplete="off" maxlength="255" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
 				
 			<!--<ul id="search_ticker">
 				<li><a href="/search?q=manages+my+twitter+feed">...manages my twitter feed</a></li>
