@@ -1,9 +1,9 @@
 <dataConfig>
   <dataSource type="JdbcDataSource" 
               driver="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://localhost/iwaat" 
-              user="jiwaatlucas"
-              password="j23waati$lucas"
+              url="jdbc:mysql://griffey.jaydenlucas.com/iwaat" 
+              user="jliwaatwesley"
+              password="eiof2!J@Issd$I6kfsd4"
 			  encoding="UTF-8"/>
   <document>
     <entity name="app" pk="id"

@@ -61,7 +61,7 @@ switch(ENVIRONMENT){
 		error_reporting(E_ALL);
 		ini_set('display_errors',1);
 		
-		define('DB_HOST', 'localhost');
+		define('DB_HOST', 'griffey');
 		define('DB_USER', 'jliwaatwesley');
 		define('DB_PASS', 'eiof2!J@Issd$I6kfsd4');
 		define('DB_NAME', 'iwaat');
