@@ -34,7 +34,9 @@ class Admin extends MY_Controller {
 		$config['base_url'] = '/admin/apps';
 		$config['per_page'] = '20'; 
 		
-		$this->data['apps'] = $this->app->get_apps(array(), array(), $config['offset'], $config['per_page']);
+		$this->data['apps'] = $this->app->get_apps(array(), array(), $config['offset'], $config['per_page'], 'category_id IS NULL');
+		
+		
 		$config['total_rows'] = $this->data['apps']['total_apps'];
 		
 		$this->pagination->initialize($config);

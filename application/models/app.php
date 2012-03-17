@@ -17,13 +17,13 @@ class App extends CI_Model{
 	function search_apps($query, $params){
 		$this->load->library('solr');
 		
-		$query = $this->solr->escape_query($query) . " AND status:(active)";
-		
 		$params['offset'] = (!empty($params['offset'])) ? $params['offset'] : 0;
 		
 		$params['limit'] = (!empty($params['limit'])) ? $params['limit'] : 10;
 		
 		$params['sort'] = (!empty($params['sort'])) ? $params['sort'] : 'score desc';
+		
+		$params['fq'] = 'status:(active)';
 		
 		$results = $this->solr->search($query, $params['offset'], $params['limit'], array('sort'=>$params['sort']));
 		
@@ -449,12 +449,16 @@ class App extends CI_Model{
 		return $app;
 	}
 	
-	function get_apps($conditions = array(), $joins = array(), $offset = 0, $limit = 10, $having = array(), $order_by = ''){
+	function get_apps($conditions = array(), $joins = array(), $offset = 0, $limit = 10, $having = array(), $order_by = '', $select_false = array()){
 		$this->db->select("SQL_CALC_FOUND_ROWS apps.*", false);  
 
 		if(!empty($conditions)) {  
 			$this->db->where($conditions, NULL);  
 		}  
+		
+		if(!empty($select_false)){
+			$this->db->where($select_false, null, false);
+		}
 		
 		if(!empty($joins)){
 			foreach($joins as $join_table => $join){
