@@ -148,7 +148,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var traction_content = "The Traction Index measures the visibility of a web application across the web. It is calculated from several data points, each measuring a small facet of an application's \"Traction\" within social networks, organic search engines, and the media."
+	var traction_content = "The Traction Index measures the visibility of a web application across the web. It's calculated from several data points, each measuring an application's \"Traction\" within social networks, organic search engines, and the media."
 	//Traction index tooltip
 	$(".app_index_wrapper").qtip({
 		content:traction_content,
