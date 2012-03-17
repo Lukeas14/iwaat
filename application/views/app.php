@@ -40,6 +40,13 @@
 				</p>
 				<?php endif; ?>
 
+				<?php if($app['owner_id'] == 8): ?>
+				<p class="app_claim">
+					<label style="width:auto">Is this your app?</label>
+					<a href="/claim_app/<?=$app['slug']?>">Claim this app</a>
+				</p>
+				<?php endif; ?>
+
 				<!--
 				<?php if(!empty($app['date_launched']) && strtotime($app['date_launched']) > 343311693): ?>
 				<p class="app_url_homepage">

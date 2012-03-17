@@ -39,6 +39,45 @@ class Apps extends MY_Controller {
 	
 		$this->load->view('app', $this->data);
 	}
+
+	public function claim_app(){
+		$this->load->driver('cache');
+
+		$this->load->model('app');
+
+		$app_slug = $this->uri->segment(2);
+		$cache_app_id = 'app_' . $app_slug;
+		if($this->cache->memcached->is_supported()){
+			if(!$app = $this->cache->memcached->get($this->app->get_app_cache_id($app_slug))){
+				$app = $this->app->get_app($app_slug);
+
+				$this->cache->memcached->save($this->app->get_app_cache_id($app_slug), $app, CACHE_TIME);
+			}
+		}
+		else{
+			$app = $this->app->get_app($app_slug);
+		}
+		
+		if(empty($app)){
+			show_404();
+		}
+		elseif($app['status'] != 'active'){
+			show_404();
+		}
+
+		if(!empty($app['urls']['homepage'])){
+			$app_url = parse_url($app['urls']['homepage']);
+			if(!empty($app_url['host'])){
+				$app['hostname'] = $app_url['host'];
+			}
+		}
+
+		$this->data['app'] = $app;
+
+		$this->data['meta']['title'] = "Claim" . $app['name'] . " | IWAAT.com";
+
+		$this->load->view('claim_app', $this->data);
+	}
 	
 	public function suggest_app(){
 		$this->load->helper(array('form', 'url'));

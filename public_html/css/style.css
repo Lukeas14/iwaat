@@ -1102,10 +1102,10 @@ margin: 0 10px 0 0;
 .app_header .app_info .app_logo{
 	display:block;
 	clear:both; 
-	height:205px;
+	height:185px;
 	vertical-align:baseline;
 	text-align:center;
-	line-height:205px;
+	line-height:185px;
 }
 .app_header .app_info .app_logo img{
 	clear:both;
@@ -1465,6 +1465,35 @@ div::-webkit-scrollbar-track {
 }
 .suggest_app_form input.submit{
 	margin-left:7px;
+}
+
+/** Claim App **/
+#claim_app_wrapper{
+	width:960px;
+	margin:0 auto;
+}
+#claim_app_wrapper h1{
+	margin:20px 0 30px 0;
+	color:#666;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#claim_app_logo{
+	float:left;
+	width:300px;
+	height:100px;
+	padding:0 20px 0 0;
+	text-align:right;
+}
+#claim_app_logo img{
+	max-width:200px;
+	max-height:100px;
+}
+#claim_app_text{
+	float:left;
+	width:500px;
+	font-size:13px;
+	color:#666;
 }
 
 /** Login / Register **/
