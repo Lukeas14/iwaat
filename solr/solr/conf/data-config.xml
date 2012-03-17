@@ -1,7 +1,7 @@
 <dataConfig>
   <dataSource type="JdbcDataSource" 
               driver="com.mysql.jdbc.Driver"
-              url="jdbc:mysql://griffey.jaydenlucas.com/iwaat" 
+              url="jdbc:mysql://griffey-private.jaydenlucas.com/iwaat" 
               user="jliwaatwesley"
               password="eiof2!J@Issd$I6kfsd4"
 			  encoding="UTF-8"/>
