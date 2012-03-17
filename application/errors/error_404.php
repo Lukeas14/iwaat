@@ -15,8 +15,19 @@ color:				#000;
 width:316px;
 margin:100px auto;
 border:				#BBB 6px solid;
-background:#FFF url('/images/iwaat_logo.png') no-repeat;
+background:#FFF url('/images/iwaat_logo_small.png') top center no-repeat;
 padding:			10px;
+}
+
+#content #logo_bg{
+	position:relative;
+	top:-10px;
+	left:-10px;
+	width:336px;
+	height:60px;
+	padding:5px 0 0 0;
+	background:#315580;
+	text-align:center;
 }
 
 img.iwaat_logo{
@@ -26,13 +37,15 @@ h1 {
 font-weight:		normal;
 font-size:			20px;
 color:				#990000;
-margin:				35px 0 35px 0;
+margin:				5px 0 35px 0;
 }
 </style>
 </head>
 <body>
 	<div id="content">
-		<br/>
+		<div id="logo_bg">
+			<img src='/images/iwaat_logo_small.png'/>
+		</div>
 		<h1><?php echo $heading; ?></h1>
 		<?php echo $message; ?>
 		You can either <a href="javascript:history.go(-1)"/>Go Back</a> or <a href="http://www.iwaat.com/">Go to the Homepage</a>.
