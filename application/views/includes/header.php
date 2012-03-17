@@ -37,22 +37,10 @@
 			<form action="/search" method="GET" accept-charset="utf-8">
 				<a href="/">
 					<div id="logo">
-						<span class="">I</span>
-						<span class="red">W</span>ant
-						<span class="green">A</span>n
-						<span class="blue">A</span>pp
-						<span class="yellow">T</span>hat...
+						<img src="<?=(isset($is_homepage) && $is_homepage === true) ? '/images/iwaat_logo.png' : '/images/iwaat_logo_small.png'?>"/>
 					</div>
 				</a>
 				<input class="text" type="text" name="q" class="text_field" autocomplete="off" maxlength="255" value="<?=($this->input->get('q')) ? $this->input->get('q') : ''?>"/>
-				
-			<!--<ul id="search_ticker">
-				<li><a href="/search?q=manages+my+twitter+feed">...manages my twitter feed</a></li>
-				<li><a href="/search?q=backs+up+all+my+photos">...backs up all my photos</a></li>
-				<li><a href="/search?q=tracks+my+daily+workouts">...tracks my daily workouts</a></li>
-				<li><a href="/search?q=teaches+me+how+to+code">...teaches me how to code</a></li>
-				<li><a href="/search?q=handles+customer+appointments">...handles customer appointments</a></li>
-			</ul>->-->
 				<Br/>
 				<input class="submit" type="submit" value="Search"/>
 				
