@@ -37,8 +37,44 @@ class Cron extends MY_Controller {
 		//print_r($apps);
 		//echo $this->app->get_screenshot('http://www.setlist.fm');
 	}
-	
+
 	function get_screenshots(){
+		$this->load->model('app');
+
+		$apps = $this->app->get_apps(array(), array('app_urls'=>array('select'=>'url AS homepage_url','condition'=>"apps.id = app_urls.app_id AND app_urls.type = 'homepage' ",'type'=>'left')), 0, 100);
+		foreach($apps['apps'] as $app){
+			if(empty($app['homepage_url'])) continue;
+
+			$screenshot_large_url = sprintf(SCREENSHOT_API_URL, SCREENSHOT_LARGE_WIDTH, SCREENSHOT_LARGE_HEIGHT, $app['homepage_url']);
+			@fopen($screenshot_large_url, 'r');
+			
+			$screenshot_small_url = sprintf(SCREENSHOT_API_URL, SCREENSHOT_SMALL_WIDTH, SCREENSHOT_SMALL_HEIGHT, $app['homepage_url']);
+			@fopen($screenshot_small_url, 'r');
+
+			echo $app['name'] . " - queue\n";
+		}
+
+		sleep(0);
+
+		foreach($apps['apps'] as $app){
+			if(empty($app['homepage_url'])) continue;
+
+			$screenshot_large_url = sprintf(SCREENSHOT_API_URL, SCREENSHOT_LARGE_WIDTH, SCREENSHOT_LARGE_HEIGHT, $app['homepage_url']);
+			$this->app->add_app_image_from_url($app['id'], 'screenshot_large', $screenshot_large_url);
+
+			$screenshot_small_url = sprintf(SCREENSHOT_API_URL, SCREENSHOT_SMALL_WIDTH, SCREENSHOT_SMALL_HEIGHT, $app['homepage_url']);
+			$this->app->add_app_image_from_url($app['id'], 'screenshot_small', $screenshot_small_url);
+
+			echo $app['name'] . " - download\n";
+		}
+
+		echo "done";
+
+
+		exit();
+	}
+	
+	function get_screenshots_old(){
 		$stw_large_base_url = "http://images.shrinktheweb.com/xino.php?stwembed=1&stwaccesskeyid=ca6b061948c9f8b&stwxmax=1024&stwymax=500&stwurl=";
 		$stw_small_base_url = "http://images.shrinktheweb.com/xino.php?stwembed=1&stwaccesskeyid=ca6b061948c9f8b&stwxmax=400&stwymax=300&stwurl=";
 		
