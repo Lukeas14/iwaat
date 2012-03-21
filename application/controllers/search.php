@@ -41,7 +41,6 @@ class Search extends MY_Controller {
 			}
 		}
 		$this->data['app_results'] = $app_results;
-		echo"<pre>";print_r($app_results);echo"</pre>";
 		
 		//save search
 		$save_search_data = array(

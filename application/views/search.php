@@ -32,6 +32,10 @@
 			if(empty($app->popularity_index) || !is_numeric($app->popularity_index)) $app->popularity_index = 'N/A';
 			$index_color = get_index_color($app->popularity_index);
 			$app->description = truncate($app->description, 200);
+			$app_score = ($app->score > 2) ? 2 : (($app->score < 0.2) ? 0.2 : $app->score);
+			$score_width = (round((1 - ($app_score / 2)), 2) * 100) / 2;
+			$score_offset = (100 - $score_width) / 2;
+			
 	?>
 		<a class="search_result" href="/app/<?=$app->slug?>">
 			<div class="search_screenshot" style="background-image:url('<?=$app->screenshot_small?>')"></div>
@@ -42,6 +46,10 @@
 			<div class="search_details_right">
 				<p class="search_description"><?=$app->description?></p>
 			</div>
+			<div class="score_bar_wrapper_left"></div>
+			<div class="score_bar_wrapper_right"></div>
+			<div class="score_bar_left" style="width:<?=($score_width)?>%;"></div>
+			<div class="score_bar_right" style="width:<?=($score_width)?>%;"></div>
 		</a>
 	<?php endforeach; ?>
 	</div>
@@ -71,18 +79,24 @@
 	
 //Open up search result details on hover to show screenshot
 $(".search_result").hover(function(){
-	$(this).children(".search_details_left").animate({
-		left:'-200'
+	$(this).children(".search_details_left, .score_bar_wrapper_left, .score_bar_left").animate({
+		left:'-=200'
 	});
-	$(this).children(".search_details_right").animate({
-		right:'-200'
+	$(this).children(".search_details_right, .score_bar_wrapper_right, .score_bar_right").animate({
+		right:'-=200'
 	});
 }, function(){
 	$(this).children(".search_details_left").animate({
 		left:0
 	});
+	$(this).children(".score_bar_wrapper_left, .score_bar_left").animate({
+		left:'5%'
+	});
 	$(this).children(".search_details_right").animate({
 		right:0
+	});
+	$(this).children(".score_bar_wrapper_right, .score_bar_right").animate({
+		right:'5%'
 	});
 });
 

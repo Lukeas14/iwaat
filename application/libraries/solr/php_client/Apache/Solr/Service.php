@@ -1155,7 +1155,21 @@ class Apache_Solr_Service
 			$params = array();
 		}
 		
-		// construct our full parameters
+		$field_boosts = array(
+			//'text'						=> 2.0,
+			'name'						=> 1.5,
+			'description'				=> 1.3,
+			'tagline'					=> 1.4,
+			'tags'						=> 1.2,
+			'homepage_title'			=> 1.0,
+			'homepage_meta_keywords'	=> 1.0,
+			'homepage_meta_description'	=> 1.0,
+		);
+		$params['qf'] = array();
+		foreach($field_boosts as $fb_name => $fb_val){
+			$params['qf'][] = $fb_name . '^' . $fb_val;
+		}
+		$params['qf'] = implode(' ', $params['qf']);
 
 		// common parameters in this interface
 		$params['wt'] = self::SOLR_WRITER;
@@ -1165,6 +1179,11 @@ class Apache_Solr_Service
 		$params['start'] = $offset;
 		$params['rows'] = $limit;
 		$params['fl'] = '*,score';
+		$params['mm'] = 0;
+		$params['debugQuery'] = 'of';
+		//$params['qf'] = 'text^1.0';
+		//$params['qf'] = 'name^2.0 description^1.5 tagline^1.9 tags^1.7 homepage_title^1.2 homepage_meta_keywords^1.0 homepage_meta_d';
+		$params['defType'] = 'dismax';
 		
 		$queryString = $this->_generateQueryString($params);
 
