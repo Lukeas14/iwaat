@@ -50,6 +50,9 @@
 		<entity name="app_homepage_meta_description" pk="id" query="SELECT data AS homepage_meta_description FROM app_external_media WHERE app_id = '${app.id}' AND type = 'homepage_meta_description'">
 			<field column="homepage_meta_description" name="homepage_meta_description"/>
 		</entity>
+		<entity name="app_homepage_text" pk="id" query="SELECT data AS homepage_text FROM app_external_media WHERE app_id = '${app.id}' AND type = 'homepage_text'">
+			<field column="homepage_text" name="homepage_text"/>
+		</entity>
     </entity>
   </document>
 </dataConfig>

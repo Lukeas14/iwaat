@@ -1164,6 +1164,7 @@ class Apache_Solr_Service
 			'homepage_title'			=> 1.0,
 			'homepage_meta_keywords'	=> 1.0,
 			'homepage_meta_description'	=> 1.0,
+			'homepage_text'				=> 1.0
 		);
 		$params['qf'] = array();
 		foreach($field_boosts as $fb_name => $fb_val){

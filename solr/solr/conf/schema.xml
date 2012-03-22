@@ -517,6 +517,7 @@
    <field name="homepage_title" type="text_en_splitting" indexed="true" stored="false" required="false" termVectors="true" />
    <field name="homepage_meta_keywords" type="text_en_splitting" indexed="true" stored="false" required="false" termVectors="true" />
    <field name="homepage_meta_description" type="text_en_splitting" indexed="true" stored="false" required="false" termVectors="true" />
+   <field name="homepage_text" type="text_en_splitting" indexed="true" stored="false" required="false" termVectors="true" />
    <field name="popularity_index" type="string" indexed="true" stored="true" required="false" />
    <field name="status" type="string" indexed="true" stored="true" required="false" />
    <field name="category" type="string" indexed="true" stored="true" required="false" />
