@@ -1180,7 +1180,7 @@ class Apache_Solr_Service
 		$params['rows'] = $limit;
 		$params['fl'] = '*,score';
 		$params['mm'] = 0;
-		$params['debugQuery'] = 'of';
+		$params['debugQuery'] = 'on';
 		//$params['qf'] = 'text^1.0';
 		//$params['qf'] = 'name^2.0 description^1.5 tagline^1.9 tags^1.7 homepage_title^1.2 homepage_meta_keywords^1.0 homepage_meta_d';
 		$params['defType'] = 'dismax';
