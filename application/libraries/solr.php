@@ -6,7 +6,7 @@ require_once(dirname(__FILE__) . '/solr/php_client/Apache/Solr/Service.php');
 class Solr extends Apache_Solr_Service{
 	
 	function __construct(){
-		parent::__construct('griffey.jaydenlucas.com',8983,'/solr/');
+		parent::__construct(SOLR_HOST, SOLR_PORT,'/solr/');
 	}
 	
 	public function escape_query($query){
