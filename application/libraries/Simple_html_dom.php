@@ -368,6 +368,7 @@ class simple_html_dom_node {
             case HDOM_TYPE_COMMENT: return '';
             case HDOM_TYPE_UNKNOWN: return '';
         }
+        if (strcasecmp($this->tag, 'a')===0) return '';
         if (strcasecmp($this->tag, 'script')===0) return '';
         if (strcasecmp($this->tag, 'style')===0) return '';
 
@@ -845,7 +846,16 @@ class simple_html_dom {
     }
 
     // load html from file
-    function load_file() {
+    function load_file($url) {
+        if($url_contents = file_get_contents($url)){
+            $this->load($url_contents, true);
+        }
+        else{
+            return false;
+        }
+
+
+
         $args = func_get_args();
         $this->load(call_user_func_array('file_get_contents', $args), true);
         // Per the simple_html_dom repositiry this is a planned upgrade to the codebase.

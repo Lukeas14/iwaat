@@ -1,11 +1,13 @@
 <?php
 
+require_once(BASE_DIR . '/application/libraries/Crawler.php');
+
 class Import_data{
 	
 	private $CI; //Codeigniter instance
 	
-	private $sources = array('homepage', 'seomoz', 'twitter', 'facebook', 'blog_rss','compete');
-	//private $sources = array('compete');
+	private $sources = array('crawler', 'seomoz', 'twitter', 'facebook', 'blog_rss','compete');
+	//private $sources = array('crawler');
 	
 	const TWITTER_COUNT_URL = 'http://urls.api.twitter.com/1/urls/count.json?url=%s';
 	const TWITTER_SEARCH_URL = 'http://search.twitter.com/search.json?q=%s';
@@ -20,6 +22,17 @@ class Import_data{
 	
 	const COMPETE_API_KEY = '2e391886a1969cb33b19a34d2aaab2cf';
 	const COMPETE_UV_URL = 'http://apps.compete.com/sites/%s/trended/uv/?apikey=%s&latest=1';
+	
+	const ALEXA_URL = 'http://awis.amazonaws.com/?AWSAccessKeyId=%s
+            &Action=UrlInfo
+            &ResponseGroup=Rank
+            &SignatureMethod=HmacSHA1
+            &SignatureVersion=2
+            &Timestamp=%s
+            &Url=%s
+            &Signature=Wz2UT%2BtCYZghLBmqtkfEpg%2FqrK8%3D';
+	const AWS_ACCESS_KEY = 'AKIAI7WCNVOFIFYCQOIA';
+	const AWS_SECRET_KEY = '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';
 
 	function __construct(){
 		$this->CI =& get_instance();
@@ -105,49 +118,74 @@ class Import_data{
 		return $blog_data;
 	}
 	
-	private function import_homepage_data($app){
+	private function import_crawler_data($app){
 		$homepage_data = array();
 		
 		if(empty($app['homepage_url'])) return $homepage_data;
 		
 		$this->CI->load->library('simple_html_dom');
-		$homepage_dom = file_get_html($app['homepage_url']);
-		
-		if($homepage_dom !== false){
-		
-			//Get plaintext
-			$homepage_text = $homepage_dom->plaintext;
-			$homepage_data[] = array(
-				'type' => 'homepage_text',
-				'data_text' => $this->remove_whitespace($homepage_text)
-			);
+		$homepage_crawler = new Crawler();
 
-			//Get title
-			$homepage_title = $homepage_dom->find('head title', 0);
+		if($homepage_crawler->set_url($app['homepage_url']) !== false){
+
+			$homepage_title =  $homepage_crawler->get_title();
 			if(!empty($homepage_title)){
 				$homepage_data[] = array(
 					'type' => 'homepage_title',
-					'data_text' => $this->remove_whitespace($homepage_title->innertext)
+					'data_text' => $homepage_title
 				);
 			}
 
-			$homepage_meta_keywords = $homepage_dom->find('head meta[name=keywords]', 0);
-				if(!empty($homepage_meta_keywords)){
-					$homepage_data[] = array(
+			$homepage_keywords =  $homepage_crawler->get_keywords();
+			if(!empty($homepage_keywords)){
+				$homepage_data[] = array(
 					'type' => 'homepage_meta_keywords',
-					'data_text' => $this->remove_whitespace($homepage_meta_keywords->content)
+					'data_text' => $homepage_keywords
 				);
 			}
 
-			$homepage_meta_description = $homepage_dom->find('head meta[name=description]', 0);
-			if(!empty($homepage_meta_description)){
+			$homepage_description =  $homepage_crawler->get_description();
+			if(!empty($homepage_description)){
 				$homepage_data[] = array(
 					'type' => 'homepage_meta_description',
-					'data_text' => $this->remove_whitespace($homepage_meta_description->content)
+					'data_text' => $homepage_description
 				);
 			}
+
+			$site_text = '';
+
+			$homepage_text =  $homepage_crawler->get_text();
+			if(!empty($homepage_text)){
+				$site_text = substr($homepage_text, 0, 20000);
+			}
+
+			$exclude_terms = array('terms','privacy');
+			$include_terms = array('about','overview','features','tour','how it works','faq');
+			$homepage_links = $homepage_crawler->get_links($exclude_terms, $include_terms);
+			foreach(array_slice($homepage_links, 0, 10) as $link){
+				$link_crawler = new Crawler();
+				if($link_crawler->set_url($link['full_href']) !== false){
+					$link_text = $link_crawler->get_text();
+					if(!empty($link_text)){
+						$site_text .= substr($link_text, 0, 20000);
+					}
+				}
+				unset($link_crawler);
+
+				sleep(1);
+			}
+			if(!empty($site_text)){
+				$site_text = implode(' ', array_unique(explode(' ', $site_text)));
+				$homepage_data[] = array(
+					'type' => 'homepage_text',
+					'data_text' => $site_text
+				);
+			}
+			
 		}
-		
+
+		unset($homepage_crawler);
+
 		return $homepage_data;
 	}
 	
@@ -252,6 +290,24 @@ class Import_data{
 		}
 		
 		return $facebook_data;
+	}
+	
+	private function import_alexa_data($app){
+		$this->CI->load->library('Alexa','alexa');
+		$alexa_data = array();
+		
+		if(!empty($app['homepage_url'])){
+			$response = $this->CI->alexa->getTrafficInfo($app['homepage_url']);
+			print_r($response);
+			if(!empty($response->TrafficHistoryResult->Alexa->TrafficHistory->HistoricalData->Data->Reach->PerMillion)){
+				$alexa_data[] = array(
+					'type' => 'alexa_reach',
+					'data_numeric' => $response->TrafficHistoryResult->Alexa->TrafficHistory->HistoricalData->Data->Reach->PerMillion
+				);
+			}
+		}
+		print_r($alexa_data);
+		exit();
 	}
 	
 	private function import_compete_data($app){
