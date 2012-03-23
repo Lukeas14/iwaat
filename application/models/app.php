@@ -76,29 +76,29 @@ class App extends CI_Model{
 		$add_app = array();
 		
 		if(isset($data['name'])){
-			$add_app['name'] = $data['name'];
+			$add_app['name'] = $this->security->xss_clean($data['name']);
 		}
 		if(isset($data['slug'])){
-			$add_app['slug'] = $data['slug'];
+			$add_app['slug'] = $this->security->xss_clean($data['slug']);
 		}
 		else{
 			$add_app['slug'] = $this->create_slug($add_app['name']);
 		}
 		$this->app_slug = $add_app['slug'];
 		if(isset($data['tagline'])){
-			$add_app['tagline'] = $data['tagline'];
+			$add_app['tagline'] = $this->security->xss_clean($data['tagline']);
 		}
 		if(isset($data['description'])){
-			$add_app['description'] = $data['description'];
+			$add_app['description'] = $this->security->xss_clean($data['description']);
 		}
 		if(isset($data['phone_number'])){
-			$add_app['phone_number'] = $data['phone_number'];
+			$add_app['phone_number'] = $this->security->xss_clean($data['phone_number']);
 		}
 		if(isset($data['email'])){
-			$add_app['email'] = $data['email'];
+			$add_app['email'] = $this->security->xss_clean($data['email']);
 		}
 		if(isset($data['status'])){
-			$add_app['status'] = $data['status'];
+			$add_app['status'] = $this->security->xss_clean($data['status']);
 		}
 		if(isset($data['date_launched'])){
 			if($data['date_launched'] == ''){
@@ -112,7 +112,7 @@ class App extends CI_Model{
 				$add_app['date_launched'] = date('Y-m-d', $date_launched_unix);
 			}
 		}
-		if(isset($data['owner_id'])){
+		if(isset($data['owner_id']) && is_numeric($data['owner_id'])){
 			$add_app['owner_id'] = $data['owner_id'];
 		}
 		
@@ -131,64 +131,6 @@ class App extends CI_Model{
 		$app_id = $this->db->insert_id();
 		
 		return $app_id;
-		/*
-		ini_set('display_errors', 1);
-		
-		$app_fields = array('company_id','name','tagline','description','phone_number','email','date_launched');
-		$app_values = array();
-		foreach($app_fields as $field){
-			if(!empty($data[$field])) $app_values[$field] = $data[$field];
-			else $app_values[$field] = '';
-		}
-		
-		$app_values['phone_number'] = preg_replace('/[^\d]/', "", $app_values['phone_number']);
-		
-		$app_values['date_launched'] = date("Y-m-d", strtotime($app_values['date_launched']));
-		
-		$app_values['slug'] = $this->create_slug($app_values['name']);
-		
-		$this->db->insert('apps',$app_values);
-		$app_id = $this->db->insert_id();
-		
-		//Add tags
-		$tags = explode(',',trim($data['tags']));
-		
-		$tags = array_slice($tags, 0, 5);
-		foreach($tags as $tag_name){
-			$tag_name = trim($tag_name);
-			
-			$this->db->select('id');
-			$this->db->where('name',$tag_name);
-			$tag_query = $this->db->get('tags');
-			if($tag_query->num_rows() > 0){
-				$tag = $tag_query->row();
-				$tag_id = $tag->id;
-			}
-			else{
-				$this->db->insert('tags',array('name'=>$tag_name));
-				$tag_id = $this->db->insert_id();
-			}
-			
-			$this->db->insert('app_tags',array('app_id'=>$app_id, 'tag_id'=>$tag_id));			
-		}
-		
-		//Add urls
-		foreach($data['urls'] as $url_type => $url){
-			if(empty($url)) continue;
-			$this->db->insert('app_urls', array('app_id'=>$app_id, 'type'=>$url_type, 'url'=>$url));
-		}
-		
-		//Add images
-		if(!empty($data['logo'])){
-			$this->add_app_image($app_id, 'logo', $data['logo']);
-		}
-		foreach($data['screenshot'] as $screenshot){
-			if(!empty($screenshot)){
-				$this->add_app_image($app_id, 'screenshot', $screenshot);
-			}
-		}
-		
-		return $app_id;*/
 	}
 	
 	function add_app_image($app_id, $type, $url, $extension = false){
@@ -575,7 +517,7 @@ class App extends CI_Model{
 		$tag_ids = array();
 		$insert_tags = array();
 		foreach($tags as $tag_name){
-			$tag_name = trim($tag_name);
+			$tag_name = trim($this->security->xss_clean($tag_name));
 			if(empty($tag_name)) continue;
 			
 			$this->db->select('id');
@@ -611,10 +553,10 @@ class App extends CI_Model{
 		foreach($urls as $url_type => $url_val){
 			if(in_array($url_type, array('homepage','blog','rss','affiliate'))){
 				//$url = mysql_real_escape_string(preg_replace('~^(?:f|ht)tps?://~i','', $url_val));
-				$url = mysql_real_escape_string($url_val);
+				$url = mysql_real_escape_string($this->security->xss_clean($url_val));
 			}
 			elseif($url_type == 'twitter'){
-				$url = mysql_real_escape_string($url_val);
+				$url = mysql_real_escape_string($this->security->xss_clean($url_val));
 			}
 			else continue;
 			
@@ -658,22 +600,22 @@ class App extends CI_Model{
 		$update_app = array();
 		
 		if(isset($data['name'])){
-			$update_app['name'] = $data['name'];
+			$update_app['name'] = $this->security->xss_clean($data['name']);
 		}
 		if(isset($data['slug'])){
-			$update_app['slug'] = $data['slug'];
+			$update_app['slug'] = $this->security->xss_clean($data['slug']);
 		}
 		if(isset($data['tagline'])){
-			$update_app['tagline'] = $data['tagline'];
+			$update_app['tagline'] = $this->security->xss_clean($data['tagline']);
 		}
 		if(isset($data['description'])){
-			$update_app['description'] = $data['description'];
+			$update_app['description'] = $this->security->xss_clean($data['description']);
 		}
 		if(isset($data['phone_number'])){
-			$update_app['phone_number'] = $data['phone_number'];
+			$update_app['phone_number'] = $this->security->xss_clean($data['phone_number']);
 		}
 		if(isset($data['email'])){
-			$update_app['email'] = $data['email'];
+			$update_app['email'] = $this->security->xss_clean($data['email']);
 		}
 		if(isset($data['popularity_index'])){
 			if(!is_numeric($data['popularity_index'])){
@@ -692,7 +634,7 @@ class App extends CI_Model{
 			}
 		}
 		if(isset($data['status'])){
-			$update_app['status'] = $data['status'];
+			$update_app['status'] = $this->security->xss_clean($data['status']);
 		}
 		if(isset($data['date_launched'])){
 			if($data['date_launched'] == ''){
@@ -709,7 +651,7 @@ class App extends CI_Model{
 		if(isset($data['crunchbase_permalink'])){
 			$update_app['crunchbase_permalink'] = $data['crunchbase_permalink'];
 		}
-		if(isset($data['owner_id'])){
+		if(isset($data['owner_id']) && is_numeric($data['owner_id'])){
 			$update_app['owner_id'] = $data['owner_id'];
 		}
 		if(isset($data['category_id']) && is_numeric($data['category_id'])){
@@ -744,7 +686,7 @@ class App extends CI_Model{
 	function set_app_url($app_id, $type, $url){
 		if(empty($app_id)) return false;
 		
-		$url = mysql_real_escape_string($url);
+		$url = mysql_real_escape_string($this->security->xss_clean($url));
 		$sql = "
 			INSERT INTO app_urls
 			(app_id, type, url)

@@ -136,6 +136,18 @@ form span{
 	margin:12px 0 0 7px;
 	color:#404040;
 }
+form p.character_count{
+	margin:0px;
+	color:#404040;
+}
+form p.character_count label{
+	margin-top:0px;
+	margin-bottom:0px;
+}
+form p.character_count span{
+	margin:0px 5px 0px 7px;
+}
+
 
 /** Common Wrappers **/
 #wrapper{

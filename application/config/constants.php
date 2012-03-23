@@ -21,6 +21,9 @@ define('SENDGRID_PORT', 587);
 define('SENDGRID_USER', 'Lukeas14');
 define('SENDGRID_PASS', 'Scott2');
 
+define('TAGLINE_MAX_CHARACTERS', 100);
+define('DESCRIPTION_MAX_CHARACTERS', 2500);
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

@@ -6,7 +6,7 @@
 	
 	<div id="account_content">
 		
-		<h1>Edit App - <?=$app['name']?></h1>
+		<h1>Edit App: <?=$app['name']?></h1>
 		
 		<div id="admin_app_form">
 			
@@ -16,19 +16,25 @@
 			<p>
 				<label for="name">Name:</label>
 				<input type="text" name="name" value="<?=set_value('name', $app['name'])?>"/>
-				<a href="/app/<?=$app['slug']?>" target="_blank">View App</a>
+				<?php if($app['status'] == 'active'): ?>
+					<a href="/app/<?=$app['slug']?>" target="_blank">View App</a>
+				<?php endif; ?>
 			</p>
 			<p>
-				<label for="status">Status</label>
+				<label for="status">Status:</label>
 				<span><?=ucwords(str_replace('_', ' ', $app['status']))?></span>
 			</p>
 			<p>
 				<label for="tagline">Tagline:</label>
-				<input type="text" name="tagline" value="<?=set_value('tagline', $app['tagline'])?>"/>
+				<input type="text" name="tagline" maxlength="<?=TAGLINE_MAX_CHARACTERS?>" value="<?=set_value('tagline', $app['tagline'])?>"/>
 			</p>
-			<p>
+			<p style="margin-bottom:0px;">
 				<label for="description">Description:</label>
-				<textarea name="description" rows="8" style="width:450px"><?=set_value('description', $app['description'])?></textarea>
+				<textarea name="description" rows="8" maxlength="<?=DESCRIPTION_MAX_CHARACTERS?>" style="width:450px"><?=set_value('description', $app['description'])?></textarea>
+			</p>
+			<p class="character_count">
+				<label>&nbsp;</label>
+				<span></span> characters left
 			</p>
 			<p>
 				<label for="date_launched">Date Launched:</label>
@@ -92,6 +98,9 @@
 <script type="text/javascript">
 $(function() {
 	$("#admin_app_form input.date_launched").datepicker();
+
+	//Description character count
+	character_count($("textarea[name='description']"), $("p.character_count span"), <?=DESCRIPTION_MAX_CHARACTERS?>);
 });
 </script>
 
