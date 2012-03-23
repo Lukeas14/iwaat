@@ -11,7 +11,7 @@ class Search extends MY_Controller {
 		$this->load->library('pagination');
 		
 		$keywords = $this->input->get('q');
-		$this->data['keywords'] = $keywords;
+		$this->data['keywords'] = $this->security->xss_clean($keywords);
 		
 		$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 1;
 		
@@ -20,7 +20,7 @@ class Search extends MY_Controller {
 			'limit'		=> self::RESULTS_PER_PAGE,
 			'sort'		=> ($this->input->get('sort')) ? str_replace('|', ' ', $this->input->get('sort')) : 'score desc'
 		);
-		$app_results = $this->app->search_apps($keywords, $search_apps_params);
+		$app_results = $this->app->search_apps($this->data['keywords'], $search_apps_params);
 		$this->data['app_total'] = $app_results->response->numFound;
 		
 		foreach($app_results->response->docs as $app_index => &$app){
@@ -78,7 +78,8 @@ class Search extends MY_Controller {
 		$this->load->model('app');
 		$this->load->library('pagination');
 		
-		$this->data['category_slug'] = $this->uri->segment(2);
+		$category_slug = $this->uri->segment(2);
+		$this->data['category_slug'] = $this->security->xss_clean($category_slug);
 		$this->data['categories'] = $this->app->get_categories_by_slug();
 		if(array_key_exists($this->data['category_slug'], $this->data['categories'])){
 			$this->data['category'] = $this->data['categories'][$this->data['category_slug']];
