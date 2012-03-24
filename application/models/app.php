@@ -25,7 +25,7 @@ class App extends CI_Model{
 		
 		$params['fq'] = 'status:(active)';
 		
-		$results = $this->solr->search($query, $params['offset'], $params['limit'], array('sort'=>$params['sort']));
+		$results = $this->solr->search_dismax($query, $params['offset'], $params['limit'], $params);
 		
 		return $results;
 	}

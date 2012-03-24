@@ -80,14 +80,13 @@ class Search extends MY_Controller {
 		
 		$category_slug = $this->uri->segment(2);
 		$this->data['category_slug'] = $this->security->xss_clean($category_slug);
-		$this->data['categories'] = $this->app->get_categories_by_slug();
+		$this->data['categories'] = $this->app->get_categories_by_slug($this->data['category_slug']);
 		if(array_key_exists($this->data['category_slug'], $this->data['categories'])){
 			$this->data['category'] = $this->data['categories'][$this->data['category_slug']];
 		}
 		else{
 			show_404();
 		}
-		
 		$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 1;
 		
 		$search_apps_params = array(
@@ -123,7 +122,7 @@ class Search extends MY_Controller {
 			$this->data['pagination_links'] = 1;
 		}
 	
-		$this->data['meta']['title'] = $category['name'] . " Web Applications | IWAAT.com";
+		$this->data['meta']['title'] = $this->data['category']['name'] . " Web Applications | IWAAT.com";
 		
 		$this->load->view('category',$this->data);
 		
