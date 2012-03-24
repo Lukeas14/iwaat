@@ -4,6 +4,8 @@
 	
 	<h1>Contact Us</h1>
 
+	<p id="contact_text">For questions, concerns or suggestions feel free to use the contact form or email me directly at <a href="mailto:justin@iwaat.com">justin@iwaat.com</a>.</p> 
+
 	<form method="POST" action="">
 		<p>
 			<label for="name">Name:</label>
