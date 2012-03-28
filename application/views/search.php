@@ -28,6 +28,7 @@
 
 	<div id="search_results">
 	<?php 
+	if($app_total > 0):
 		foreach($app_results->response->docs as $app):
 			if(empty($app->popularity_index) || !is_numeric($app->popularity_index)) $app->popularity_index = 'N/A';
 			$index_color = get_index_color($app->popularity_index);
@@ -51,7 +52,14 @@
 			<div class="score_bar_left" style="width:<?=($score_width)?>%;"></div>
 			<div class="score_bar_right" style="width:<?=($score_width)?>%;"></div>
 		</a>
-	<?php endforeach; ?>
+	<?php 
+		endforeach;
+	else:
+	?>
+		<p style="width:100%; text-align:center;">No results found.</p>
+	<?php
+	endif;
+	?>
 	</div>
 
 	<div id="search_footer">
