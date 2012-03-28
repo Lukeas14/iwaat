@@ -11,7 +11,7 @@
 		</p>
 		<p>
 			IWAAT.com is the side project of web developer and wannabe entrepreneur Justin Lucas.
-			What began as a weekend goal to index the <a href="http://www.crunchbase.com">Crunchbase</a> database has slowly expanded into the site IWAAT.com is today.
+			He has worked nights and weekends to expand what began as a search engine of the <a href="http://www.crunchbase.com">Crunchbase</a> database into the site IWAAT.com is today.
 			
 		</p>
 	</div>
