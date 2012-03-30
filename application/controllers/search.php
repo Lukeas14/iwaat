@@ -15,39 +15,44 @@ class Search extends MY_Controller {
 		
 		$this->data['page'] = ($this->input->get('page')) ? $this->input->get('page') : 1;
 		
-		$search_apps_params = array(
-			'offset'	=> self::RESULTS_PER_PAGE * ($this->data['page'] - 1),
-			'limit'		=> self::RESULTS_PER_PAGE,
-			'sort'		=> ($this->input->get('sort')) ? str_replace('|', ' ', $this->input->get('sort')) : 'score desc'
-		);
-		$app_results = $this->app->search_apps($this->data['keywords'], $search_apps_params);
-		$this->data['app_total'] = $app_results->response->numFound;
-		
-		foreach($app_results->response->docs as $app_index => &$app){
-			//Set Logo
-			if(empty($app->logo)){
-				$app->logo = '/images/apps/68/e6e21d348008762a8cfac38e0c3d31f8.png';
-			}
+		if(!empty($this->data['keywords'])){
+			$search_apps_params = array(
+				'offset'	=> self::RESULTS_PER_PAGE * ($this->data['page'] - 1),
+				'limit'		=> self::RESULTS_PER_PAGE,
+				'sort'		=> ($this->input->get('sort')) ? str_replace('|', ' ', $this->input->get('sort')) : 'score desc'
+			);
+			$app_results = $this->app->search_apps($this->data['keywords'], $search_apps_params);
+			$this->data['app_total'] = $app_results->response->numFound;
 			
-			//Set Screenshot
-			if(empty($app->screenshots)){
-				$app->screenshot = '/images/apps/68/fa4d5a4b411cde04e3836f8ccea469dc.jpg';
+			foreach($app_results->response->docs as $app_index => &$app){
+				//Set Logo
+				if(empty($app->logo)){
+					$app->logo = '/images/apps/68/e6e21d348008762a8cfac38e0c3d31f8.png';
+				}
+				
+				//Set Screenshot
+				if(empty($app->screenshots)){
+					$app->screenshot = '/images/apps/68/fa4d5a4b411cde04e3836f8ccea469dc.jpg';
+				}
+				elseif(is_array($app->screenshots)){
+					$app->screenshot = $app->screenshots[0];
+				}
+				else{
+					$app->screenshot = $app->screenshots;
+				}
 			}
-			elseif(is_array($app->screenshots)){
-				$app->screenshot = $app->screenshots[0];
-			}
-			else{
-				$app->screenshot = $app->screenshots;
-			}
+			$this->data['app_results'] = $app_results;
+			
+			//save search
+			$save_search_data = array(
+				'query'			=> $this->data['keywords'],
+				'user_agent'	=> $_SERVER['HTTP_USER_AGENT']
+			);
+			$this->app->save_search($save_search_data);
 		}
-		$this->data['app_results'] = $app_results;
-		
-		//save search
-		$save_search_data = array(
-			'query'			=> $this->data['keywords'],
-			'user_agent'	=> $_SERVER['HTTP_USER_AGENT']
-		);
-		$this->app->save_search($save_search_data);
+		else{
+			$this->data['app_total'] = 0;
+		}
 		
 		$pagination_config = array(
 			'base_url'				=> '/search?q=' . $this->input->get('q'),
