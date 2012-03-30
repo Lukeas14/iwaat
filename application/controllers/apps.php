@@ -15,7 +15,7 @@ class Apps extends MY_Controller {
 			if(!$app = $this->cache->memcached->get($this->app->get_app_cache_id($app_slug))){
 				$app = $this->app->get_app($app_slug);
 
-				$this->cache->memcached->save($this->app->get_app_cache_id($app_slug), $app, CACHE_TIME);
+				$this->cache->memcached->save($this->app->get_app_cache_id($app_slug), $app, CACHE_TIME_DAY);
 			}
 		}
 		else{
