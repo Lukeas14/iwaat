@@ -1284,7 +1284,7 @@ class Apache_Solr_Service
 		$params['rows'] = $limit;
 		$params['fl'] = 'id,popularity_index,name,slug,tagline,logo,screenshot_small,timestamp,score';
 		
-		$params['mlt.fl'] = 'description,tagline,homepage_title,homepage_meta_keywords,homepage_meta_description,homepage_text';
+		$params['mlt.fl'] = 'name,description,tagline,homepage_title,homepage_meta_keywords,homepage_meta_description,homepage_text';
 		$params['mlt.mindf'] = 1;
 		$params['mlt.mintf'] = 1;
 		$params['mlt.match.include'] = 'false';
