@@ -77,7 +77,7 @@
 				<div id="logo">
 					<img src="/images/iwaat_logo_small.png"/>
 				</div>
-				<h1 class='blog_title'>blog</h1>
+				<h1 class='blog_title'>Blog</h1>
 			</a>
 			<a href="/" class="back_to_site">back to site &rarr;</a>
 		</div>

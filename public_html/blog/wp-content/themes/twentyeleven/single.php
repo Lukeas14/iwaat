@@ -25,3 +25,12 @@ get_header(); ?>
 				<?php get_sidebar(); ?>
 
 <?php get_footer(); ?>
+
+<style>
+#disqus_thread{
+	background:#f5f5f5;
+	padding:20px;
+	border-radius:10px;
+	moz-border-radius:10px;
+}
+</style>
