@@ -1,6 +1,6 @@
 <?php $this->load->view('includes/header'); ?>	
 
-<div id="homepage_categories">sdfdsf
+<div id="homepage_categories">
 <?php foreach($homepage_categories as $homepage_category): ?>
 	<?php $category_alt = (!isset($category_alt) || $category_alt == 'odd') ? 'even' : 'odd'; ?>
 	<div class="homepage_category <?=$category_alt?>">
