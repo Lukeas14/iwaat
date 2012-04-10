@@ -39,6 +39,9 @@ switch(ENVIRONMENT){
 		define('SOLR_PORT', 8983);
 		define('SOLR_USERNAME', 'jwasolrat');
 		define('SOLR_PASSWORD', 'joi2!d9s@kd#@d01)#');
+
+		define('MEMCACHED_HOST', '127.0.0.1');
+		define('MEMCACHED_PORT', '11211');
 		break;
 	
 	case 'testing':
@@ -56,6 +59,9 @@ switch(ENVIRONMENT){
 		define('SOLR_PORT', 8983);
 		define('SOLR_USERNAME', 'jwasolrat');
 		define('SOLR_PASSWORD', 'joi2!d9s@kd#@d01)#');
+
+		define('MEMCACHED_HOST', 'woodson.jaydenlucas.com');
+		define('MEMCACHED_PORT', '11204');
 		break;
 	
 	case 'production':
@@ -74,4 +80,7 @@ switch(ENVIRONMENT){
 		define('SOLR_PORT', 8983);
 		define('SOLR_USERNAME', 'jwasolrat');
 		define('SOLR_PASSWORD', 'joi2!d9s@kd#@d01)#');
+
+		define('MEMCACHED_HOST', 'woodson.jaydenlucas.com');
+		define('MEMCACHED_PORT', '11204');
 }

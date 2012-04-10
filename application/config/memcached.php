@@ -3,7 +3,7 @@
 if (!defined('BASEPATH')) exit('No direct script access allowed');
 
   $config['memcached'] = array(
-          'hostname' => '127.0.0.1',
-          'port'        => 11211,
+          'hostname' => MEMCACHED_HOST,
+          'port'        => MEMCACHED_PORT,
           'weight'    => 1
   );
