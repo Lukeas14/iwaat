@@ -418,7 +418,15 @@ class App extends CI_Model{
 		if(!empty($order_by)){
 			$this->db->order_by($order_by);
 		}
+		
+		if(!is_numeric($offset)){
+			$offset = 0;
+		}
 
+		if(!is_numeric($limit)){
+			$limit = 10;
+		}
+		
 		$query = $this->db->get('apps', $limit, $offset);  
 
 		if($query->num_rows() > 0) {
