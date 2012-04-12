@@ -1,6 +1,7 @@
 <div id="account_nav_wrapper">
 	<div id="account_nav">
 		<a href="/account/profile" class="parent_nav <?=($this->uri->segment(2) == 'profile') ? 'selected' : ''?>">My Profile</a>
+		<a href="/account/app_lists" class="parent_nav <?=($this->uri->segment(2) == 'app_lists') ? 'selected' : ''?>">App Lists</a>
 		<a href="/account/add_app" class="parent_nav <?=($this->uri->segment(2) == 'add_app') ? 'selected' : ''?>">Add an Application</a>
 		<a class="parent_nav disabled">My Applications</a>
 		<?php 

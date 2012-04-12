@@ -1671,6 +1671,35 @@ div::-webkit-scrollbar-track {
 	color:#333;
 }
 
+
+/** Account App Lists **/
+.user_app_list_divider{
+	width:100%;
+	margin:35px 0 0px 0;
+	border-top:1px dotted #999;
+}
+#user_app_lists{
+	width:100%;
+	margin:0;
+	padding:0;
+	list-style:none;
+}
+#user_app_lists li{
+	padding:10px 15px;
+}
+#user_app_lists li.even{
+	background:#DDD;
+}
+#user_app_lists li p.app_list_title{
+	display:inline-block;
+	width:555px;
+	color:#333;
+	font-size:14px;
+}
+#user_app_lists li a button{
+	margin:0;
+}
+
 /** Admin **/
 #admin_wrapper{
 	width:960px;

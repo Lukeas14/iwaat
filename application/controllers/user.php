@@ -157,6 +157,27 @@ class User extends MY_Controller {
 		
 		$this->load->view('account_profile', $this->data);
 	}
+
+	public function account_app_lists(){
+		//Is user logged in
+		if(!$this->ion_auth->logged_in()){
+			$this->session->set_flashdata('message', 'Please log in or register to add an application.');
+			$this->session->set_flashdata('redirect', $this->uri->uri_string());
+			redirect('/login_register', 'location');
+		}
+
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+
+		$this->load->model('app_lists');
+
+		//Get app lists
+		$app_list_options = array(
+			'owner_id' => $this->data['user_profile']->id
+		);
+		$this->data['user_app_lists'] = $this->app_lists->get_app_lists($app_list_options);
+		//echo"<pre>";print_r($this->data['user_app_lists']);echo"</prE>";
+		$this->load->view('account_app_lists', $this->data);
+	}
 	
 	public function account_add_app(){
 		if(!$this->ion_auth->logged_in()){
