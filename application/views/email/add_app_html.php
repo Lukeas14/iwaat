@@ -2,7 +2,7 @@
 	<head></head>
 	<body>
 		
-		<img src="http://www.iwaat.com/images/iwaat_logo.png"/>
+		<img src="http://www.iwaat.com/images/iwaat_logo_small.png"/>
 		<h2>Hi <?=$user_profile->username?>,</h2>
 		
 		<strong>Thanks for submitting "<?=$app_data['name']?>" to the I Want An App That... (IWAAT) library.</strong>  

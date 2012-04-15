@@ -2,7 +2,7 @@
 	<head></head>
 	<body>
 		
-		<img src="http://www.iwaat.com/images/iwaat_logo.png"/>
+		<img src="http://www.iwaat.com/images/iwaat_logo_small.png"/>
 		<br/>
 		
 		"<?=$app_data['name']?>" has been added to the  I Want An App That... (IWAAT) library.</strong>

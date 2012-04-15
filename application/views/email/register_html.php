@@ -1,8 +1,8 @@
 <html>
 	<head></head>
-	<body style="background:url('http://www.iwaat.com/images/background.png') repeat;">
+	<body>
 		
-		<img src="http://www.iwaat.com/images/iwaat_logo.png"/>
+		<img src="http://www.iwaat.com/images/iwaat_logo_small.png"/>
 		<h2>Hi <?=$user_data['username']?>,</h2>
 		
 		<strong>Welcome to I Want An App That... (IWAAT).</strong>  
