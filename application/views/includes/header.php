@@ -17,7 +17,7 @@
 
 	<meta property="fb:admins" content="jlukeas"/>
 	<meta property="fb:app_id" content="153127361451027"/>
-	<meta property="og:image" content="http://www.iwaat.com/images/iwaat_logo.png"/>
+	<meta property="og:image" content="http://www.iwaat.com/images/iwaat_avatar.png"/>
 </head>
 <body>
 
