@@ -64,7 +64,9 @@
 				<div id="header_social_buttons" >
 
 					<!-- FB like button-->
-					<div class="fb-like" data-href="http://www.iwaat.com" data-send="false" data-width="50" data-show-faces="false" data-colorscheme="dark"></div>
+					<div id="header_fb_like">
+						<div class="fb-like" data-href="http://www.iwaat.com" data-send="false" data-width="50" data-show-faces="false" data-colorscheme="dark"></div>
+					</div>
 					
 					<!-- Tweet button-->
 					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.iwaat.com" data-via="IWantAnAppThat" data-count="none">Tweet</a>

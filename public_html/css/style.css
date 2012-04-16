@@ -365,6 +365,9 @@ form p.character_count span{
 #header_social_buttons:hover{
 	opacity:1;
 }
+#header_fb_like{
+	height:27px;
+}
 
 /* liScroll styles */
 
