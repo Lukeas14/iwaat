@@ -15,6 +15,8 @@
 	<title><?=(!empty($meta['title'])) ? $meta['title'] : "I Want An App That... | IWAAT.com"?></title>
 	<meta name="description" content="<?=(!empty($meta['description'])) ? $meta['description'] : 'IWAAT.com is a web app discovery engine. Our mission is to help you discover and research apps that you may never come across otherwise. At the same time, we hope to provide application creators with increased visibility to potential users.'?>"/>
 
+	<meta property="fb:admins" content="jlukeas"/>
+	<meta property="fb:app_id" content="153127361451027"/>
 	<meta property="og:image" content="http://www.iwaat.com/images/iwaat_logo.png"/>
 </head>
 <body>
