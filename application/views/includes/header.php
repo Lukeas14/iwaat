@@ -56,6 +56,37 @@
 			<div id="header_text_left">
 				<span>Search</span> for a web application that solves your specific problem.
 			</div>
+			<?php if(isset($is_homepage) && $is_homepage === true): ?>
+				<div id="header_social_buttons" >
+
+					<!-- FB like button-->
+					<div class="fb-like" data-href="http://www.iwaat.com" data-send="false" data-width="50" data-show-faces="false" data-colorscheme="dark"></div>
+					
+					<!-- Tweet button-->
+					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.iwaat.com" data-via="IWantAnAppThat" data-count="none">Tweet</a>
+					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+
+					<!-- Google plus one button -->
+					<g:plusone annotation="none"></g:plusone>
+					<!-- Place this render call where appropriate -->
+					<script type="text/javascript">
+					  (function() {
+					    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+					    po.src = 'https://apis.google.com/js/plusone.js';
+					    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+					  })();
+					</script>
+
+					<div id="fb-root"></div>
+					<script>(function(d, s, id) {
+					  var js, fjs = d.getElementsByTagName(s)[0];
+					  if (d.getElementById(id)) return;
+					  js = d.createElement(s); js.id = id;
+					  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=153127361451027";
+					  fjs.parentNode.insertBefore(js, fjs);
+					}(document, 'script', 'facebook-jssdk'));</script>
+				</div>
+			<?php endif; ?>
 			<div id="header_text_right">
 				<span>Browse</span> through our library of web apps by category.
 			</div>

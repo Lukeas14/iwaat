@@ -352,6 +352,20 @@ form p.character_count span{
 #header.homepage #header_text_right{
 	display:block;
 }
+
+#header_social_buttons{
+	position:absolute;
+	width:55px;
+	overflow:hidden;
+	top:10px;
+	left:0px;
+	text-align:left;
+	opacity:0.6;
+}
+#header_social_buttons:hover{
+	opacity:1;
+}
+
 /* liScroll styles */
 
 #recent_searches{
