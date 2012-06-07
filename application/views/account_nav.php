@@ -2,20 +2,12 @@
 	<div id="account_nav">
 		<a href="/account/profile" class="parent_nav <?=($this->uri->segment(2) == 'profile') ? 'selected' : ''?>">My Profile</a>
 		<a href="/account/add_app" class="parent_nav <?=($this->uri->segment(2) == 'add_app') ? 'selected' : ''?>">Add an Application</a>
+		<?php if(!empty($user_apps['apps'])): ?>
 		<a class="parent_nav disabled">My Applications</a>
-		<?php 
-		if(!empty($user_apps['apps'])):
-			foreach($user_apps['apps'] as $user_app): 
-		?>
+		<?php foreach($user_apps['apps'] as $user_app): ?>
 			<a href="/account/edit_app/<?=$user_app['slug']?>" class="sub_nav <?=($this->uri->segment(3) == $user_app['slug']) ? 'selected' : ''?>"><?=$user_app['name']?></a>
-		<?php 
-			endforeach; 
-		else:
-		?>
-			<a class="sub_nav disabled">None</a>
-		<?php
-		endif;
-		?>
+		<?php endforeach; ?>
+		<?php endif; ?>
 	</div>
 
 	<?php if($this->uri->segment(2) == 'add_app'): ?>
