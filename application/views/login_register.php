@@ -4,6 +4,12 @@
 
 	<div id="login_wrapper">
 		<h1>Login</h1>
+		<div id="social_login_buttons">
+			<!-- Buttons from http://www.turkhitbox.com/photoshop/twitter-facebook-connect-buttons-psd.html -->
+			<a id="fb_login_button" href="hauth/login/Facebook"></a>
+			<a id="tw_login_button" href="hauth/login/Twitter"></a>
+		</div>
+
 		<form action="/login" method="post" accept-charset="utf-8">
 		<div class="login_form">
 			<p>

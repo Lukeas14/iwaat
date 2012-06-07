@@ -445,6 +445,36 @@ class Ion_auth_model extends CI_Model
 	}
 
 	/**
+	 * Create Slug
+	 *
+	 **/
+	public function create_slug($str)
+	{
+		return strtolower(trim(preg_replace('~[^0-9a-z]+~i', '-', html_entity_decode(preg_replace('~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i', '$1', htmlentities($str, ENT_QUOTES, 'UTF-8')), ENT_QUOTES, 'UTF-8')), '-'));
+	}
+
+	/**
+	 * Checks user slug
+	 *
+	 * @return bool
+	 * @author Mathew
+	 **/
+	public function slug_check($slug = '')
+	{
+		$this->trigger_events('slug_check');
+
+		if (empty($slug))
+		{
+			return FALSE;
+		}
+
+		$this->trigger_events('extra_where');
+
+		return $this->db->where('slug', $slug)
+		                ->count_all_results($this->tables['users']) > 0;
+	}
+
+	/**
 	 * Checks email
 	 *
 	 * @return bool
@@ -484,6 +514,20 @@ class Ion_auth_model extends CI_Model
 		                ->count_all_results($this->tables['users']) > 0;
 	}
 
+	public function hauth_user_check($provider, $identifier)
+	{
+		$provider = strtolower($provider) . '_id';
+		$this->db->where($provider, $identifier);
+		if($this->db->count_all_results($this->tables['users']) > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
 	/**
 	 * Insert a forgotten password key.
 	 *
@@ -513,7 +557,7 @@ class Ion_auth_model extends CI_Model
 			$this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_successful'));
 		else
 			$this->trigger_events(array('post_forgotten_password', 'post_forgotten_password_unsuccessful'));
-
+		echo $return;
 		return $return;
 	}
 
@@ -561,13 +605,21 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author Mathew
 	 **/
-	public function register($username, $password, $email, $additional_data = array(), $groups = array())
+	public function register($username, $password, $email, $additional_data = array(), $groups = array(), $provider='iwaat')
 	{
 		$this->trigger_events('pre_register');
 
 		if ($this->identity_column == 'email' && $this->email_check($email))
 		{
-			$this->set_error('account_creation_duplicate_email');
+			if($provider == 'iwaat')
+			{
+				$this->set_error('account_creation_duplicate_email');
+			}
+			else
+			{
+				$this->set_error('account_creation_hauth_duplicate_email');
+			}
+			
 			return FALSE;
 		}
 		elseif ($this->identity_column == 'username' && $this->username_check($username))
@@ -576,6 +628,17 @@ class Ion_auth_model extends CI_Model
 			return FALSE;
 		}
 
+		$slug = $this->create_slug($username);
+		$original_slug = $slug;
+		for($i=0; $this->slug_check($slug); $i++)
+		{
+			if($i > 0)
+			{
+				$slug = $original_slug . $i;
+			}
+		}
+
+		/*
 		// If username is taken, use username1 or username2, etc.
 		if ($this->identity_column != 'username')
 		{
@@ -588,6 +651,7 @@ class Ion_auth_model extends CI_Model
 				}
 			}
 		}
+		*/
 
 		// IP Address
 		$ip_address = $this->input->ip_address();
@@ -597,6 +661,7 @@ class Ion_auth_model extends CI_Model
 		// Users table.
 		$data = array(
 			'username'   => $username,
+			'slug'		 => $slug,
 			'password'   => $password,
 			'email'      => $email,
 			'ip_address' => sprintf('%u', ip2long($ip_address)),
@@ -647,11 +712,11 @@ class Ion_auth_model extends CI_Model
 	 * @return bool
 	 * @author Mathew
 	 **/
-	public function login($identity, $password, $remember=FALSE)
+	public function login($identity, $password='', $remember=FALSE, $provider='iwaat')
 	{
 		$this->trigger_events('pre_login');
 
-		if (empty($identity) || empty($password))
+		if (empty($identity) || ($provider == 'iwaat' && empty($password)))
 		{
 			$this->set_error('login_unsuccessful');
 			return FALSE;
@@ -659,18 +724,36 @@ class Ion_auth_model extends CI_Model
 
 		$this->trigger_events('extra_where');
 
-		$query = $this->db->select('username, email, id, password, active, last_login')
-		                  ->where(sprintf("(username = '%1\$s' OR email = '%1\$s')", $this->db->escape_str($identity)))
-		                  ->limit(1)
-		                  ->get($this->tables['users']);
+		$this->db->select('username, email, id, password, active, last_login');
+
+		switch($provider)
+		{
+			case 'iwaat':
+				$this->db->where(sprintf("(email = '%1\$s')", $this->db->escape_str($identity)));
+				break;
+
+			case 'facebook':
+				$this->db->where(sprintf("(facebook_id = '%1\$s')", $this->db->escape_str($identity)));
+				break;
+
+			case 'twitter':
+				$this->db->where(sprintf("(twitter_id = '%1\$s')", $this->db->escape_str($identity)));
+				break;
+		}
+
+		$this->db->limit(1);
+		$query = $this->db->get($this->tables['users']);
 
 		$user = $query->row();
 
 		if ($query->num_rows() == 1)
 		{
-			$password = $this->hash_password_db($user->id, $password);
+			if($provider == 'iwaat')
+			{
+				$password = $this->hash_password_db($user->id, $password);
+			}
 
-			if ($user->password === $password)
+			if ($provider != 'iwaat' || $user->password === $password)
 			{
                 if ($user->active == 0)
                 {
@@ -1011,7 +1094,7 @@ class Ion_auth_model extends CI_Model
 
 			return FALSE;
 		}
-
+		
 		// Filter the data passed
 		$data = $this->_filter_data($this->tables['users'], $data);
 
@@ -1348,6 +1431,18 @@ class Ion_auth_model extends CI_Model
 	}
 
 	/**
+	* clear_errors
+	*
+	* Clears error messages
+	**/
+	public function clear_errors()
+	{
+		$this->errors = array();
+
+		return;
+	}
+
+	/**
 	 * errors
 	 *
 	 * Get the error message
@@ -1398,4 +1493,5 @@ class Ion_auth_model extends CI_Model
 		
 		return true;
 	}
+
 }

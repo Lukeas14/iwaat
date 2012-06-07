@@ -206,7 +206,7 @@ class Ion_auth
 	 * @return void
 	 * @author Mathew
 	 **/
-	public function register($username, $password, $email, $additional_data = array(), $group_name = array()) //need to test email activation
+	public function register($username, $password, $email, $additional_data = array(), $group_name = array(), $provider='iwaat') //need to test email activation
 	{
 		$this->ci->ion_auth_model->trigger_events('pre_account_creation');
 
@@ -214,7 +214,7 @@ class Ion_auth
 
 		if (!$email_activation)
 		{
-			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name);
+			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name, $provider);
 			if ($id !== FALSE)
 			{
 				$this->set_message('account_creation_successful');
@@ -223,14 +223,18 @@ class Ion_auth
 			}
 			else
 			{
-				$this->set_error('account_creation_unsuccessful');
+				if($provider == 'iwaat')
+				{
+					$this->set_error('account_creation_unsuccessful');
+				}
+				
 				$this->ci->ion_auth_model->trigger_events(array('post_account_creation', 'post_account_creation_unsuccessful'));
 				return FALSE;
 			}
 		}
 		else
 		{
-			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name);
+			$id = $this->ci->ion_auth_model->register($username, $password, $email, $additional_data, $group_name, $provider);
 
 			if (!$id)
 			{
@@ -378,6 +382,44 @@ class Ion_auth
 		}
 
 		return FALSE;
+	}
+
+	/**
+	 * Does this account have a password set by the user (as opposed to one created for an OAuth provider)
+	 */
+	public function is_user_password_set()
+	{
+		$user = $this->user()->row();
+
+		$hauth_password = $this->hash_password_db($user->id, $this->ci->config->item('user_password', 'ion_auth'));
+		return ($hauth_password != $user->password);
+	}
+
+	public function login_options()
+	{
+		$login_options = 0;
+
+		$user = $this->user()->row();
+
+		$hauth_password = $this->hash_password_db($user->id, $this->ci->config->item('user_password', 'ion_auth'));
+		if($hauth_password != $user->password)
+		{
+			$login_options++;
+			//14439660
+			//ec188a3685fdac44479bfd155166bec6d1a3b795
+		}
+
+		$hauth_providers = $this->ci->config->item('hauth_providers', 'ion_auth');
+		foreach(array_keys($hauth_providers) as $hauth_provider)
+		{
+			$provider_id_column = strtolower($hauth_provider) . '_id';
+			if($user->{$provider_id_column} != 0)
+			{
+				$login_options++;
+			}
+		}
+
+		return $login_options;
 	}
 
 }
