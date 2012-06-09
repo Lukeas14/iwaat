@@ -40,6 +40,7 @@
 		<?php endif; ?>
 
 		<footer class="entry-meta">
+			<!--
 			<?php $show_sep = false; ?>
 			<?php if ( 'post' == get_post_type() ) : // Hide category and tag text for pages on Search ?>
 			<?php
@@ -74,5 +75,6 @@
 			<?php endif; // End if comments_open() ?>
 
 			<?php edit_post_link( __( 'Edit', 'twentyeleven' ), '<span class="edit-link">', '</span>' ); ?>
+			-->
 		</footer><!-- #entry-meta -->
 	</article><!-- #post-<?php the_ID(); ?> -->
