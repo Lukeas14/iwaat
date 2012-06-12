@@ -18,6 +18,7 @@
 $lang['account_creation_successful'] 	  	 = 'Account Successfully Created';
 $lang['account_creation_unsuccessful'] 	 	 = 'Unable to Create Account.';
 $lang['account_creation_duplicate_email'] 	 = 'Email Already Used or Invalid.  ';
+$lang['account_creation_hauth_duplicate_email'] = 'Email Already Used or Invalid.  If you\'ve already created an account with this email please login to connect a social media profile.  ';
 $lang['account_creation_duplicate_username'] 	 = 'Username Already Used or Invalid';
 
 

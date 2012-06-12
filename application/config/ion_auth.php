@@ -158,6 +158,21 @@
 	 * Error End Delimiter
 	 **/
 	$config['error_end_delimiter'] = '</p>';
+
+	/**
+	 * Hauth Providers
+	 **/
+	$config['hauth_providers'] = array(
+		'Facebook'	=> array('prefix' => 'fb_'),
+		'Twitter'	=> array('prefix' => 'tw_')
+	);
+
+	/**
+	 * Hauth Password
+	 * PAssword to use for Hauth users.
+	 * DO NOT EVER CHANGE!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	 **/
+	$config['user_password'] = 'hauth23j9j3r22';
 	
 /* End of file ion_auth.php */
 /* Location: ./system/application/config/ion_auth.php */

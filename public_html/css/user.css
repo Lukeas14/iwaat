@@ -1,0 +1,153 @@
+#login_register_wrapper{
+	width:960px;
+	margin:40px auto;
+}
+#login_register_wrapper h1{
+	margin:0px 0 10px 140px;	
+	color:#666;
+	font-size:18px;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#login_register_wrapper label{
+	width:125px;
+}
+#login_wrapper{
+	float:left;
+	width:449px;
+	height:350px;
+	padding:0px 15px;
+	border-right:1px solid #BBB;
+	overflow:none;
+}
+#register_wrapper{
+	float:right;
+	width:449px;
+	height:350px;
+	padding:0px 15px;
+	border-left:1px solid #FAFAFA;
+	overflow:none;
+}
+
+#social_login_buttons{
+	margin-left:140px;
+	text-align:center;
+}
+#social_login_buttons a{
+	opacity:0.7;
+	display:block;
+	width:202px;
+	height:36px;
+	background:url('/images/social_buttons.png') no-repeat;
+}
+#social_login_buttons a:hover{
+	opacity:1;
+}
+
+#social_login_buttons a#fb_login_button{
+	background-position:0px 0px;
+}
+#social_login_buttons a#tw_login_button{
+	margin-top:15px;
+	background-position:0px -50px;
+}
+
+/* Account Profile Edit */
+.social_connect_button{
+	float:left;
+	display:block;
+	width:282px;
+	height:32px;
+	margin:5px 0 0 5px;
+	background:url('/images/social_buttons.png') no-repeat;
+	opacity:0.7;
+}
+.social_connect_button#connect_fb{
+	background-position:0px -150px;
+}
+.social_connect_button#fb_connected{
+	background-position:0px -250px;
+}
+.social_connect_button.disconnectable#fb_connected:hover{
+	background-position:0px -350px;
+	opacity:1;
+}
+.social_connect_button#connect_tw{
+	background-position:0px -100px;
+}
+.social_connect_button#tw_connected{
+	background-position:0px -200px;
+}
+.social_connect_button.disconnectable#tw_connected:hover{
+	background-position:0px -300px;
+	opacity:1;
+}
+.social_connect_button#connect_fb:hover, .social_connect_button#connect_tw:hover{
+	opacity:1;
+}
+
+/** Set Password **/
+#set_password_wrapper{
+	width:760px;
+	margin:40px auto;
+}
+#set_password_wrapper p{
+	color:#666;
+}
+#set_password_wrapper h1{
+	margin:0px 0 10px 0px;	
+	color:#666;
+	font-size:18px;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#set_password_form{
+	margin:40px 0 0 150px;
+}
+#set_password_wrapper label{
+	width:125px;
+}
+
+/** Change Password **/
+#change_password_wrapper{
+	width:760px;
+	margin:40px auto;
+}
+#change_password_wrapper p{
+	color:#666;
+}
+#change_password_wrapper h1{
+	margin:0px 0 10px 0px;	
+	color:#666;
+	font-size:18px;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#change_password_form{
+	margin:40px 0 0 150px;
+}
+#change_password_wrapper label{
+	width:125px;
+}
+
+/** Forgot Password **/
+#forgot_password_wrapper{
+	width:760px;
+	margin:40px auto;
+}
+#forgot_password_wrapper p{
+	color:#666;
+}
+#forgot_password_wrapper h1{
+	margin:0px 0 10px 0px;	
+	color:#666;
+	font-size:18px;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF;
+}
+#forgot_password_form{
+	margin:40px 0 0 0px;
+}
+#forgot_password_wrapper label{
+	width:125px;
+}

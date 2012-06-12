@@ -7,12 +7,19 @@ class User extends MY_Controller {
 	);
 	
 	public function login_register(){
+		if ($this->ion_auth->logged_in())
+		{
+			redirect('/account/profile');
+		}
+
 		$this->load->helper(array('form', 'url'));
 		$this->load->library('form_validation');
 		
 		$redirect = ($this->session->flashdata('redirect') !== false) ? $this->session->flashdata('redirect') : '/account/profile';
 		$this->session->set_flashdata('redirect', $redirect);		
 		
+		$this->set_css('user.css');
+
 		$this->load->view('login_register', $this->data);
 	}
 	
@@ -52,13 +59,13 @@ class User extends MY_Controller {
 		$this->load->library('form_validation');
 		
 		$this->form_validation->set_rules('register_first_name', 'First Name', 'trim|required|xss_clean|max_length[64]');
-		$this->form_validation->set_rules('register_last_name', 'Last Name', 'trim|required|xss_clean|max_length[64]');
+		$this->form_validation->set_rules('register_last_name', 'Last Name', 'trim|xss_clean|max_length[64]');
 		$this->form_validation->set_rules('register_email', 'Email Address', 'trim|required|valid_email');
 		$this->form_validation->set_rules('register_password', 'Password', 'trim|required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[register_confirm_password]');
 		$this->form_validation->set_rules('register_confirm_password', 'Confirm Password', 'trim|required');
 		
 		if($this->form_validation->run() === true){
-			$username = $this->input->post('register_first_name') . ' ' . $this->input->post('register_last_name');
+			$username = trim($this->input->post('register_first_name') . ' ' . $this->input->post('register_last_name'));
 			$email = $this->input->post('register_email');
 			$password = $this->input->post('register_password');
 			
@@ -154,6 +161,12 @@ class User extends MY_Controller {
 		
 		$this->data['user_profile'] = $this->ion_auth->user()->row();
 		$this->data['user_apps'] = $this->app->get_apps(array('owner_id'=>$this->data['user_profile']->id));
+		
+		//Check if a user password is set
+		$hauth_password = $this->ion_auth->hash_password_db($this->data['user_profile']->id, $this->config->item('user_password', 'ion_auth'));
+		$this->data['user_password_set'] = ($hauth_password != $this->data['user_profile']->password);
+
+		$this->set_css('user.css');
 		
 		$this->load->view('account_profile', $this->data);
 	}
@@ -391,13 +404,53 @@ class User extends MY_Controller {
 		$this->load->view('suggest_app', $this->data);
 	}
 	
+	function set_password()
+	{
+		if(!$this->ion_auth->logged_in())
+		{
+			show_404();
+		}
+
+		$this->load->helper(array('form','url'));
+		$this->load->library('form_validation');
+
+		$this->data['user_profile'] = $this->ion_auth->user()->row();
+
+		if($this->ion_auth->is_user_password_set())
+		{
+			show_404();
+		}
+
+		$this->form_validation->set_rules('new_password', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_password_confirm]');
+		$this->form_validation->set_rules('new_password_confirm', 'Confirm New Password', 'required');
+		
+		if($this->form_validation->run() === true){
+			$identity = $this->session->userdata($this->config->item('identity','ion_auth'));
+			
+			$change = $this->ion_auth->change_password($identity, $this->config->item('user_password', 'ion_auth'), $this->input->post('new_password'));
+			if($change){
+				$this->session->set_flashdata('confirm', 'Your new password has been set.');
+				redirect('/account/profile', 'location');
+			}
+			else{
+				$this->session->set_flashdata('error', $this->ion_auth->errors());
+				redirect('/account/set_password', 'location');
+			}
+		}
+		else{
+			$this->data['notifications']['error'] = $this->form_validation->get_errors();
+		}
+
+		$this->set_css('user.css');
+
+		$this->load->view('account_set_password', $this->data);
+	}
+
 	function change_password()
 	{
 		if (!$this->ion_auth->logged_in())
 		{
-			$this->session->set_flashdata('message', 'Please log in or register to change your password.');
-			$this->session->set_flashdata('redirect', $this->uri->uri_string());
-			redirect('/login_register');
+			show_404();
 		}
 		
 		$this->load->helper(array('form', 'url'));
@@ -405,6 +458,11 @@ class User extends MY_Controller {
 		
 		$this->data['user_profile'] = $this->ion_auth->user()->row();
 		
+		if(!$this->ion_auth->is_user_password_set())
+		{
+			show_404();
+		}
+
 		$this->form_validation->set_rules('old', 'Old password', 'required');
 		$this->form_validation->set_rules('new', 'New Password', 'required|min_length[' . $this->config->item('min_password_length', 'ion_auth') . ']|max_length[' . $this->config->item('max_password_length', 'ion_auth') . ']|matches[new_confirm]');
 		$this->form_validation->set_rules('new_confirm', 'Confirm New Password', 'required');
@@ -425,7 +483,9 @@ class User extends MY_Controller {
 		else{
 			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
-		
+
+		$this->set_css('user.css');
+
 		$this->load->view('account_change_password', $this->data);
 	}
 	
@@ -439,12 +499,14 @@ class User extends MY_Controller {
 		
 		if($this->form_validation->run() === true){
 			$forgotten = $this->ion_auth->forgotten_password($this->input->post('email'));
-			
+			echo $forgotten;
 			if($forgotten){
+				echo"here";exit();
 				$this->session->set_flashdata('confirm', $this->ion_auth->messages());
 				redirect('/login_register', 'location');
 			}
 			else{
+				echo"there";exit();
 				$this->session->set_flashdata('error', $this->ion_auth->errors());
 				redirect('/account/forgot_password', 'location');
 			}
@@ -452,6 +514,8 @@ class User extends MY_Controller {
 		else{
 			$this->data['notifications']['error'] = $this->form_validation->get_errors();
 		}
+
+		$this->set_css('user.css');
 		
 		$this->load->view('/account_forgot_password', $this->data);
 	}

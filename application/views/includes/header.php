@@ -3,14 +3,17 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	
-	<link rel="stylesheet" href="/css/style.css" type="text/css" media="screen"/>
-	<link rel="stylesheet" href="/css/jquery-ui-1.8.16.custom.css" type="text/css" media="screen"/>
+	<?php if(!empty($this->css_files)): ?>
+		<link rel="stylesheet" href="/min/?b=css&f=<?=implode(',', $this->css_files)?>" type="text/css" media="screen"/>
+	<?php endif; ?>
+
 	<link href='http://fonts.googleapis.com/css?family=Jura' rel='stylesheet' type='text/css'>
 
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/jquery-ui-1.8.16.custom.min.js"></script>
-	<script type="text/javascript" src="/js/script.js"></script>
-	<script type="text/javascript" src="/js/qtip.js"></script>
+
+	<?php if(!empty($this->js_files)): ?>
+		<script type="text/javascript" src="/min/?b=js&f=<?=implode(',', $this->js_files)?>"></script>
+	<?php endif; ?>
 		
 	<title><?=(!empty($meta['title'])) ? $meta['title'] : "I Want An App That... | IWAAT.com"?></title>
 	<meta name="description" content="<?=(!empty($meta['description'])) ? $meta['description'] : 'IWAAT.com is a web app discovery engine. Our mission is to help you discover and research apps that you may never come across otherwise. At the same time, we hope to provide application creators with increased visibility to potential users.'?>"/>
@@ -71,6 +74,8 @@
 					<!-- Tweet button-->
 					<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://www.iwaat.com" data-via="IWantAnAppThat" data-count="none">Tweet</a>
 					<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+					
+					<br/>
 
 					<!-- Google plus one button -->
 					<g:plusone annotation="none"></g:plusone>

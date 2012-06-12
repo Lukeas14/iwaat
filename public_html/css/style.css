@@ -1,14 +1,3 @@
-	
-	background: -moz-linear-gradient(top, # 0%, # 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#), color-stop(100%,#)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, # 0%,# 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, # 0%,# 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, # 0%,# 100%); /* IE10+ */
-	background: linear-gradient(top, # 0%,# 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#', endColorstr='#',GradientType=0 ); /* IE6-9 */
-	
-	*{margin:0; padding:0;}
-
 html{
 	height:100%;
 }
@@ -356,7 +345,7 @@ form p.character_count span{
 
 #header_social_buttons{
 	position:absolute;
-	width:55px;
+	width:225px;
 	overflow:hidden;
 	top:10px;
 	left:0px;
@@ -1525,82 +1514,6 @@ div::-webkit-scrollbar-track {
 	width:500px;
 	font-size:13px;
 	color:#666;
-}
-
-/** Login / Register **/
-#login_register_wrapper{
-	width:960px;
-	margin:40px auto;
-}
-#login_register_wrapper h1{
-	margin:0px 0 10px 140px;	
-	color:#666;
-	font-size:18px;
-	font-weight:normal;
-	text-shadow:1px 1px #FFF;
-}
-#login_register_wrapper label{
-	width:125px;
-}
-#login_wrapper{
-	float:left;
-	width:449px;
-	height:300px;
-	padding:0px 15px;
-	border-right:1px solid #BBB;
-	overflow:none;
-}
-#register_wrapper{
-	float:right;
-	width:449px;
-	height:300px;
-	padding:0px 15px;
-	border-left:1px solid #FAFAFA;
-	overflow:none;
-}
-
-/** Change Password **/
-#change_password_wrapper{
-	width:760px;
-	margin:40px auto;
-}
-#change_password_wrapper p{
-	color:#666;
-}
-#change_password_wrapper h1{
-	margin:0px 0 10px 0px;	
-	color:#666;
-	font-size:18px;
-	font-weight:normal;
-	text-shadow:1px 1px #FFF;
-}
-#change_password_form{
-	margin:40px 0 0 0px;
-}
-#change_password_wrapper label{
-	width:125px;
-}
-
-/** Forgot Password **/
-#forgot_password_wrapper{
-	width:760px;
-	margin:40px auto;
-}
-#forgot_password_wrapper p{
-	color:#666;
-}
-#forgot_password_wrapper h1{
-	margin:0px 0 10px 0px;	
-	color:#666;
-	font-size:18px;
-	font-weight:normal;
-	text-shadow:1px 1px #FFF;
-}
-#forgot_password_form{
-	margin:40px 0 0 0px;
-}
-#forgot_password_wrapper label{
-	width:125px;
 }
 
 /** Account **/
