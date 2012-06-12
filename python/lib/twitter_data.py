@@ -1,6 +1,8 @@
 import tweepy
 import sys
 import pprint
+import datetime
+import time
 from lib import app_model
 
 
@@ -13,6 +15,11 @@ class TwitterData:
 	ACCESS_TOKEN_SECRET = 'BA39Wg8aTNixm9mRaevkRr4AjKsFt1D0BLvJcIXaRE'
 
 	twitter_tweet_url = "https://twitter.com/#!/%s/status/%s"
+
+	tweet_queue = []
+	tweet_queue_last_import = time.time()
+	tweet_queue_size_limit = 10
+	tweet_queue_time_limit = 180 #in seconds
 
 	def __init__(self, app=None):
 
@@ -61,10 +68,7 @@ class TwitterData:
 			return url[:length] + '...'
 
 	def integrate_entities(self, plain_text, entities, display_text='', offset=0):
-		pprint.pprint(entities)
-		
-		display_text = ''
-		offset = 0
+		parsed_entities = []
 
 		for entity_type, entity_list in entities.iteritems():
 			if not entity_list:
@@ -86,9 +90,18 @@ class TwitterData:
 				if not entity_text:
 					break
 
-				display_text = display_text + plain_text[offset:entity['indices'][0]] + entity_text 
+				parsed_entities.append({
+					'type'		: entity_type,
+					'text'		: entity_text,
+					'indices'	: entity['indices']
+				})
 
-				offset = entity['indices'][1]
+		display_text = ''
+		offset = 0
+
+		for entity in sorted(parsed_entities, key=lambda entity: entity['indices'][0]):
+			display_text = display_text + plain_text[offset:entity['indices'][0]] + entity['text']
+			offset = entity['indices'][1]
 
 		display_text = display_text + plain_text[offset:]
 
@@ -97,11 +110,16 @@ class TwitterData:
 	def save_tweet(self, status):
 		if status.user.id_str in self.apps:
 			app_tweet = {
-				'type'		: 'app_tweet',
-				'app_id'	: self.apps[status.user.id_str]
+				'type'			: 'app_tweet',
+				'app_id'		: self.apps[status.user.id_str],
+				'updates'		: [],
+				'time_added'	: datetime.datetime.now(),
+				'time_updated'	: datetime.datetime.now()
 			}
-			
+		
 		else:
+			return
+			'''
 			app_tweet = {
 				'type'		: 'mention_tweet'
 			}
@@ -111,23 +129,32 @@ class TwitterData:
 				if user_mention['id_str'] in self.apps:
 					app_tweet['app_id'] = self.apps[user_mention['id_str']]
 					break
-		
+			'''
 
 		tweet_attributes = {
-			'id'						: 'twitter_tweet_id',
-			'text'						: 'twitter_tweet_text',
+			'id'						: 'tweet_id',
+			'text'						: 'raw_text',
 			'created_at'				: 'time_posted',
 			'user.screen_name'			: 'twitter_screen_name',
 			'user.name'					: 'twitter_full_name',
 			'user.profile_image_url'	: 'twitter_profile_image'
 		}
 		for twitter_attr, discussion_attr in tweet_attributes.iteritems():
-			if hasattr(status, twitter_attr):
-				app_tweet[discussion_attr] = eval('status. ' + twitter_attr)
+			#if hasattr(status, twitter_attr):
+			if eval('status.' + twitter_attr):
+				app_tweet[discussion_attr] = eval('status.' + twitter_attr)
 
-		app_tweet['text'] = self.integrate_entities(app_tweet['twitter_tweet_text'], status.entities)
+		app_tweet['parsed_text'] = self.integrate_entities(app_tweet['raw_text'], status.entities)
 
-		pprint.pprint(app_tweet)
+		self.tweet_queue.append(app_tweet)
+
+		#If tweet queue size or time limit has been reached then import the queue into MongoDB
+		if len(self.tweet_queue) >= self.tweet_queue_size_limit or time.time() >= (self.tweet_queue_last_import + self.tweet_queue_time_limit):
+			app_model.set_discussions(self.tweet_queue)
+			print "importing " + str(len(self.tweet_queue)) + "tweets\n"
+
+			self.tweet_queue = []
+			self.tweet_queue_last_import = time.time()
 
 	class StreamListener(tweepy.StreamListener):
 
@@ -139,7 +166,6 @@ class TwitterData:
 
 	        	#Don't save empty tweets
 	        	if not status.text:
-	        		print 'empty text'
 	        		return True
 
 	        	self.save_tweet(status)

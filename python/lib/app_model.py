@@ -105,6 +105,9 @@ def get_apps_with_twitter_id():
 
 	return query_result
 
+def set_discussion(discussion):
+	return set_discussions([discussion])
+
 def set_discussions(discussions):
 	discussions_collection.insert(discussions)
 
