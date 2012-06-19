@@ -3,7 +3,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, backref
 from sqlalchemy import Column, Integer, String, DateTime, Enum, Text, ForeignKey, sql, exc
 import datetime
-
+import pprint
 import pymongo
 from pymongo import Connection
 
@@ -97,6 +97,27 @@ def get_latest_app_tweet(app_id):
 	latest_app_tweet = discussions_collection.find_one({'app_id':app_id, 'type':'app_tweet'}, sort=[('time_posted', pymongo.DESCENDING)])
 	return latest_app_tweet
 
+def get_offset_app_tweet(app_id, offset = 10, fields=['_id'], date_range = False):
+	if not app_id or not offset or not fields:
+		return False
+	if date_range:
+		offset_app_tweet = discussions_collection.find_one({'app_id':app_id, 'type':'app_tweet', 'time_posted':{'$gte':date_range[0], '$lte':date_range[1]}}, sort=[('time_posted', pymongo.DESCENDING)], fields=fields, skip=offset)
+	else:
+		offset_app_tweet = discussions_collection.find_one({'app_id':app_id, 'type':'app_tweet'}, sort=[('time_posted', pymongo.DESCENDING)], fields=fields, skip=offset)
+	return offset_app_tweet
+
+def get_offset_blog_post(app_id, offset = 10, fields=['_id']):
+	if not app_id or not offset or not fields:
+		return False
+	offset_blog_post = discussions_collection.find_one({'app_id':app_id, 'type':'blog_post'}, sort=[('time_posted', pymongo.DESCENDING)], fields=fields, skip=offset)
+	return offset_blog_post
+
+def get_latest_blog_post_link(app_id):
+	if not app_id:
+		return False
+	blog_post_link = discussions_collection.find_one({'app_id':app_id, 'type':'blog_post'}, fields=['link'], sort=[('time_posted', pymongo.DESCENDING)])
+	return blog_post_link
+
 def get_apps_with_twitter_id():
 	query_result = session.query(App.id.label('app_id'), AppUrl.url.label('twitter_id')).\
 		join(AppUrl, App.id == AppUrl.app_id).\
@@ -149,3 +170,14 @@ def set_external_data(app_id, type, data):
 		print 'Error'
 
 	return update_result
+
+def delete_app_tweets(app_id, tweet_id, direction='$lte', date_range=False):
+	if date_range:
+		discussions_collection.remove({'app_id':app_id, 'time_posted':{'$gte':date_range[0], '$lte':date_range[1]}, '_id': {direction:tweet_id}})
+	else:
+		discussions_collection.remove({'app_id':app_id, '_id': {direction:tweet_id}})
+	return True
+
+def delete_blog_posts(app_id, time_posted, direction='$lte'):
+	discussions_collection.remove({'app_id':app_id, 'time_posted':{direction:time_posted}})
+	return True	

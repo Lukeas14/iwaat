@@ -3,6 +3,8 @@ import feedparser
 import pprint
 from dateutil.parser import parse
 import tweepy
+import pprint
+from bs4 import BeautifulSoup
 
 class ExternalData:
 
@@ -19,7 +21,7 @@ class ExternalData:
 
 		feedparser.USER_AGENT = self.user_agent
 
-	def get_blog_posts(self, post_limit=20, post_max_length=10000):
+	def get_blog_posts(self, post_limit=20, post_max_length=10000, latest_blog_post_link=False):
 
 		if 'rss' not in self.app_urls or not self.app_urls['rss']:
 			return False
@@ -31,6 +33,11 @@ class ExternalData:
 
 		feed_entries = []
 		for entry in feed_data.entries[:post_limit]:
+
+			#Stop when link is found in database
+			if latest_blog_post_link and entry.link == latest_blog_post_link['link']:
+				break
+
 			feed_entry = {
 				'type'		: 'blog_post',
 				'app_id'	: self.app.id
@@ -49,6 +56,10 @@ class ExternalData:
 				feed_entry['content'] = entry.summary[:post_max_length]
 			elif entry.has_key('content'):
 				feed_entry['content'] = entry.content[:post_max_length]
+			else:
+				continue
+
+			feed_entry['content'] = ' '.join(''.join(BeautifulSoup(feed_entry['content']).findAll(text=True)).split())
 
 			feed_entries.append(feed_entry)
 

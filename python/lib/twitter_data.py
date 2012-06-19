@@ -151,7 +151,7 @@ class TwitterData:
 		#If tweet queue size or time limit has been reached then import the queue into MongoDB
 		if len(self.tweet_queue) >= self.tweet_queue_size_limit or time.time() >= (self.tweet_queue_last_import + self.tweet_queue_time_limit):
 			app_model.set_discussions(self.tweet_queue)
-			print "importing " + str(len(self.tweet_queue)) + "tweets\n"
+			print "importing " + str(len(self.tweet_queue)) + " tweets...\n"
 
 			self.tweet_queue = []
 			self.tweet_queue_last_import = time.time()
