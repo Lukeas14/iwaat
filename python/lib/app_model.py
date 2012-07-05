@@ -1,3 +1,4 @@
+from env import conf
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, backref
@@ -9,7 +10,8 @@ import pymongo
 from pymongo import Connection
 
 #MySQL connection
-engine = sqlalchemy.create_engine('mysql://jiwaatlucas:j23waati$lucas@localhost/iwaat', echo=False)
+mysql_url = 'mysql://' + conf['mysql']['user'] + ':' + conf['mysql']['pass'] + '@' + conf['mysql']['host'] + '/' + conf['mysql']['db_name']
+engine = sqlalchemy.create_engine(mysql_url, echo=False)
 Session = sessionmaker(bind=engine)
 session = Session()
 Base = declarative_base()

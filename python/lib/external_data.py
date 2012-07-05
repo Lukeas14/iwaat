@@ -67,7 +67,7 @@ class ExternalData:
 		response = json_response.json
 		try:
 			compete_data['compete_unique_visitors'] = response['data']['trends']['uv'][0]['value']
-		except KeyError:
+		except:
 			return False
 
 		return compete_data

@@ -200,4 +200,7 @@ class SiteCrawler:
 				self.links.append(link_url)
 
 	def clean_text(self, text=''):
-		return ''.join(i for i in text if ord(i)<128)
+		try:
+			return ''.join(i for i in text if ord(i)<128)
+		except:
+			return ''

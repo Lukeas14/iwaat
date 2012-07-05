@@ -1,4 +1,5 @@
 import sys
+from configobj import ConfigObj
 
 def get_environment():
 	''' Get the environment name '''
@@ -12,3 +13,6 @@ def get_environment():
 	return 'production'
 
 ENVIRONMENT = get_environment()
+
+config_obj = ConfigObj('lib/env.conf')
+conf = config_obj[ENVIRONMENT]
