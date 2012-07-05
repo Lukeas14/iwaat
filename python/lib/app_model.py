@@ -1,8 +1,9 @@
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship, backref
-from sqlalchemy import Column, Integer, String, DateTime, Enum, Text, ForeignKey, sql, exc
+from sqlalchemy import Column, Integer, String, DateTime, Enum, Text, ForeignKey, sql, exc, func
 import datetime
+from dateutil.relativedelta import relativedelta
 import pprint
 import pymongo
 from pymongo import Connection
@@ -57,6 +58,25 @@ class AppExternalData(Base):
 		self.data = data
 		self.time_added = time_added
 
+class AppExternalMedia(Base):
+	__tablename__ = 'app_external_media'
+	__table_args__ = {
+		'mysql_engine': 'InnoDB',
+		'mysql_charset': 'utf8'
+	}
+
+	id = Column(Integer, primary_key=True)
+	app_id = Column(Integer, ForeignKey('apps.id'))
+	type = Column(String(64))
+	data = Column(Text)
+	time_added = Column(DateTime)
+
+	def __init__(self, app_id, type, data, time_added):
+		self.app_id = app_id
+		self.type = type
+		self.data = data
+		self.time_added = time_added
+
 class App(Base):
 	__tablename__ = 'apps'
 	__table_args__ = {  
@@ -66,8 +86,10 @@ class App(Base):
 
 	id = Column(Integer, primary_key=True)
 	name = Column(String)
+	slug = Column(String)
 	last_import = Column(DateTime)
 	status = Column(Enum('status', 'inactive', 'pending_review'))
+	popularity_index = Column(Integer)
 
 	app_urls = relationship("AppUrl", order_by="AppUrl.id", backref="AppUrl")
 	app_external_data = relationship("AppExternalData", order_by="AppExternalData.id", backref="AppExternalData")
@@ -83,6 +105,11 @@ class App(Base):
 
 	def __repr__(self):
 		return "<App('%s')>" % (self.name)
+
+def get_app(app_id):
+	app_result = session.query(App).\
+		filter(App.id == app_id)
+	return app_result[0]
 
 def get_app_import_queue(queue_size = 15):
 	app_queue = session.query(App).\
@@ -123,7 +150,20 @@ def get_apps_with_twitter_id():
 		join(AppUrl, App.id == AppUrl.app_id).\
 		filter(App.status.in_(['active','pending_review'])).\
 		filter(AppUrl.type == 'twitter_id')
+	return query_result
 
+def get_field_aggrs(fields):
+	query_result = session.query(AppExternalData.type, func.min(AppExternalData.data).label('min'), func.max(AppExternalData.data).label('max')).\
+		group_by(AppExternalData.type).\
+		filter(AppExternalData.type.in_(fields))
+	return query_result
+
+def get_app_external_data(fields, app_id):
+	query_result = session.query(AppExternalData.type, AppExternalData.data, AppExternalData.time_added).\
+		filter(AppExternalData.app_id == app_id).\
+		filter(AppExternalData.type.in_(fields)).\
+		filter(AppExternalData.time_added > (datetime.date.today() + relativedelta(months=-6)).isoformat()).\
+		group_by(AppExternalData.type)
 	return query_result
 
 def set_discussion(discussion):
@@ -139,6 +179,17 @@ def set_last_import(app_ids):
 			update({'last_import':datetime.datetime.now()}, False)
 		session.commit()
 	except exc.SQLAlchemyError:
+		return False
+
+	return update_result
+
+def set_app_data(app_id, col, val):
+	try:
+		update_result = session.query(App).\
+			filter(App.id == app_id).\
+			update({col:val})
+	except exc.SQLAlchemyError, e:
+		pprint.pprint(e)
 		return False
 
 	return update_result
@@ -161,9 +212,23 @@ def set_external_data(app_id, type, data):
 	try:
 		update_result = session.query(AppExternalData).\
 			filter_by(app_id = app_id, type = type).\
-			update({'data':data, 'time_added':datetime.datetime.now})
+			update({'data':data, 'time_added':str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))})
 		if update_result == 0:
-			new_external_data = AppExternalData(app_id, type, data, datetime.datetime.now)
+			new_external_data = AppExternalData(app_id, type, data, str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
+			session.add(new_external_data)
+		session.commit()
+	except exc.SQLAlchemyError:
+		print 'Error'
+
+	return update_result
+
+def set_external_media(app_id, type, data):
+	try:
+		update_result = session.query(AppExternalMedia).\
+			filter_by(app_id = app_id, type = type).\
+			update({'data':data, 'time_added':str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))})
+		if update_result == 0:
+			new_external_data = AppExternalMedia(app_id, type, data, str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")))
 			session.add(new_external_data)
 		session.commit()
 	except exc.SQLAlchemyError:

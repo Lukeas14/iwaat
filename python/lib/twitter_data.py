@@ -1,4 +1,5 @@
 import tweepy
+from tweepy import streaming
 import sys
 import pprint
 import datetime
@@ -11,8 +12,8 @@ class TwitterData:
 	CONSUMER_KEY = 'q4Ol3UY5MizRpa3cadFcA'
 	CONSUMER_SECRET = 'CVeic3IhM3dav39hLhnmXSlhGEPcHSHJYlBAAEx3ZYc'
 
-	ACCESS_TOKEN = '471115836-5V7pluWSQCwnLdnsdCP0gg9VJuRKm48vhcFDi5pZ'
-	ACCESS_TOKEN_SECRET = 'BA39Wg8aTNixm9mRaevkRr4AjKsFt1D0BLvJcIXaRE'
+	ACCESS_TOKEN = '471115836-mdOJrnaxaqYx9AWoAccDgM5ivVT6vkUeWd0VDmaL'
+	ACCESS_TOKEN_SECRET = '0g87cQeBghwzVKUcqeXwpd3WsmBEAcpRuwDZ0lNyJ0'
 
 	twitter_tweet_url = "https://twitter.com/#!/%s/status/%s"
 
