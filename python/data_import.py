@@ -1,4 +1,5 @@
-from lib import env_constants, app_model, twitter_data, memcache
+from lib.env import conf
+from lib import app_model, twitter_data, memcache
 from bs4 import BeautifulSoup
 import requests
 from lib.external_data import ExternalData
@@ -13,7 +14,8 @@ print "Starting data import..."
 while True:
 	twitter_data = TwitterData()
 
-	mc = memcache.Client(['127.0.0.1:11211'], debug=0)
+	mc_host = conf['memcached']['host'] + ':' + conf['memcached']['port']
+	mc = memcache.Client([mc_host], debug=0)
 
 	traction_index = TractionIndex()
 
