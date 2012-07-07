@@ -95,7 +95,7 @@ class SiteCrawler:
 
 	def get_page_keywords(self):
 		keywords = self.soup.find("meta", {"name":"keywords"})
-		if keywords:
+		if keywords and keywords.has_key('content'):
 			return self.clean_text(keywords['content'])
 		else:
 			return False
