@@ -91,7 +91,7 @@ class ExternalData:
 		soup = BeautifulSoup(response.text, 'xml')
 		try:
 			page_views = soup.Alexa.TrafficData.UsageStatistics.Reach.PerMillion.Value.contents[0]
-		except AttributeError:
+		except:
 			return False
 		if page_views:
 			try:
