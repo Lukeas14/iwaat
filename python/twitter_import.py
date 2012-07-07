@@ -1,4 +1,4 @@
-from lib import env_constants, app_model
+from lib import app_model
 from lib.twitter_data import TwitterData
 import pprint
 
