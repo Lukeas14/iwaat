@@ -19,6 +19,10 @@ Base = declarative_base()
 #MongoDB connection
 connection = Connection(conf['mongodb']['host'], conf['mongodb'].as_int('port'))
 iwaat_db = connection.iwaat
+if conf['mongodb']['pass']:
+	if not iwaat_db.authenticate(conf['mongodb']['user'], conf['mongodb']['pass']):
+		print "Failed to authenticate to MongoDB"
+		exit()
 discussions_collection = iwaat_db.discussions
 
 class AppUrl(Base):
