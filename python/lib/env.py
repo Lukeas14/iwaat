@@ -1,4 +1,4 @@
-import sys
+import sys, os
 from configobj import ConfigObj
 
 def get_environment():
@@ -14,5 +14,6 @@ def get_environment():
 
 ENVIRONMENT = get_environment()
 
-config_obj = ConfigObj('lib/env.conf')
+config_path = os.path.dirname(__file__) + '/env.conf'
+config_obj = ConfigObj(config_path)
 conf = config_obj[ENVIRONMENT]
