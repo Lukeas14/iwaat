@@ -7,11 +7,27 @@ from lib.twitter_data import TwitterData
 from lib.traction_index import TractionIndex
 import datetime
 from dateutil.relativedelta import relativedelta
+from multiprocessing import Process, Pipe
 import pprint
 
 print "Starting data import..."
 
+def create_process(proc, timeout = 60):
+	parent_conn, child_conn = Pipe()
+	def f(conn, func):
+		conn.send(eval(func))
+		conn.close()
+	p = Process(target = f, args=(child_conn,proc))
+	p.start()
+	data = parent_conn.recv()
+	p.join(timeout)
+	p.terminate()
+	return data
+
+
 while True:
+	print "\n" + str(datetime.datetime.now())
+
 	twitter_data = TwitterData()
 
 	mc_host = conf['memcached']['host'] + ':' + conf['memcached']['port']
@@ -35,31 +51,31 @@ while True:
 		last_import_queue.append(app.id)
 
 		#Get Compete data
-		compete_data = external_data.get_compete_data()
+		compete_data = create_process("external_data.get_compete_data()")
 		if compete_data:
 			for data_type, data_val in compete_data.items():
 				app_model.set_external_data(app.id, data_type, data_val)
 
 		#Get Alexa data
-		alexa_data = external_data.get_alexa_data()
+		alexa_data = create_process("external_data.get_alexa_data()")
 		if alexa_data:
 			for data_type, data_val in alexa_data.items():
 				app_model.set_external_data(app.id, data_type, data_val)
 
 		#Get Facebook share data
-		facebook_data = external_data.get_facebook_data()
+		facebook_data = create_process("external_data.get_facebook_data()")
 		if facebook_data:
 			for data_type, data_val in facebook_data.items():
 				app_model.set_external_data(app.id, data_type, data_val)
 		
 		#Get SEOmoz data
-		seomoz_data = external_data.get_seomoz_data()
+		seomoz_data = create_process("external_data.get_seomoz_data()")
 		if seomoz_data:
 			for data_type, data_val in seomoz_data.items():
 				app_model.set_external_data(app.id, data_type, data_val)
 
 		#Get site data
-		site_data = external_data.get_site_data()
+		site_data = create_process("external_data.get_site_data()")
 		if site_data:
 			for data_type, data_val in site_data.items():
 				if data_val:
@@ -85,7 +101,7 @@ while True:
 
 		#Get blog posts
 		post_link = app_model.get_latest_blog_post_link(app.id)
-		blog_posts = external_data.get_blog_posts(post_limit=50, post_max_length=10000, latest_blog_post_link=post_link)
+		blog_posts = create_process("external_data.get_blog_posts(post_limit=50, post_max_length=10000, latest_blog_post_link=post_link)")
 		if blog_posts:
 			app_model.set_discussions(blog_posts)
 
