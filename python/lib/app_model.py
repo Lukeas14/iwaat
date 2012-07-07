@@ -17,7 +17,7 @@ session = Session()
 Base = declarative_base()
 
 #MongoDB connection
-connection = Connection(conf['mongodb']['host'], conf['mongodb']['port'])
+connection = Connection(conf['mongodb']['host'], conf['mongodb'].as_int('port'))
 iwaat_db = connection.iwaat
 discussions_collection = iwaat_db.discussions
 
