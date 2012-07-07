@@ -31,7 +31,13 @@ class TractionIndex:
 
 		app_external_data = app_model.get_app_external_data(self.fields, app_id)
 		for app_data in app_external_data:
-			if not app_data.data:
+			if not app_data.data or not self.field_aggrs[app_data.type]:
+				continue
+
+			if self.field_aggrs[app_data.type]['max'] <= 0 or self.field_aggrs[app_data.type]['min'] <= 0:
+				continue
+
+			if self.field_aggrs[app_data.type]['max'] == self.field_aggrs[app_data.type]['min']:
 				continue
 
 			sub_index_val = (math.log(app_data.data) - math.log(self.field_aggrs[app_data.type]['min'])) / (math.log(self.field_aggrs[app_data.type]['max']) - math.log(self.field_aggrs[app_data.type]['min']))
