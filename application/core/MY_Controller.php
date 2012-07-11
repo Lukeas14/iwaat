@@ -4,7 +4,7 @@ class MY_Controller extends CI_Controller {
 
 	public $css_files = array('style.css', 'jquery-ui-1.8.16.custom.css');
 
-	public $js_files = array('script.js', 'qtip.js', 'jquery-ui-1.8.16.custom.min.js', 'backbone.js', 'underscore.js');
+	public $js_files = array('script.js', 'qtip.js', 'jquery-ui-1.8.16.custom.min.js', 'underscore.js', 'backbone.js');
 
 	public    function __construct()
     {

@@ -106,7 +106,31 @@
 		</div>
 		
 	</div>
+
+	<div id="app_discussions_wrapper">
+		<h2>Discussions</h2>
+		<!--<div class="discussions_params" id="type_params">
+			<label>Include:</label>
+			<button class="selected">Blog Posts</button>
+			<button>Tweets</button>
+			<button class="selected">Reviews</button>
+			<button>Q&A</button>
+		</div>
+		<div class="discussions_params" id="sort_params">
+			<label>Sort By:</label>
+			<button>Date</button>
+			<button>Votes</button>
+		</div>-->
+		<div id="app_discussions_window">
+			<div id="app_discussions">
+				<div id="loading_discussions">Loading Disc...</div>
+	            <div id="discussions_left"></div>
+	            <div id="discussions_right"></div>
+			</div>
+		</div>
+	</div>
 	
+	<br/>
 	<div class="app_media">
 		<h2>News</h2>
 		
@@ -153,7 +177,21 @@
 	
 </div>
 
+<?php $this->load->view('app_discussions_templates'); ?>
+
 <script type="text/javascript">
+//Load Discussions
+var discussions, discussionsView;
+$(document).ready(function(){
+    discussions = new Discussions();
+    discussionsView = new DiscussionsView({
+    	el: $("#app_discussions_wrapper"), 
+    	collection:discussions,
+    	app_id:<?=$app['id']?>,
+    	unix_time:<?=time()?>
+    });
+});
+
 $(document).ready(function(){
 	var traction_content = "The Traction Index measures the visibility of a web application across the web. It's calculated from several data points, each measuring an application's \"Traction\" within social networks, organic search engines, and the media."
 	//Traction index tooltip

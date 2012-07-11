@@ -1,0 +1,227 @@
+#app_discussions_wrapper{
+	position:relative;
+	z-index:100;
+	width:930px;
+	margin:0px auto;
+	padding:0px 15px 15px 15px;
+	background:#DDD;
+	background: -moz-linear-gradient(top, #FEFEFE 0%, #DDDDDD 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FEFEFE), color-stop(100%,#DDDDDD)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #FEFEFE 0%,#DDDDDD 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #FEFEFE 0%,#DDDDDD 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #FEFEFE 0%,#DDDDDD 100%); /* IE10+ */
+	background: linear-gradient(top, #FEFEFE 0%,#DDDDDD 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#FEFEFE', endColorstr='#DDDDDD',GradientType=0 ); /* IE6-9 */
+	overflow:hidden;
+	
+	-moz-box-shadow: 0px 0px 5px #333;
+	-webkit-box-shadow: 0px 0px 5px #333;
+	box-shadow: 0px 0px 5px #333;
+}
+#app_discussions_wrapper h2{
+	float:left;
+	width:140px;
+	padding:9px 0 5px 0;
+	margin:0 0 0 70px;
+	font-size:22px;
+	font-weight:100;
+	color:#76c248;
+}
+#app_discussions_window{
+	width:910px;
+	height:auto;
+	padding:5px 10px;
+	background:#999;
+	overflow:hidden;
+	-moz-box-shadow: inset 0px 0px 3px 3px #777;
+	-webkit-box-shadow: inset 0px 0px 3px 3px #777;
+	box-shadow: inset 0px 0px 3px 3px #777;
+}
+#app_discussions{
+	width:890px;
+	min-height:30px;
+	max-height:500px;
+	padding:0px 30px 0px 0px;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+.discussions_params{
+	float:left;
+	height:40px;
+	padding:0px;
+	overflow:hidden;
+}
+.discussions_params label{
+	padding:12px 10px;
+	height:40px;
+	margin:0px;
+	width:auto;
+	border-right:1px solid #EEE;
+}
+#type_params{
+
+}
+#sort_params{
+
+}
+.discussions_params button{
+	display:inline-block;
+	height:40px;
+	margin:0px;
+	padding:12px 10px;
+	background:transparent;
+	border:0px;
+	border-right:1px solid #EEE;
+	color:#444;
+	text-shadow:none;
+	border-radius:0px;
+}
+.discussions_params button.selected{
+	color:#222;
+	text-shadow: 0.1em 0.1em 0.2em #32B5FC;
+}
+
+#discussions_left, #discussions_right{
+    display:none;
+    width:379px;
+    padding:10px;
+}
+#discussions_left{
+    float:left;
+    border-right:1px solid #CCC;
+}
+#discussions_right{
+    float:right;
+    border-left:1px solid #999;
+}
+.discussion{
+    position:relative;
+    width:378px;
+    margin:0 0 10px 0;
+    padding:0px;
+    border:1px solid #CCC;
+    background:#DDD;
+	background: -moz-linear-gradient(top, #ffffff 0%, #EEEEEE 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#EEEEEE)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #ffffff 0%,#EEEEEE 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #ffffff 0%,#EEEEEE 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #ffffff 0%,#EEEEEE 100%); /* IE10+ */
+	background: linear-gradient(top, #ffffff 0%,#EEEEEE 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#EEEEEE',GradientType=0 ); /* IE6-9 */
+	border-radius:5px;
+	overflow:hidden;
+}
+.discussion.upvoted{
+    background:red;
+}
+.discussion.downvoted{
+    background:blue;
+}
+.discussion .discussion_header{
+    position:relative;
+    width:378px;
+    padding:0;
+    overflow:hidden;
+    font-size:11px;
+    color:#666;
+}
+.discussion .discussion_title{
+	display:block;
+	float:left;
+	margin:5px 0 0 5px;
+	padding:0;
+	font-size:15px;
+
+	color:#A5A5A5;
+}
+.discussion img.user_avatar{
+    position:relative;
+    top:-5px;
+    left:-5px;
+    border-radius-top-left:5px;
+    float:left;
+    width:40px;
+    height:40px;
+    margin:0 5px 0 0;
+}
+.discussion a.discussion_username{
+    float:left;
+    width:150px;
+    margin:5px 0 0 0;
+}
+.discussion .discussion_type{
+    float:right;
+    clear:right;
+    padding:0;
+    color:#AAA;
+    margin:5px 5px 0 0;
+}
+.discussion .discussion_time{
+    float:right;
+    clear:right;
+    padding:0;
+    margin:0px 5px 0 0;
+}
+.discussion .timeline_line{
+    position:absolute;
+    top:50%;
+    width:10px;
+    height:1px;
+    background:#CCC;
+}
+.discussion .timeline_line .timeline_dot{
+    z-index:10;
+    position:absolute;
+    top:-2px;
+    width:3px;
+    height:3px;
+    border-radius:3px;
+    background:#FFF;
+    border:1px solid #999;
+}
+.discussion .discussion_text{
+    margin:5px 0 0 0;
+    padding:0px 5px;
+    font-size:12px;
+    color:#222;
+}
+.discussion .discussion_footer{
+    position:relative;
+    width:378px;
+    padding:0;
+    border-top:1px solid #DDD;
+    overflow:hidden;
+}
+.discussion .discussion_score{
+    float:left;
+    border-right:1px solid red;
+    width:50px;
+    height:25px;
+    padding:5px 0 0 0;
+    margin:0;
+    font-size:15px;
+    color:#666;
+    vertical-align: middle;
+    text-align:center;
+}
+.discussion .discussion_comment_count{
+    float:right;
+    padding:5px 15px 0 0;
+    font-size:11px;
+    color:#666;
+}
+
+
+#discussions_left .discussion .timeline_line{
+    right:-11px;
+}
+#discussions_left .discussion .timeline_dot{
+    right:-3px;
+}
+#discussions_right .discussion .timeline_line{
+    left:-11px;
+}
+#discussions_right .discussion .timeline_dot{
+    left:-3px;
+}
