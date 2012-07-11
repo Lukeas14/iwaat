@@ -12,11 +12,17 @@ import pprint
 
 print "Starting data import..."
 
-def create_process(proc, timeout = 60):
+def create_process(proc, timeout = 300):
 	parent_conn, child_conn = Pipe()
 	def f(conn, func):
-		conn.send(eval(func))
-		conn.close()
+		try:
+			data = eval(func)
+			conn.send(eval(func))
+			conn.close()
+		except:
+			conn.send(False)
+			conn.close()
+
 	p = Process(target = f, args=(child_conn,proc))
 	p.start()
 	data = parent_conn.recv()
