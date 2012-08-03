@@ -84,12 +84,12 @@
 
 #discussions_left, #discussions_right{
     display:none;
-    width:379px;
+    width:416px;
     padding:10px;
 }
 #discussions_left{
     float:left;
-    border-right:1px solid #CCC;
+    border-right:1px solid #BBB;
 }
 #discussions_right{
     float:right;
@@ -97,10 +97,9 @@
 }
 .discussion{
     position:relative;
-    width:378px;
+    width:410px;
     margin:0 0 10px 0;
     padding:0px;
-    border:1px solid #CCC;
     background:#DDD;
 	background: -moz-linear-gradient(top, #ffffff 0%, #EEEEEE 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#EEEEEE)); /* Chrome,Safari4+ */
@@ -181,10 +180,10 @@
     border:1px solid #999;
 }
 .discussion .discussion_text{
-    margin:5px 0 0 0;
-    padding:0px 5px;
+    margin:5px 0;
+    padding:0px 10px;
     font-size:12px;
-    color:#222;
+    color:#555;
 }
 .discussion .discussion_footer{
     position:relative;
