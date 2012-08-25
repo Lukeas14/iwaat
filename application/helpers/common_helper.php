@@ -135,6 +135,14 @@ function get_message_box(){
 			$app = $CI->app->get_app($message_box['app_slug']);
 			if(empty($app)) return false;
 
+			//Get app hostname
+			if(!empty($app['urls']['homepage'])){
+				$app_url = parse_url($app['urls']['homepage']);
+				if(!empty($app_url['host'])){
+					$app['hostname'] = $app_url['host'];
+				}
+			}
+
 			$message_box_html = "<div class='" . $message_box_class . "' id='claim_app'>";
 			
 			$message_box_html .= $CI->load->view('helpers/message_box_claim_app', array('app' => $app), true);

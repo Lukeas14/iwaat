@@ -26,7 +26,7 @@ h1{
 	color:#666;
 	font-size:19px;
 	font-weight:normal;
-	text-shadow:1px 1px #EEE;
+	text-shadow:1px 1px #FFF;
 }
 
 span.red{
@@ -459,10 +459,10 @@ margin: 0 10px 0 0;
 .message_box{
 	width:640px;
 	padding:10px;
-	margin:10px auto;
+	margin:20px auto 0 auto;
 	overflow:hidden;
 	border:1px solid #CCC;
-	border-radius: 5px;
+	border-radius: 10px;
 }
 .message_box#claim_app h1{
 	margin-bottom:10px;
