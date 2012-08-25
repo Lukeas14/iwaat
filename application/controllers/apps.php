@@ -114,6 +114,19 @@ class Apps extends MY_Controller {
 				$this->load->view('suggest_app', $this->data);
 			}
 			else{
+				$this->data['suggest_app'] = $this->input->post();
+
+				//Send admin an email
+				$this->load->library('swift_email');
+				$email_params = array(
+					'html'		=> $this->load->view('email/suggest_app_admin_html', $this->data, true),
+					'text'		=> '',
+					'subject'	=> $this->data['suggest_app']['app_name'] . ' suggested to IWAAT.com',
+					'to'		=> array(ADMIN_EMAIL_ADDRESS => ADMIN_EMAIL_NAME),
+					'from'		=> array($this->data['suggest_app']['email'])
+				);
+				$this->swift_email->send_email($email_params);
+
 				$this->load->view('suggest_app_success', $this->data);
 			}
 		}
