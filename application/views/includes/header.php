@@ -126,4 +126,9 @@
 	<?php
 	endif;
 	?>
+
+	<?php 
+	$message_box = get_message_box();
+	if(!empty($message_box)) echo $message_box; 
+	?>
 	

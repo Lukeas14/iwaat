@@ -40,7 +40,7 @@ class Apps extends MY_Controller {
 		$this->load->view('app', $this->data);
 	}
 
-	public function claim_app(){
+	/*public function claim_app(){
 		$this->load->driver('cache');
 
 		$this->load->model('app');
@@ -77,7 +77,7 @@ class Apps extends MY_Controller {
 		$this->data['meta']['title'] = "Claim" . $app['name'] . " | IWAAT.com";
 
 		$this->load->view('claim_app', $this->data);
-	}
+	}*/
 	
 	public function suggest_app(){
 		$this->load->helper(array('form', 'url'));
@@ -133,6 +133,17 @@ class Apps extends MY_Controller {
 		
 		
 		$this->load->view('suggest_app', $this->data);
+	}
+
+	public function claim_app(){
+		if (!$this->ion_auth->logged_in()){
+			//$this->session->set_flashdata('message', 'Please log in or register to edit your account profile');
+			$this->session->set_flashdata('redirect', $this->uri->uri_string());
+			$this->session->set_flashdata('message_box', array('type' => 'claim_app', 'app_slug' => $this->uri->segment(2)));
+			redirect('/login_register');
+		}
+
+
 	}
 	
 	public function add_app(){

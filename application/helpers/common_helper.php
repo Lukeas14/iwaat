@@ -17,9 +17,8 @@ function get_index_color($index){
 		);
 
 	$index_val = round($index / 10);
-	//echo $index_val;
 	$hex_codes = $alpha_array[$index_val];
-	//return $hex_codes['bg'];
+
 	return $hex_codes;
 }
 
@@ -74,18 +73,6 @@ function get_notifications($controller_notifications){
 	
 	$notifications = array();
 	
-	/*hforeach(array('message','error') as $note_type){
-		if(array_key_exists($note_type, $_GET)){
-			$notifications[$note_type] = array();
-			if(is_array($_GET[$note_type])){
-				array_merge($notifications[$note_type], $_GET[$note_type]);
-			}
-			else{
-				$notifications[$note_type][] = $_GET[$note_type];
-			}
-		}
-	}*/
-	
 	foreach(array('message', 'error', 'confirm') as $note_type){
 		$notifications[$note_type] = array();
 		
@@ -129,6 +116,42 @@ function get_notifications($controller_notifications){
 	}
 	
 	return $notifications;
+}
+
+function get_message_box(){
+	$CI =& get_instance();
+
+	$message_box_class = 'message_box';
+
+	$message_box = $CI->session->flashdata('message_box');
+	if(!is_array($message_box) || empty($message_box['type'])) return false;
+
+	switch($message_box['type']){
+		case 'claim_app':
+			if(empty($message_box['app_slug'])) return false;
+
+			$app_model = $CI->load->model('app');
+
+			$app = $CI->app->get_app($message_box['app_slug']);
+			if(empty($app)) return false;
+
+			$message_box_html = "<div class='" . $message_box_class . "' id='claim_app'>";
+			
+			$message_box_html .= $CI->load->view('helpers/message_box_claim_app', array('app' => $app), true);
+			
+			$message_box_html .= "</div>";
+			
+			return $message_box_html;
+
+			break;
+
+		default:
+			return false;
+	}
+
+	$message_box_html .= "</div>";
+
+	return $message_box_html;
 }
 
 function get_app_image_directory($app_id){
