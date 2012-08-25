@@ -16,6 +16,9 @@ a{
 	text-decoration:none;
 	outline:none;
 }
+a:hover{
+	color:#2C6B96;
+}
 
 h1{
 	margin:0 0 20px 0;
@@ -93,9 +96,9 @@ button, input.submit{
 	margin:5px 0px 0px 5px;
 	padding:7px 10px;
 	text-align:center;
-	font-size:16px;
+	font-size:13px;
 	color:#555;
-	text-shadow:1px 1px #FFF;
+	text-shadow:1px 1px #EEE;
 	
 	background: -moz-linear-gradient(top, #ffffff 0%, #BBBBBB100%); /* FF3.6+ */
 	background: -webkit-linear-gradient(top, #ffffff 0px, #BBB 100%); /* Chrome10+,Safari5.1+ */
@@ -1170,7 +1173,7 @@ margin: 0 10px 0 0;
 	margin:0px auto 20px auto;
 	padding:0px;
 	margin-top:0px;
-	overflow:hidden;
+	overflow:visible;
 	vertical-align:middle;
 	border-left:0px solid #DDD;
 	border-right:0px solid #DDD;
@@ -1179,7 +1182,7 @@ margin: 0 10px 0 0;
 	float:left;
 	width:400px;
 	padding:10px 0 5px 0;
-	margin:0 0 10px 0;
+	margin:0;
 	font-size:22px;
 	font-weight:100;
 	color:#c24851;
@@ -1195,20 +1198,58 @@ margin: 0 10px 0 0;
 	display:block;
 	clear:left;
 	width:auto;
-	margin:10px 0 0 0;
-	overflow:visible;
+	/*height:130px;*/
+	margin:0;
+	overflow:hidden;
 	font-size:12px;
 	color:#555;
 }
 .app_metadata .app_description p{
 	margin:0;
-	padding:0;
+	padding:10px 0 0 0;
 	text-indent:15px;
+}
+.app_metadata .app_description_expand{
+	display:block;
+	width:100%;
+	height:15px;
+	margin-top:5px;
+	text-align:center;
+	cursor:pointer;
+}
+.app_metadata .app_description_expand .expand_line{
+	float:left;
+	width:320px;
+	height:1px;
+	margin:8px 0 0 0;
+	background:#BBB;
+	-webkit-box-shadow: 0 0px 10px 0px #777;
+}
+.app_metadata .app_description_expand:hover .expand_line{
+	-webkit-box-shadow: 0 0px 10px 0px #000;
+}
+.app_metadata .app_description_expand p.expand_text{
+	float:left;
+	width:150px;
+	padding:0;
+	margin:0 auto;
+	background:transparent;
+}
+.app_metadata .app_description_expand p.arrow_left{
+	float:left;
+	margin:-2px 10px 0 10px;
+	color:#333;
+}
+
+.app_metadata .app_description_expand p.arrow_right{
+	float:right;
+	margin:-2px 10px 0 0;
+	color:#333;
 }
 .app_metadata .app_social_buttons{
 	float:right;
 	width:260px;
-	margin:-10px 15px 30px 20px;
+	margin:0px 15px 30px 20px;
 }
 .app_metadata .app_social_buttons .app_facebook{
 	float:left;

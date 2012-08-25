@@ -56,6 +56,8 @@ $route['suggest_app'] = "apps/suggest_app";
 $route['add_app'] = "apps/add_app";
 $route['claim_app/(.*)'] = "apps/claim_app";
 
+$route['discussions/(.*)'] = "discussions/$1";
+
 $route['about_us'] = "static_pages/about_us";
 $route['contact_us'] = "static_pages/contact_us";
 $route['privacy_policy'] = "static_pages/privacy_policy";

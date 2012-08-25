@@ -104,6 +104,17 @@
 				Source: <a href="http://www.crunchbase.com/company/<?=$app['crunchbase_permalink']?>" target="_blank">Crunchbase</a>
 			<?php endif; ?>
 		</div>
+
+		<?php if(strlen($app['description']) > 1000): ?>
+		<style>
+			div.app_description{ height:130px; }
+		</style>
+		<a class="app_description_expand">
+			<div class="expand_line"></div> 
+			<p class='expand_text'>Show Entire Description</p>
+			<div class="expand_line"></div> 
+		</a>
+		<?php endif; ?>
 		
 	</div>
 
@@ -126,11 +137,47 @@
 				<div id="loading_discussions">Loading Disc...</div>
 	            <div id="discussions_left"></div>
 	            <div id="discussions_right"></div>
+	            <div class="clear"></div>
 			</div>
+		</div>
+
+		<div id="app_add_discussion">
+		<form id="add_discussion" action="/discussions/add_discussion" method="POST">
+			<input type="hidden" name="type" value="review"/>
+
+			<h2 id="add_discussion_header">Add To Discussion:</h2>
+
+			<div id="app_add_discussion_type">
+				<button id="review" class="discussion_type selected">Review</button>
+				<button id="question" class="discussion_type">Question</button>
+				<button id="feedback" class="discussion_type">Feedback</button>
+			</div>
+
+
+			<div id="app_discussion_type_description">
+				Add a review for <?=$app['name']?>.
+			</div>
+
+			<div id="app_add_discussion_fields">
+				<p>
+					<label for="title">Title:</label>
+					<input type="text" name="title"/>
+				</p>
+				<p>
+					<label for="text">Text:</label>
+					<textarea name="text"></textarea>
+
+				</p>
+			</div>
+
+
+			<input type="submit" class="submit" name="submit" value="Submit"/>
+		</form>
 		</div>
 	</div>
 	
 	<br/>
+	<!--
 	<div class="app_media">
 		<h2>News</h2>
 		
@@ -162,6 +209,7 @@
 			</div>
 		<?php endif; ?>
 	</div>
+	-->
 	
 	<div class="related_apps">
 		<h2>Related Apps</h2>
@@ -180,10 +228,23 @@
 <?php $this->load->view('app_discussions_templates'); ?>
 
 <script type="text/javascript">
-//Load Discussions
-var discussions, discussionsView;
+//Load collections and views
+var discussions, appProfile, discussionsView;
+
 $(document).ready(function(){
-    discussions = new Discussions();
+    discussions = new Discussions([], {
+    	discussion_types: <?=json_encode($this->config->item('discussion_types'))?>
+    });
+    appProfile = new AppProfileView({
+		el: $(".app_wrapper"),
+		collection:discussions,
+		app_id: <?=$app['id']?>,
+		app: {
+			id: <?=$app['id']?>,
+			name: "<?=$app['name']?>",
+			slug: "<?=$app['slug']?>"
+		}
+	});
     discussionsView = new DiscussionsView({
     	el: $("#app_discussions_wrapper"), 
     	collection:discussions,

@@ -34,12 +34,12 @@ class Apps extends MY_Controller {
 		$app['related_apps'] = (!empty($related_apps->response->docs)) ? $related_apps->response->docs : array();
 		
 		$this->data['app'] = $app;
-
+		
 		$this->data['meta']['title'] = $app['name'] . " Profile | IWAAT.com";
 	
 		$this->set_css('app.css');
-		$this->set_js('discussions.js');
-		
+		$this->set_js(array('discussions.js', 'views/app_profile.js'));
+
 		$this->load->view('app', $this->data);
 	}
 

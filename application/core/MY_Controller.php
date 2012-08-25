@@ -11,14 +11,28 @@ class MY_Controller extends CI_Controller {
         parent::__construct();
     }
 
-    public function set_js($file_path)
+    public function set_js($file_paths)
     {
-    	array_push($this->js_files, $file_path);
+        if(is_array($file_paths)){
+            foreach($file_paths as $file_path){
+                array_push($this->js_files, $file_path);
+            }
+        }
+        else{
+        	array_push($this->js_files, $file_paths);
+        }
     }
 
-    public function set_css($file_path)
+    public function set_css($file_paths)
     {
-    	array_push($this->css_files, $file_path);
+    	if(is_array($file_paths)){
+            foreach($file_paths as $file_path){
+                array_push($this->css_files, $file_path);
+            }
+        }
+        else{
+            array_push($this->css_files, $file_paths);
+        }
     }
 
 }

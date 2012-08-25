@@ -54,12 +54,18 @@ Discussion = Backbone.Model.extend({
     },
 
     get_relative_time: function(time_now){
+        var time_posted = this.get('time_posted');
+        if(!time_posted){
+            return false;
+        }
+
         /*time_obj = new Date(time_str);
         if(time_obj == 'Invalid Date'){
             return false;
         }*/
 
         now_threshold = 1000 * 60 * 5; //5 minutes
+        //console.log(this.get('time_posted'));
         //time_now = new Date();
         //time_delta = time_now - time_obj;
         //delta = parseInt(time_delta, 10);
@@ -103,10 +109,12 @@ Discussions = Backbone.Collection.extend({
 
     base_url:'/ajax/app_discussions?app_id=',
 
-    discussion_types:[],
+    discussion_types:{},
 
-    initialize: function(){
-
+    initialize: function(models, options){
+        if(typeof options.discussion_types != "undefined"){
+            this.discussion_types = options.discussion_types;
+        }
     },
 
     getDiscussions: function(callback){
@@ -134,12 +142,6 @@ DiscussionsView = Backbone.View.extend({
     discussionViews: [],
 
     state: 'idle',
-
-    view_types: {
-        'review': 'DiscussionReviewView',
-        'app_tweet': 'DiscussionReviewView',
-        'blog_post': 'DiscussionBlogPostView'
-    },
 
     fade_duration: 200,
 
@@ -184,9 +186,10 @@ DiscussionsView = Backbone.View.extend({
         discussion_count = this.collection.length;
 
         this.collection.each(function(discussion){
-            view_type = _this.view_types[discussion.get('type')];
+            view_type = _this.collection.discussion_types[discussion.get('type')].view;
             var discussionView = new window[view_type]({
                 model: discussion,
+                collection: _this.collection,
                 id: "discussion_" + discussion.id,
                 className: "discussion",
                 unix_time: _this.options.unix_time,
@@ -233,12 +236,6 @@ DiscussionsView = Backbone.View.extend({
 
 DiscussionView = Backbone.View.extend({
 
-    discussion_type_display: {
-        'review': 'Review',
-        'blog_post': 'Blog Post',
-        'question': 'Question',
-    },
-
     template_id: 'discussion_template',
     template: $("#discussion_template").html(),
 
@@ -247,7 +244,8 @@ DiscussionView = Backbone.View.extend({
             {
                 comment_count: this.model.get_comment_count(),
                 relative_time_posted: this.model.get_relative_time(this.options.unix_time),
-                type_display: this.get_type_display(this.model.get('type'))
+                type_name: this.get_type_name(this.model.get('type')),
+                text_display: this.get_text()
             }
         );
         this.model.get_comment_count();
@@ -293,12 +291,12 @@ DiscussionView = Backbone.View.extend({
         return 'what';
     },
 
-    get_type_display: function(type){
-        if(!type in this.discussion_type_display){
+    get_type_name: function(type){
+        if(!type in this.collection.discussion_types){
             return '';
         }
 
-        return this.discussion_type_display[type];
+        return this.collection.discussion_types[type].name;
     },
 
 });
@@ -312,6 +310,13 @@ DiscussionReviewView = DiscussionView.extend({
 
 DiscussionBlogPostView = DiscussionView.extend({
 
-    template_id: "discussion_blog_post_template"
+    template_id: "discussion_blog_post_template",
+
+    get_text: function(){
+        var max_text_length = 400;
+        var content = this.model.get('content');
+
+        return (content.length >= max_text_length) ? content.substring(0, max_text_length) + '...' : content;
+    }
 
 });

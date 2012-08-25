@@ -10,7 +10,7 @@ class Discussion extends CI_Model{
 		parent::__construct();
 
 		//Connect to Mongodb server
-		if(defined('MONGODB_PASS')){
+		if(defined('MONGODB_PASS') && MONGODB_PASS != '') {
 			$mongo_url = "mongodb://" . MONGODB_USER . ":" . MONGODB_PASS . "@" . MONGODB_HOST . ":" . MONGODB_PORT;
 		}
 		else{
@@ -21,7 +21,7 @@ class Discussion extends CI_Model{
 		//Connect to iwaat database
 		$this->db = $this->conn->iwaat;
 
-		$this->discussions_coll = $this->db->discussions;
+		$this->discussions_col = $this->db->discussions;
 	}
 
 	public function get_app_discussions($options){
@@ -40,7 +40,7 @@ class Discussion extends CI_Model{
 		print_r($params);
 		echo"<br/>";
 		*/
-		$discussions = $this->discussions_coll->find($params);
+		$discussions = $this->discussions_col->find($params);
 
 		return $discussions;
 	}

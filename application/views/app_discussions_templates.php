@@ -2,11 +2,14 @@
 <script id='discussion_blog_post_template' type='text/template'>
     <div class="discussion_header">
         <a class="discussion_title" href="<%= link %>" target="_blank" rel="nofollow"><%= title %></a>
-        <p class="discussion_type"><%= type_display %></p>
+        <p class="discussion_type"><%= type_name %></p>
         <p class="discussion_time"><%= relative_time_posted %></p>
     </div>
     
-    <p class="discussion_text"><%= content %></p>
+    <p class="discussion_text">
+        <%= text_display %>
+        <a href="<%= link %>" target="_blank" rel="nofollow">Read More</a>
+    </p>
 
     <div class="discussion_footer">
         <p class="discussion_score">23</p>
@@ -26,7 +29,7 @@
     <div class="discussion_header">
         <img class="user_avatar" src="<%= user_avatar_url %>" />
         <a href="/user/<%= user_slug %>" class="discussion_username"><%= username %></a>
-        <span class="discussion_type"><%= type_display %></span>
+        <span class="discussion_type"><%= type_name %></span>
         <span class="discussion_time"><%= relative_time_posted %></span>
     </div>
 

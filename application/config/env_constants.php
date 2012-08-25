@@ -44,10 +44,10 @@ switch(ENVIRONMENT){
 		define('MEMCACHED_HOST', '127.0.0.1');
 		define('MEMCACHED_PORT', '11211');
 
-		define('MONGODB_HOST', '96.126.96.254');
+		define('MONGODB_HOST', 'localhost');
 		define('MONGODB_PORT', 27017);
-		define('MONGODB_USER', 'siwaat42jd');
-		define('MONGODB_PASS', 'i34IJ2d9k2SE4i2j9dwjihhg85jfsl9w');
+		define('MONGODB_USER', '');
+		define('MONGODB_PASS', '');
 		break;
 	
 	case 'testing':
