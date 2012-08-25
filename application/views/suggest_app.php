@@ -6,8 +6,6 @@
 	
 	<form action="" method="POST">
 	<div class="suggest_app_form">
-		<div class="validation_errors"><?=validation_errors()?></div>
-		
 		<p>
 			<label for="email">Your Email:</label>
 			<input type="text" name="email" value="<?=set_value('email')?>"/>

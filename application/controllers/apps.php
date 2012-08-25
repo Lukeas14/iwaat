@@ -110,8 +110,8 @@ class Apps extends MY_Controller {
 			);
 			$this->form_validation->set_rules($validation_rules);
 			
-			if ($this->form_validation->run() == FALSE){
-				$this->load->view('suggest_app', $this->data);
+			if ($this->form_validation->run() === false){
+				$this->data['notifications']['error'] = $this->form_validation->get_errors();
 			}
 			else{
 				$this->data['suggest_app'] = $this->input->post();
