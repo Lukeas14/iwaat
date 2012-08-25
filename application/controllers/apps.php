@@ -149,7 +149,7 @@ class Apps extends MY_Controller {
 		if(!empty($this->data['app']['urls']['homepage'])){
 			$app_url = parse_url($this->data['app']['urls']['homepage']);
 			if(!empty($app_url['host'])){
-				$this->data['app']['hostname'] = $app_url['host'];
+				$this->data['app']['hostname'] = str_replace('www.', '', $app_url['host']);
 			}
 		}
 

@@ -139,7 +139,7 @@ function get_message_box(){
 			if(!empty($app['urls']['homepage'])){
 				$app_url = parse_url($app['urls']['homepage']);
 				if(!empty($app_url['host'])){
-					$app['hostname'] = $app_url['host'];
+					$app['hostname'] = str_replace('www.', '', $app_url['host']);
 				}
 			}
 
