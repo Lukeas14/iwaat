@@ -29,6 +29,7 @@ switch(ENVIRONMENT){
 		
 		error_reporting(E_ALL);
 		ini_set('display_errors',1);
+		define('HAUTH_DEBUG', false);
 		
 		define('DB_HOST', 'localhost');
 		define('DB_USER', 'jiwaatlucas');
@@ -50,6 +51,7 @@ switch(ENVIRONMENT){
 		
 		error_reporting(E_ALL);
 		ini_set('display_errors',1);
+		define('HAUTH_DEBUG', false);
 		
 		define('DB_HOST', 'localhost');
 		define('DB_USER', 'jiwaatlucas');
@@ -72,6 +74,7 @@ switch(ENVIRONMENT){
 		
 		error_reporting(0);
 		ini_set('display_errors',0);
+		define('HAUTH_DEBUG', false);
 		
 		define('DB_HOST', 'griffey');
 		define('DB_USER', 'jliwaatwesley');
