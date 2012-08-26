@@ -125,8 +125,6 @@ class Apps extends MY_Controller {
 			$app = $this->app->get_app($app_slug);
 		}
 
-		$this->data['app'] = $app;
-		
 		//Make sure app is valid
 		if(empty($app)){
 			show_404();
@@ -135,6 +133,8 @@ class Apps extends MY_Controller {
 			show_404();
 		}
 
+		$this->data['app'] = $app;
+		
 		//Send email to admin for review
 		$this->load->library('swift_email');
 		$email_params = array(

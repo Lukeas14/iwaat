@@ -196,3 +196,7 @@ function validate_email_address($email){
     }
     return false;
 }
+
+function get_app_hash($app_id, $app_slug){
+	return md5($app_id . APP_HASH_SALT . $app_slug);
+}
