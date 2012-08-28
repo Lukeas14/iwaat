@@ -1,3 +1,3 @@
 #!/bin/bash
 
-supervisorctl restart all
+/usr/local/bin/supervisorctl restart all
