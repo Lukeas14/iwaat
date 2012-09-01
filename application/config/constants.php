@@ -15,6 +15,8 @@ define('SCREENSHOT_LARGE_HEIGHT', 500);
 define('SCREENSHOT_SMALL_WIDTH', 400);
 define('SCREENSHOT_SMALL_HEIGHT', 300);
 
+define('APP_HASH_SALT', '3kdur857fnnclkxoru42m42of89w4jk2o');
+
 //Sendgrid
 define('SENDGRID_HOST', 'smtp.sendgrid.net');
 define('SENDGRID_PORT', 587);

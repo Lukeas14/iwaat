@@ -63,7 +63,7 @@
 			<div id="header_text_left">
 				<span>Search</span> for a web application that solves your specific problem.
 			</div>
-			<?php if(isset($is_homepage) && $is_homepage === true): ?>
+			<?php /* if(isset($is_homepage) && $is_homepage === true): ?>
 				<div id="header_social_buttons" >
 
 					<!-- FB like button-->
@@ -97,7 +97,7 @@
 					  fjs.parentNode.insertBefore(js, fjs);
 					}(document, 'script', 'facebook-jssdk'));</script>
 				</div>
-			<?php endif; ?>
+			<?php endif; */ ?>
 			<div id="header_text_right">
 				<span>Browse</span> through our library of web apps by category.
 			</div>

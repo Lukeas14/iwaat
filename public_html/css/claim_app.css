@@ -1,0 +1,27 @@
+#claim_app_wrapper{
+	width:960px;
+	margin:0 auto
+}
+#claim_app_wrapper h1{
+	margin:20px 0 30px 0;
+	color:#666;
+	font-weight:normal;
+	text-shadow:1px 1px #FFF
+}
+#claim_app_logo{
+	float:left;
+	width:300px;
+	height:100px;
+	padding:0 20px 0 0;
+	text-align:center;
+}
+#claim_app_logo img{
+	max-width:200px;
+	max-height:100px
+}
+#claim_app_text{
+	float:left;
+	width:500px;
+	font-size:13px;
+	color:#666
+}
