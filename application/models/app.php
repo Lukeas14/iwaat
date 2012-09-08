@@ -333,6 +333,24 @@ class App extends CI_Model{
 	function get_app_cache_id($app_slug){
 		return 'app_' . $app_slug;
 	}
+
+	function get_cached_app($app_slug){
+		$this->load->driver('cache');
+
+		$cache_app_id = 'app_' . $app_slug;
+		if($this->cache->memcached->is_supported()){
+			if(!$app = $this->cache->memcached->get($this->get_app_cache_id($app_slug))){
+				$app = $this->app->get_app($app_slug);
+
+				$this->cache->memcached->save($this->app->get_app_cache_id($app_slug), $app, CACHE_TIME_DAY);
+			}
+		}
+		else{
+			$app = $this->app->get_app($app_slug);
+		}
+
+		return $app;
+	}
 	
 	function get_app($id){
 		if(empty($id)) return false;
@@ -391,12 +409,16 @@ class App extends CI_Model{
 		return $app;
 	}
 	
-	function get_apps($conditions = array(), $joins = array(), $offset = 0, $limit = 10, $having = array(), $order_by = '', $select_false = array()){
+	function get_apps($conditions = array(), $joins = array(), $offset = 0, $limit = 10, $having = array(), $order_by = '', $select_false = array(), $where_in = array()){
 		$this->db->select("SQL_CALC_FOUND_ROWS apps.*", false);  
 
 		if(!empty($conditions)) {  
 			$this->db->where($conditions, NULL);  
 		}  
+
+		if(is_array($where_in) && !empty($where_in['field']) && !empty($where_in['values'])){
+			$this->db->where_in($where_in['field'], $where_in['values']);
+		}
 		
 		if(!empty($select_false)){
 			$this->db->where($select_false, null, false);

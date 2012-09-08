@@ -177,7 +177,7 @@
 	</div>
 	
 	<br/>
-	<!--
+	
 	<div class="app_media">
 		<h2>News</h2>
 		
@@ -209,7 +209,7 @@
 			</div>
 		<?php endif; ?>
 	</div>
-	-->
+	
 	
 	<div class="related_apps">
 		<h2>Related Apps</h2>

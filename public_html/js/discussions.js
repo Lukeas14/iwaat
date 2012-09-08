@@ -111,6 +111,8 @@ Discussions = Backbone.Collection.extend({
 
     discussion_types:{},
 
+    user_ids:[],
+
     initialize: function(models, options){
         if(typeof options.discussion_types != "undefined"){
             this.discussion_types = options.discussion_types;
@@ -131,8 +133,20 @@ Discussions = Backbone.Collection.extend({
                 if(typeof callback == 'function'){
                     callback();
                 }
+                console.log(_this.user_ids);
             }
         });
+    },
+
+    parse: function(response){
+        var _this = this;
+
+        _.each(response, function(result){
+            if(typeof result.user_id !== undefined){
+                _this.user_ids.push(result.user_id);
+            }
+        });
+        return response.discussions;
     }
 
 });
@@ -303,7 +317,14 @@ DiscussionView = Backbone.View.extend({
 
 DiscussionReviewView = DiscussionView.extend({
 
-    template_id: "discussion_review_template"
+    template_id: "discussion_review_template",
+
+    get_text: function(){
+        var max_text_length = 400;
+        var content = strip_tags(this.model.get('text'));
+
+        return (content.length >= max_text_length) ? content.substring(0, max_text_length) + '...' : content;
+    }
 
 });
 

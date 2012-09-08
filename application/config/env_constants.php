@@ -49,6 +49,7 @@ switch(ENVIRONMENT){
 		define('MONGODB_PORT', 27017);
 		define('MONGODB_USER', '');
 		define('MONGODB_PASS', '');
+		define('MONGODB_NAME', 'iwaat');
 		break;
 	
 	case 'testing':
@@ -71,6 +72,12 @@ switch(ENVIRONMENT){
 
 		define('MEMCACHED_HOST', 'woodson.jaydenlucas.com');
 		define('MEMCACHED_PORT', '11204');
+
+		define('MONGODB_HOST', 'localhost');
+		define('MONGODB_PORT', 27017);
+		define('MONGODB_USER', '');
+		define('MONGODB_PASS', '');
+		define('MONGODB_NAME', 'iwaat');
 		break;
 	
 	case 'production':
@@ -99,4 +106,5 @@ switch(ENVIRONMENT){
 		define('MONGODB_PORT', 27017);
 		define('MONGODB_USER', 'siwaat42jd');
 		define('MONGODB_PASS', 'i34IJ2d9k2SE4i2j9dwjihhg85jfsl9w');
+		define('MONGODB_NAME', 'iwaat');
 }

@@ -1,4 +1,3 @@
-
 <script id='discussion_blog_post_template' type='text/template'>
     <div class="discussion_header">
         <a class="discussion_title" href="<%= link %>" target="_blank" rel="nofollow"><%= title %></a>
@@ -8,7 +7,6 @@
     
     <p class="discussion_text">
         <%= text_display %>
-        <a href="<%= link %>" target="_blank" rel="nofollow">Read More</a>
     </p>
 
     <div class="discussion_footer">
@@ -27,17 +25,20 @@
 
 <script id='discussion_review_template' type='text/template'>
     <div class="discussion_header">
-        <img class="user_avatar" src="<%= user_avatar_url %>" />
-        <a href="/user/<%= user_slug %>" class="discussion_username"><%= username %></a>
+        <img class="user_avatar" src="" />
+        <a href="/user/" class="discussion_username"></a>
+        <a class="discussion_title" href="" target="_blank"><%= title %></a>
         <span class="discussion_type"><%= type_name %></span>
         <span class="discussion_time"><%= relative_time_posted %></span>
     </div>
 
-    <div class="discussion_title"><%= title %></div>
-    <p class="discussion_text"><%= text %></p>
+    <p class="discussion_text">
+        <%= text_display %>
+        <a href="/review/<?=$app['slug']?>/" target="_blank" rel="nofollow">Read More</a>
+    </p>
 
     <div class="discussion_footer">
-        <p class="discussion_score"><%= vote_score %></p>
+        <p class="discussion_score"><%= score %></p>
         <p class="discussion_comment_count"><%= comment_count %></p>
     </div>
 

@@ -26,6 +26,11 @@ define('SENDGRID_PASS', 'Scott2');
 define('TAGLINE_MAX_CHARACTERS', 100);
 define('DESCRIPTION_MAX_CHARACTERS', 2500);
 
+define('DISPLAY_ID_LENGTH', 8);
+
+define('MONGODB_ASCENDING', 1);
+define('MONGODB_DESCENDING', -1);
+
 /*
 |--------------------------------------------------------------------------
 | File and Directory Modes

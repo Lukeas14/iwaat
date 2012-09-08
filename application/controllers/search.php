@@ -4,7 +4,10 @@ class Search extends MY_Controller {
 	
 	const RESULTS_PER_PAGE = 10;
 	
-	private $data = array();
+	function __construct()
+	{
+		parent::__construct();
+	}
 	
 	public function index(){
 		$this->load->model('app');

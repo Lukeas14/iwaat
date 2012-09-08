@@ -23,16 +23,16 @@ function get_index_color($index){
 }
 
 function truncate ($string, $limit){
-	if(strlen($string) > $limit){
-		return substr($string, 0, $limit)."...";
+	if(strlen(trim($string)) > $limit){
+		return trim(substr(trim($string), 0, $limit)) . "...";
 	}
 	else{
-		return $string;
+		return trim($string);
 	}
 }
 
 function get_relative_time($time){
-	$unix_time = strtotime($time);
+	$unix_time = ( is_numeric($time) && (int)$time == $time ) ? $time : strtotime($time);
 	$today = strtotime(date('Y-m-d'));
 	
 	//Time not valid
@@ -66,6 +66,10 @@ function get_relative_time($time){
 	else{
 		return false;
 	}
+}
+
+function get_possessive($string){
+	return (substr($string, -1) == 's') ? $string . "'" : $string . "'s";
 }
 
 function get_notifications($controller_notifications){
@@ -199,4 +203,32 @@ function validate_email_address($email){
 
 function get_app_hash($app_id, $app_slug){
 	return md5($app_id . APP_HASH_SALT . $app_slug);
+}
+
+function get_user_avatar($user, $size = null){
+	$CI =& get_instance();
+	$CI->load->helper('email');
+
+	$source_order = array(
+		'facebook_id' => 'facebook', 
+		'twitter_id' => 'twitter', 
+		'email' => 'email'
+	);
+
+	foreach($source_order as $source_field => $source_name){
+		if(!empty($user[$source_field]) && $user[$source_field] !== 0){
+			$service = $source_name;
+			$id = strtolower($user[$source_field]);
+			break;
+		}
+	}
+
+	$url = 'http://avatars.io/' . $service . '/' . $id;
+
+	if(isset($size)) {
+		$url .= '/?size='.$size;
+	}
+
+
+	return $url;
 }

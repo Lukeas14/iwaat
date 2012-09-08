@@ -56,6 +56,11 @@ $route['suggest_app'] = "apps/suggest_app";
 $route['add_app'] = "apps/add_app";
 $route['claim_app/(.*)'] = "apps/claim_app";
 
+$route['review/add/(.*)'] = "discussions/add_edit_review";
+$route['review/edit/(.*)'] = "discussions/add_edit_review";
+$route['review/(.*)/(.*)'] = "discussions/review";
+$route['question/add/(.*)'] = "discussions/add_question";
+$route['question/(.*)/(.*)'] = "discussions/question";
 $route['discussions/(.*)'] = "discussions/$1";
 
 $route['about_us'] = "static_pages/about_us";
@@ -63,13 +68,18 @@ $route['contact_us'] = "static_pages/contact_us";
 $route['privacy_policy'] = "static_pages/privacy_policy";
 $route['terms_service'] = "static_pages/terms_service";
 
-$route['login_register'] = "user/login_register";
+$route['user/(.*)'] = "user/user_profile";
+
+/* Account pages */
 $route['account/forgot_password'] = "user/forgot_password";
 $route['account/change_password'] = "user/change_password";
 $route['account/set_password'] = "user/set_password";
 $route['account/profile'] = "user/account_profile";
 $route['account/add_app'] = "user/account_add_app";
 $route['account/edit_app/(.*)'] = "user/account_edit_app";
+
+/* Login/Register Pages */
+$route['login_register'] = "user/login_register";
 $route['login'] = "user/login";
 $route['register'] = "user/register";
 $route['logout'] = "user/logout";

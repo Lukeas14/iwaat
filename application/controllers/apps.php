@@ -2,7 +2,10 @@
 
 class Apps extends MY_Controller {
 	
-	private $data = array();
+	function __construct()
+	{
+		parent::__construct();
+	}
 	
 	public function app(){
 		$this->load->driver('cache');

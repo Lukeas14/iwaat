@@ -2,8 +2,6 @@
 
 class Admin extends MY_Controller {
 
-	private $data = array();
-	
 	function __construct()
 	{
 		parent::__construct();

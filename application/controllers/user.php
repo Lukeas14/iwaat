@@ -2,10 +2,50 @@
 
 class User extends MY_Controller {
 	
-	private $data = array(
-		'notifications' => array()
-	);
+	function __construct()
+	{
+		parent::__construct();
+	}
 	
+	public function user_profile(){
+		$this->load->model('discussion');
+
+		$user_slug = $this->uri->segment(2);
+
+		//Get user profile data
+		$this->data['user'] = $this->ion_auth->where('slug', $user_slug)->limit(1)->users()->row_array();
+		
+		//Get user discussions
+		$discussion_options = array(
+			'user_id' => $this->data['user']['id'],
+			'type' => $this->config->item('user_profile_discussion_types'),
+			'sort' => array('time_posted' => MONGODB_DESCENDING),
+			'limit' => 10
+		);
+		$this->data['user_discussions'] = $this->discussion->get_discussions($discussion_options);
+		$this->data['user_discussions_total'] = $this->data['user_discussions']->count();
+		$discussions_apps = $this->discussion->get_discussions_apps($this->data['user_discussions']);
+		/*
+		$this->data['user_discussions'] = array(
+			'total_count' => 0,
+		);
+		foreach($this->config->item('user_profile_discussion_types') as $discussion_type){
+			$this->data['user_discussions'][$discussion_type] = array();
+		}
+		foreach($user_discussions as $user_discussion){
+			$this->data['user_discussions'][$user_discussion['type']][] = $user_discussion;
+			$this->data['user_discussions']['total_count']++;
+		}
+		*/
+
+		$this->data['discussion_types'] = $this->config->item('discussion_types');
+
+		echo"<pre>";print_r($this->data['user']);print_r($discussions_apps);echo"</pre>";
+		$this->set_css('user.css');
+
+		$this->load->view('user_profile', $this->data);
+	}
+
 	public function login_register(){
 		if ($this->ion_auth->logged_in())
 		{

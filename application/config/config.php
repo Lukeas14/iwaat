@@ -389,5 +389,12 @@ $config['discussion_types'] = array(
     )
 );
 
+$config['app_profile_discussion_types'] = array(
+    'review',  'blog_post', 'question', 'feedback'
+);
+
+$config['user_profile_discussion_types'] = array(
+    'review', 'question', 'answer', 'comment', 'feedback'
+);
 /* End of file config.php */
 /* Location' => ./application/config/config.php */

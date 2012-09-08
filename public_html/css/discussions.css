@@ -1,0 +1,110 @@
+/** Add Discussion **/
+.add_discussion_wrapper{
+	width:960px;
+	margin:20px auto;
+	overflow:hidden;
+}
+
+.add_discussion_left{
+	float:left;
+	width:230px;
+}
+.add_discussion_right{
+	float:right;
+	width:700px;
+	margin-right:0px;
+}
+
+.add_discussion_right h1{
+	margin:0px 0 10px 0;
+	overflow:hidden;
+}
+.add_discussion_right h1 input.submit{
+	float:right;
+	margin:0 15px 0 0;
+}
+
+.add_discussion_right label{
+	width:50px;
+}
+.add_discussion_right input#title{
+	width:610px;
+}
+
+/** Question **/
+.question_wrapper{
+	width:960px;
+	margin:20px auto;
+	overflow:hidden;
+}
+.question_left{
+	float:left;
+	width:230px;
+}
+.question_right{
+	float:right;
+	width:700px;
+	margin-right:0px;
+}
+
+.question_right h1{
+	margin:0 0 20px 0;
+	overflow:hidden;
+}
+.question_right h1 button{
+	float:right;
+	margin-top:0px;
+}
+.question_right p.question_metadata{
+	margin:0;
+	padding:0;
+	font-size:11px;
+	text-shadow:none;
+}
+.question_right .question_text{
+	margin:0 0 20px 0;
+	padding:20px;
+	background-color:rgba(255, 255, 255, 0.4);
+	border-radius:10px;
+	font-size:13px;
+	color:#555;
+}
+
+/** Review **/
+.review_wrapper{
+	width:960px;
+	margin:20px auto 20px auto;
+	overflow:hidden;
+}
+.review_left{
+	width:230px;
+	float:left;
+}
+.review_right{
+	width:560px;
+	margin-right:80px;
+	float:right;
+}
+
+.review_wrapper h1{
+}
+.review_wrapper p.review_metadata{
+	margin:0px;
+	padding:0px;
+	font-size:11px;
+	text-shadow:none;
+}
+.review_wrapper h1 button{
+	float:right;
+	margin-top:0px;
+}
+.review_wrapper h2{
+	color:#c24851;
+}
+.review_wrapper .review_text{
+	padding:20px;
+	background-color:rgba(255, 255, 255, 0.4);
+	border-radius:10px;
+	font-size:13px;
+	color:#555;
+}

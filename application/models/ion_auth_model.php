@@ -63,6 +63,8 @@ class Ion_auth_model extends CI_Model
 	 **/
 	public $_ion_where = array();
 
+	public $_ion_where_in = array();
+
 	/**
 	 * Select
 	 *
@@ -822,6 +824,15 @@ class Ion_auth_model extends CI_Model
 		return $this;
 	}
 
+	public function where_in($field, $value)
+	{
+		$this->trigger_events('where_in');
+
+		array_push($this->_ion_where_in, array('field' => $field, 'val' => $value));
+
+		return $this;
+	}
+
 	public function select($select)
 	{
 		$this->trigger_events('select');
@@ -909,6 +920,16 @@ class Ion_auth_model extends CI_Model
 			foreach ($this->_ion_where as $where)
 			{
 				$this->db->where($where);
+			}
+
+			$this->_ion_where = array();
+		}
+
+		if (isset($this->_ion_where_in))
+		{
+			foreach ($this->_ion_where_in as $where)
+			{
+				$this->db->where_in($where['field'], $where['val']);
 			}
 
 			$this->_ion_where = array();

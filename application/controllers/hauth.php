@@ -3,8 +3,11 @@
 class HAuth extends MY_Controller
 {
 
-	private $data;
-
+	function __construct()
+	{
+		parent::__construct();
+	}
+	
 	public function register($provider, $user_profile = array())
 	{
 		$this->load->helper(array('form', 'url'));

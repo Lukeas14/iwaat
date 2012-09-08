@@ -2,7 +2,10 @@
 
 class Static_pages extends MY_Controller {
 	
-	public $data;
+	function __construct()
+	{
+		parent::__construct();
+	}
 	
 	public function about_us(){
 		$this->load->view('about_us', $this->data);
