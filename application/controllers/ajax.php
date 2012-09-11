@@ -36,11 +36,10 @@ class Ajax extends MY_Controller {
 			$discussions[] = $discussion;
 		}
 
-		$users = $this->ion_auth->where_in('id', $user_ids)->users()->result_array();
+		$users = (!empty($user_ids)) ? $this->ion_auth->where_in('id', $user_ids)->users()->result_array() : array();
 
-		//echo"<pre>";print_r($users);echo"</pre>";
-		//exit();
-		echo json_encode(array('discussions' => $discussions, 'users' => $users));
+		$this->data['json'] = json_encode(array('discussions' => $discussions, 'users' => $users));
+		$this->load->view('json', $this->data);
 		
 		return;
 	}
